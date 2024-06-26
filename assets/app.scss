@@ -1,0 +1,22 @@
+@import "css/bootstrap.min.css";
+@import "css/bootstrap.rtl.min.css";
+@import 'primevue/resources/themes/lara-light-green/theme.css';
+@import 'vue3-toastify/dist/index.css';
+@import "css/fonts.css";
+@import "scss/_all-styles.scss";
+
+ul, li,a  {
+  text-decoration:none;
+  list-style: none;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  touch-action: pan-x pan-y;
+}
+
+body {
+  font-family: "iranSans";
+  background-color: var(--gray-1);
+}

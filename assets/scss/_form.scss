@@ -1,0 +1,53 @@
+.form-group {
+  margin-top: 1rem;
+
+  .p-password.p-invalid.p-component > .p-inputtext {
+    border-color: #e24c4c !important;
+  }
+
+  .p-inputtext {
+    border: 1px solid transparent;
+    border-radius: var(--border-r-0-75);
+    text-align: center;
+    &:enabled:focus {
+      outline: 0 none;
+      outline-offset: 0;
+      box-shadow: unset;
+      border: 1px solid var(--green-3);
+      background-color: white !important;
+      color: var(--black-3);
+    }
+    &:hover {
+      border: 1px solid var(--green-3);
+      background-color: white !important;
+    }
+    &.p-invalid.p-component {
+      border: 2px solid #e24c4c!important;
+    }
+  }
+  .p-inputnumber-input{
+    border: 1px solid #000;
+  }
+
+}
+
+.p-inputtext.p-invalid.p-component {
+  border: 2px solid #e24c4c!important;
+}
+
+.p-inputnumber.p-invalid.p-component > .p-inputtext {
+  border:2.5px solid #e24c4c
+}
+
+.p-selectbutton.p-invalid > .p-button {
+  border: 2.5px solid #e24c4c
+}
+
+.p-invalid-textarea {
+  border: 2.5px solid #e24c4c
+}
+
+.p-invalid-select {
+  border: 2.5px solid #e24c4c
+}
+
