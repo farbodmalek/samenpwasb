@@ -120,7 +120,7 @@
               v-model="form.workShopCode"
                :class="{'p-invalid': v$.workShopCode.$invalid && submitted}"
               style="height: 45px"
-
+               inputmode="numeric"
               :useGrouping="false"
               maxlength="10"
               placeholder="مانند 123456"
@@ -482,13 +482,15 @@ const rules = computed(() => {
       LivestockBooklet: {required},
       NumberOfMaleLivestock: '',
       Isinsurance:{required},
-      NumberOfFemaleLivestock: ''
+      NumberOfFemaleLivestock: '',
+      planActivationTypeId:{required},
 
     };
   } else if (loanSurvey == 2) {
     return {
       HasAgriculturalInsurance: {required},
       numberOfJobsCreated: {required},
+      planActivationTypeId:{required},
       OwnerTypeId: {required},
       ProductTypeId: {required},
       LandArea: {required},
@@ -599,6 +601,7 @@ const InsuranceTabHadel = (tabNumber:any) => {
         insuranceTypeId: {required},
         workShopCode: {required},
         numberOfInsurdPerson: {required},
+        planActivationTypeId:{required},
       };
     });
     v$ = useVuelidate(rules1, form);
@@ -616,6 +619,7 @@ const InsuranceTabHadel = (tabNumber:any) => {
         insuranceTypeId: '',
         workShopCode: '',
         numberOfInsurdPerson: '',
+        planActivationTypeId:{required},
       };
     });
     form.insuranceTypeId = null
@@ -636,7 +640,8 @@ const InsuranceTabHadel = (tabNumber:any) => {
         workShopCode: {required},
         numberOfInsurdPerson: {required},
         NumberOfMaleLivestock: '',
-        NumberOfFemaleLivestock: ''
+        NumberOfFemaleLivestock: '',
+        planActivationTypeId:{required},
       };
     });
     v$ = useVuelidate(rules1, form);
@@ -654,7 +659,8 @@ const InsuranceTabHadel = (tabNumber:any) => {
         workShopCode: '',
         numberOfInsurdPerson: '',
         NumberOfMaleLivestock: '',
-        NumberOfFemaleLivestock: ''
+        NumberOfFemaleLivestock: '',
+        planActivationTypeId:{required},
       };
     });
     form.insuranceTypeId = null
@@ -671,6 +677,7 @@ const LivestockTab = (tabNumber:number) => {
     const rules1 = computed(() => {
       return {
         NumberOfMaleLivestock: {required},
+        planActivationTypeId:{required},
         LivestockTypeId: {required},
         numberOfJobsCreated: {required},
         LivestockInsurance: {required},
@@ -689,6 +696,7 @@ const LivestockTab = (tabNumber:number) => {
     const rules1 = computed(() => {
       return {
         NumberOfFemaleLivestock: {required},
+        planActivationTypeId:{required},
         NumberOfMaleLivestock: {required},
         LivestockTypeId: {required},
         numberOfJobsCreated: {required},
