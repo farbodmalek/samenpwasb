@@ -190,8 +190,6 @@ export default defineNuxtConfig({
             enabled: true,
             type: "module",
         },
-    },devServer:{
-        https:true
     }
     ,
     runtimeConfig: {
