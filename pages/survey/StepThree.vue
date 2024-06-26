@@ -51,7 +51,7 @@
                     optionValue="value"
                     @click="EquipmentBoughtHandel(form.isEquipmentBought)"/>
 
-      <div v-if="EquipmentTab === 2"
+      <div v-if="EquipmentTab === 1"
            class="flex-column px-1">
         <div class="d-flex pt-3  justify-content-around ">
           <SelectButton v-model="form.isFactorMatch"
@@ -213,8 +213,8 @@ const optionsFactor = ref([
 ]);
 
 const optionsEquipmentBought = ref([
-  {name: 'خریداری شده  ', value: 2},
-  {name: 'خریداری نشده', value: 1},
+  {name: 'خریداری شده  ', value: 1},
+  {name: 'خریداری نشده', value: 2},
   {name: 'تجهیزات ندارد', value: 0},
 ]);
 
@@ -345,7 +345,7 @@ const ConstructionHandelTab = (Number: number) => {
 
 const EquipmentBoughtHandel = (Number: number) => {
   EquipmentTab.value = Number;
-  if (Number === 2 && ConstructionTab.value === 1) {
+  if (Number === 1 && ConstructionTab.value === 1) {
     const rules = computed(() => {
       return {
         constructionApproval: {required},
@@ -360,7 +360,7 @@ const EquipmentBoughtHandel = (Number: number) => {
       };
     })
     v$ = useVuelidate(rules, form);
-  } else if (Number === 2) {
+  } else if (Number === 1) {
     const rules = computed(() => {
       return {
         constructionApproval: {required},
@@ -389,6 +389,9 @@ const EquipmentBoughtHandel = (Number: number) => {
         isFactorMatch: ''
       };
     })
+    form.value.isFactorMatch=null
+    form.value.equipmentTypeId=null
+    form.value.equipmentDescription=null
     v$ = useVuelidate(rules, form);
   }
 };
