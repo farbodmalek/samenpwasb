@@ -1,4 +1,5 @@
 <template>
+  <surveyHeader @childEvent="login" ></surveyHeader>
   <Carddetails />
   <form  @submit.prevent="sumbitForm()">
     <section class="col col-12 d-flex align-center pt-1 flex-column mb-2 text-black ">
@@ -174,7 +175,7 @@ import {ToastNotificationService} from "~/core/toast-notification-service";
 import {required} from '@vuelidate/validators';
 import {useVuelidate} from "@vuelidate/core";
 import { Useform } from "~/store/Form";
-
+import surveyHeader from "~/components/Layouts/surveyHeader.vue";
 
 definePageMeta({
   layout: "survey",
@@ -219,6 +220,13 @@ let previousValues = <any>{};
 if (targetObject) {
   InfoMonitored = targetObject;
 }
+
+
+const login=()=>{
+
+  console.log("kpok")
+}
+
 
 const form = <any>reactive({
   genderType:   InfoMonitored.customerGenderType,

@@ -2,7 +2,7 @@
   <div id="app">
     <Loading/>
     <div id="main" class="mb-0 container bg-gray-1">
-      <surveyHeader></surveyHeader>
+<!--      <surveyHeader></surveyHeader>-->
       <slot />
     </div>
   </div>
