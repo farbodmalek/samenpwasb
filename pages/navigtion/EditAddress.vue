@@ -1,4 +1,5 @@
 <template>
+  <surveyHeader></surveyHeader>
   <form @submit.prevent="sumbit()">
     <div  class="position-relative z-1">
       <l-map
@@ -64,6 +65,7 @@ import { ToastNotificationService } from '~/core/toast-notification-service';
 import { required } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 import { Useform } from '~/store/Form';
+import surveyHeader from "~/components/Layouts/surveyHeader.vue";
 
 definePageMeta({
   layout: 'survey',
