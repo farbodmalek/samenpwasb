@@ -115,13 +115,12 @@
           <div class="px-2 col-9">
               <input-text
                   @input="form.workShopCode=ConvertNUM(form.workShopCode)"
-              type="text"
+
               class="form-group input-group border-1 border-black rounded-3"
               v-model="form.workShopCode"
                :class="{'p-invalid': v$.workShopCode.$invalid && submitted}"
               style="height: 45px"
                inputmode="numeric"
-              :useGrouping="false"
               maxlength="10"
               placeholder="مانند 123456"
             />
@@ -758,6 +757,14 @@ const setCalenderForAgricultural = (tabNumber:any) => {
 
 
 const ConvertNUM = (input) => {
+
+  if (!input) {
+    return "";
+  }
+  if (!/^[۰-۹0-9]+$/.test(input)) {
+    ToastNotificationService.warn("از اعداد فارسی یا انگلیسی استفاده کنید ");;
+     return ''
+  }
   const persianToEnglishMap = {
     '۰': '0',
     '۱': '1',
@@ -770,8 +777,12 @@ const ConvertNUM = (input) => {
     '۸': '8',
     '۹': '9'
   };
-  return input.replace(/[۰-۹]/g, (match) => persianToEnglishMap[match]);
+  const convertedString = input.replace(/[۰-۹]/g, (match) => persianToEnglishMap[match]);
+  return parseInt(convertedString, 10);
 };
+
+
+
 
 const NextstepHandel = () => {
   submitted.value = true
