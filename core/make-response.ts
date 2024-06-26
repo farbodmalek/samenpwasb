@@ -30,7 +30,7 @@ export class MakeResponse {
     const config = {headers: {Authorization: "Bearer " + supervisoryInfo.token}};
     store.getLoadingShow()
     axios.post(`${Url + "api/survey/GetCartables"}`,
-      {pageNumber: 1, take: 1000, cartableStatusTypeId:2}, config)
+      {pageNumber: 1, take: 1000, cartableStatusTypeId:1}, config)
       .then((res: any) => {
         if (res.data.results) {
           const Cartables = res.data.results.filter((item: any) => item.expireDate.substring(0, 10) >= todayDateString);

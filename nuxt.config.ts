@@ -190,7 +190,10 @@ export default defineNuxtConfig({
             enabled: true,
             type: "module",
         },
-    },
+    },devServer:{
+        https:true
+    }
+    ,
     runtimeConfig: {
         public: {
             base_API: process.env.base_API,

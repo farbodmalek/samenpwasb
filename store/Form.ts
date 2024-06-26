@@ -50,12 +50,14 @@ export const Useform = defineStore('form', {
         this.form.survey.planServiceSurvey = {
           HasWorkPermission: data.HasWorkPermission,
           OwnerTypeId: data.OwnerTypeId,
+          PresenceTypeId: 1
         };
       }
       if (this.form.loanPlan.loanSurveyEconomidTypeId == 4) {
         this.form.survey.planIndustrialSurvey = {
           HasWorkPermission: data.HasWorkPermission,
           OwnerTypeId: data.OwnerTypeId,
+          PresenceTypeId: 1
         };
       }
       if (this.form.loanPlan.loanSurveyEconomidTypeId ==1) {
