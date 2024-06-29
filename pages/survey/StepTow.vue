@@ -830,6 +830,14 @@ const setCalenderForAgricultural = (tabNumber:any) => {
 
 
 const ConvertNUM = (input) => {
+
+  if (!input) {
+    return "";
+  }
+  if (!/^[۰-۹0-9]+$/.test(input)) {
+    ToastNotificationService.warn("از اعداد فارسی یا انگلیسی استفاده کنید ");;
+     return ''
+  }
   const persianToEnglishMap = {
     '۰': '0',
     '۱': '1',
@@ -842,7 +850,8 @@ const ConvertNUM = (input) => {
     '۸': '8',
     '۹': '9'
   };
-  return input.replace(/[۰-۹]/g, (match) => persianToEnglishMap[match]);
+  const convertedString = input.replace(/[۰-۹]/g, (match) => persianToEnglishMap[match]);
+  return parseInt(convertedString, 10);
 };
 
 const NextstepHandel = () => {
