@@ -475,6 +475,7 @@ const rules = computed(() => {
   if (loanSurvey == 1) {
     return {
       LivestockTypeId: {required},
+      planActivationTypeId: {required},
       numberOfJobsCreated: {required},
       LivestockInsurance: {required},
       LivestockLicense: {required},
@@ -488,6 +489,7 @@ const rules = computed(() => {
   } else if (loanSurvey == 2) {
     return {
       HasAgriculturalInsurance: {required},
+      planActivationTypeId: {required},
       numberOfJobsCreated: {required},
       planActivationTypeId:{required},
       OwnerTypeId: {required},
@@ -591,6 +593,7 @@ const InsuranceTabHadel = (tabNumber:any) => {
     const rules1 = computed(() => {
       return {
         HasAgriculturalInsurance: {required},
+        planActivationTypeId: {required},
         Isinsurance:{required},
         numberOfJobsCreated: {required},
         OwnerTypeId: {required},
@@ -609,6 +612,7 @@ const InsuranceTabHadel = (tabNumber:any) => {
     const rules1 = computed(() => {
       return {
         HasAgriculturalInsurance: {required},
+        planActivationTypeId: {required},
         Isinsurance:{required},
         numberOfJobsCreated: {required},
         OwnerTypeId: {required},
@@ -625,11 +629,91 @@ const InsuranceTabHadel = (tabNumber:any) => {
     form.workShopCode = null
     form.numberOfInsurdPerson = null
     v$ = useVuelidate(rules1, form);
-  }
-  if (tabNumber && loanSurvey == 1) {
+  }else if (tabNumber && loanSurvey == 1 && [3, 4, 5, 7, 8, 9, 6].includes(form.LivestockTypeId)) {
+    console.log(1)
     const rules1 = computed(() => {
       return {
         LivestockTypeId: {required},
+        planActivationTypeId: {required},
+        Isinsurance:{required},
+        LivestockInsurance: {required},
+        LivestockLicense: {required},
+        LivestockBooklet: {required},
+        numberOfJobsCreated: {required},
+        insuranceTypeId: {required},
+        workShopCode: {required},
+        numberOfInsurdPerson: {required},
+        NumberOfMaleLivestock: {required},
+        NumberOfFemaleLivestock: ''
+      };
+    });
+    v$ = useVuelidate(rules1, form);
+  }else if (!tabNumber && loanSurvey == 1 && [3, 4, 5, 7, 8, 9, 6].includes(form.LivestockTypeId)) {
+    console.log(form.LivestockTypeId)
+    const rules1 = computed(() => {
+      return {
+        LivestockTypeId: {required},
+        planActivationTypeId: {required},
+        Isinsurance:{required},
+        LivestockInsurance: {required},
+        LivestockLicense: {required},
+        LivestockBooklet: {required},
+        numberOfJobsCreated: {required},
+        insuranceTypeId: {required},
+        workShopCode: {required},
+        numberOfInsurdPerson: {required},
+        NumberOfMaleLivestock: {required},
+        NumberOfFemaleLivestock: ''
+      };
+    });
+    v$ = useVuelidate(rules1, form);
+  }else if (tabNumber && loanSurvey == 1 && [1, 2].includes(form.LivestockTypeId)) {
+    const rules1 = computed(() => {
+      return {
+        NumberOfFemaleLivestock: {required},
+        planActivationTypeId: {required},
+        NumberOfMaleLivestock: {required},
+        LivestockTypeId: {required},
+        numberOfJobsCreated: {required},
+        LivestockInsurance: {required},
+        LivestockLicense: {required},
+        LivestockBooklet: {required},
+        Isinsurance:{required},
+        insuranceTypeId: '',
+        workShopCode: '',
+        numberOfInsurdPerson: '',
+      };
+    });
+    form.NumberOfFemaleLivestock = null
+    form.NumberOfMaleLivestock = null
+    v$ = useVuelidate(rules1, form);
+  }else if (!tabNumber && loanSurvey == 1 &&[1, 2].includes(form.LivestockTypeId)) {
+    const rules1 = computed(() => {
+      return {
+        NumberOfFemaleLivestock: {required},
+        planActivationTypeId: {required},
+        NumberOfMaleLivestock: {required},
+        LivestockTypeId: {required},
+        numberOfJobsCreated: {required},
+        LivestockInsurance: {required},
+        LivestockLicense: {required},
+        LivestockBooklet: {required},
+        Isinsurance:{required},
+        insuranceTypeId: '',
+        workShopCode: '',
+        numberOfInsurdPerson: '',
+      };
+    });
+    form.NumberOfFemaleLivestock = null
+    form.NumberOfMaleLivestock = null
+    v$ = useVuelidate(rules1, form);
+  }
+  else if (tabNumber && loanSurvey == 1) {
+    console.log(1)
+    const rules1 = computed(() => {
+      return {
+        LivestockTypeId: {required},
+        planActivationTypeId: {required},
         Isinsurance:{required},
         LivestockInsurance: {required},
         LivestockLicense: {required},
@@ -646,8 +730,10 @@ const InsuranceTabHadel = (tabNumber:any) => {
     v$ = useVuelidate(rules1, form);
   }
   else if (!tabNumber && loanSurvey == 1) {
+    console.log(2)
     const rules1 = computed(() => {
       return {
+        planActivationTypeId: {required},
         LivestockTypeId: {required},
         Isinsurance:{required},
         numberOfJobsCreated: {required},
@@ -658,8 +744,12 @@ const InsuranceTabHadel = (tabNumber:any) => {
         workShopCode: '',
         numberOfInsurdPerson: '',
         NumberOfMaleLivestock: '',
+<<<<<<< HEAD
         NumberOfFemaleLivestock: '',
         planActivationTypeId:{required},
+=======
+        NumberOfFemaleLivestock: {required}
+>>>>>>> e152c0ad2a0313f4f0f47bc1b7438cce40faa836
       };
     });
     form.insuranceTypeId = null
@@ -676,7 +766,11 @@ const LivestockTab = (tabNumber:number) => {
     const rules1 = computed(() => {
       return {
         NumberOfMaleLivestock: {required},
+<<<<<<< HEAD
         planActivationTypeId:{required},
+=======
+        planActivationTypeId: {required},
+>>>>>>> e152c0ad2a0313f4f0f47bc1b7438cce40faa836
         LivestockTypeId: {required},
         numberOfJobsCreated: {required},
         LivestockInsurance: {required},
@@ -696,6 +790,9 @@ const LivestockTab = (tabNumber:number) => {
       return {
         NumberOfFemaleLivestock: {required},
         planActivationTypeId:{required},
+ASF=======
+        planActivationTypeId: {required},
+>>>>>>> e152c0ad2a0313f4f0f47bc1b7438cce40faa836
         NumberOfMaleLivestock: {required},
         LivestockTypeId: {required},
         numberOfJobsCreated: {required},

@@ -1,3 +1,4 @@
+
 <template>
   <surveyHeader @saveform3="Setform" ></surveyHeader>
   <Carddetails/>
@@ -19,23 +20,23 @@
       <div v-if="ConstructionTab === 1">
         <Titel :title="'شرح عملیات'"/>
         <input-number
-                    inputmode="numeric"
-                      class=" text-end col-12 mb-2 text-end mt-3"
-                      id="formGroupExampleInput"
-                      style="height: 75px"
-                      :min="0" :max="100"
-                      :class="{'p-invalid': v$.constructionPercentageProgress.$invalid && submitted}"
-                      v-model="form.constructionPercentageProgress"
-                      placeholder="درصد پیشرفت"
+            inputmode="numeric"
+            class=" text-end col-12 mb-2 text-end mt-3"
+            id="formGroupExampleInput"
+            style="height: 75px"
+            :min="0" :max="100"
+            :class="{'p-invalid': v$.constructionPercentageProgress.$invalid && submitted}"
+            v-model="form.constructionPercentageProgress"
+            placeholder="درصد پیشرفت"
         />
         <textarea
-          type="text"
-          class="form-control bg-white text-end mb-3 pt-3"
-          id="formGroupExampleInput"
-          :class="{'p-invalid-textarea': v$.constructionDescription.$invalid && submitted}"
-          style="height: 100px"
-          v-model="form.constructionDescription"
-          placeholder="شرح عملیات عمرانی"
+            type="text"
+            class="form-control bg-white text-end mb-3 pt-3"
+            id="formGroupExampleInput"
+            :class="{'p-invalid-textarea': v$.constructionDescription.$invalid && submitted}"
+            style="height: 100px"
+            v-model="form.constructionDescription"
+            placeholder="شرح عملیات عمرانی"
         />
       </div>
     </section>
@@ -51,7 +52,7 @@
                     optionValue="value"
                     @click="EquipmentBoughtHandel(form.isEquipmentBought)"/>
 
-      <div v-if="EquipmentTab === 1"
+      <div v-if="EquipmentTab === 2"
            class="flex-column px-1">
         <div class="d-flex pt-3  justify-content-around ">
           <SelectButton v-model="form.isFactorMatch"
@@ -120,7 +121,7 @@
                 <img src="/img/img.png" class="text-danger" width="50"/>
               </div>
               <Badge :value="index+1" size="large" severity="success"></Badge>
-<!--              <ProgressBar v-if="image.uploadProgress !== null" :value="image.uploadProgress"></ProgressBar>-->
+              <!--              <ProgressBar v-if="image.uploadProgress !== null" :value="image.uploadProgress"></ProgressBar>-->
               <Knob v-if="image.uploadProgress !== null" v-model="image.uploadProgress" :strokeWidth="5" valueTemplate="{value}%" />
             </div>
           </div>
@@ -135,7 +136,7 @@
     <section class="form-group px-1">
       <Titel :title="'تایید ثبت'"/>
       <div
-        class="px-1 col col-12 align-center pt-1 px-2 justify-content-between">
+          class="px-1 col col-12 align-center pt-1 px-2 justify-content-between">
         <div class="col-12 d-flex gap-5">
           <p class="mx-2 text-black text-center py-2font-checkbox col-9">
             کلیه اطلاعات فوق را با دقت و رعایت حقوق صندوق و امانتداری تکمیل
@@ -146,8 +147,8 @@
       </div>
     </section>
     <button
-      class="d-flex justify-content-center col-11 mx-auto py-3 mt-4 text-white bg-blue-1 rounded-pill p-3 "
-      @click="">
+        class="d-flex justify-content-center col-11 mx-auto py-3 mt-4 text-white bg-blue-1 rounded-pill p-3 "
+        @click="">
       ثبت نظارت
     </button>
     <Dialog v-model:visible="visible" modal :showHeader="false">
@@ -156,15 +157,15 @@
       </div>
       <div class="col-12 d-flex justify-content-center gap-2">
         <button
-          class=" rounded-pill border-0  col-6 text-white  bg-danger py-3"
-          type="button"
-          @click="SendOffline">
+            class=" rounded-pill border-0  col-6 text-white  bg-danger py-3"
+            type="button"
+            @click="SendOffline">
           ارسال افلاین
         </button>
         <button
-          class="rounded-pill border-0 col-6 bg-success text-white py-3"
-          type="button"
-          @click="visible = false"
+            class="rounded-pill border-0 col-6 bg-success text-white py-3"
+            type="button"
+            @click="visible = false"
         >
           ارسال آنلاین
         </button>
@@ -196,7 +197,7 @@ import {required} from '@vuelidate/validators';
 import {useVuelidate} from "@vuelidate/core";
 import {ToastNotificationService} from "~/core/toast-notification-service";
 import {UseLoading} from "@/store/loading-store";
-import surveyHeader from "~/components/Layouts/surveyHeader.vue";
+
 
 definePageMeta({
   layout: "survey",
@@ -213,8 +214,8 @@ const optionsFactor = ref([
 ]);
 
 const optionsEquipmentBought = ref([
-  {name: 'خریداری شده  ', value: 1},
-  {name: 'خریداری نشده', value: 2},
+  {name: 'خریداری شده  ', value: 2},
+  {name: 'خریداری نشده', value: 1},
   {name: 'تجهیزات ندارد', value: 0},
 ]);
 
@@ -345,7 +346,7 @@ const ConstructionHandelTab = (Number: number) => {
 
 const EquipmentBoughtHandel = (Number: number) => {
   EquipmentTab.value = Number;
-  if (Number === 1 && ConstructionTab.value === 1) {
+  if (Number === 2 && ConstructionTab.value === 1) {
     const rules = computed(() => {
       return {
         constructionApproval: {required},
@@ -360,7 +361,7 @@ const EquipmentBoughtHandel = (Number: number) => {
       };
     })
     v$ = useVuelidate(rules, form);
-  } else if (Number === 1) {
+  } else if (Number === 2) {
     const rules = computed(() => {
       return {
         constructionApproval: {required},
@@ -396,9 +397,7 @@ const EquipmentBoughtHandel = (Number: number) => {
   }
 };
 
-const Setform=()=>{
-  localStorage.setItem("FinalRegistrationform", JSON.stringify(form.value));
-}
+
 
 const submit = () => {
   mainform = store.form
@@ -438,44 +437,52 @@ const SendForm = async (data: any) => {
       loadingMethod.getLoadingShow()
       const config = {headers: {Authorization: "Bearer " + supervisoryInfo.token}};
       const response = await axios
-        .post(
-            `${Url + "api/survey/SetLoanPlanSurvey"}`,
-            data,
-          config
-        )
-        .then((response:any) => {
-          loadingMethod.getLoadingHide()
-          if (response.status === 200 && response.data.result == null) {
-            ToastNotificationService.warn(response.data.serverErrors[0].hint);
-          }
-          else if(response.status === 200 && response.data.serverErrors.length==0) {
-            ToastNotificationService.success("نظارت با موفقیت ثبت شد");
-            setTimeout(() => {
-              router.push("/");
-              localStorage.removeItem("firPreForm");
-              localStorage.removeItem("SecPreForm");
-              localStorage.removeItem("FinalRegistrationform");
-            }, 8000);
-          }
-        });
+          .post(
+              `${Url + "api/survey/SetLoanPlanSurvey"}`,
+              data,
+              config
+          )
+          .then((response:any) => {
+            loadingMethod.getLoadingHide()
+            if (response.status === 200 && response.data.result == null) {
+
+              console.log( store.form)
+              ToastNotificationService.warn(response.data.serverErrors[0].hint);
+            }
+            else if(response.status === 200 && response.data.serverErrors.length==0) {
+              ToastNotificationService.success("نظارت با موفقیت ثبت شد");
+              setTimeout(() => {
+                router.push("/");
+                console.log( store.form)
+                store.form.survey.planIndustrialSurvey=null
+                store.form.survey.planGardenSurvey=null
+                store.form.survey.planLivestockSurvey=null
+                store.form.survey.planServiceSurvey=null
+                localStorage.removeItem("firPreForm");
+                localStorage.removeItem("SecPreForm");
+                localStorage.removeItem("FinalRegistrationform");
+
+              }, 8000);
+            }
+          });
       loadingMethod.getLoadingHide()
     } else {
       ToastNotificationService.warn("درحال ارسال عکس لطفا صبر کنید");
     }
   } catch (error:any) {
-      loadingMethod.getLoadingHide()
-      if(error.response && error.response.status===500){
-          ToastNotificationService.error("خطای 500 سرور لطفا  مجددا تلاش کنید " + error.response.data.serverErrors[0].hint,10000);
-      }
-     else if(error.response && error.response.status===400){
-        const [firstErrorKey, firstErrorMessages] :any = Object.entries(error.response.data.errors)[0];
-        const firstMessage = firstErrorMessages[0];
-        ToastNotificationService.error(  `${firstMessage}ارور 400 خطای داخلی سیستم لطفا با پشتیبانی تماس بگیرید`, 10000);
-      }
-      else if(error.code==="ERR_NETWORK"){
-          ToastNotificationService.error("خطا در برقراری ارتباط " );
-          visible.value = true
-      }
+    loadingMethod.getLoadingHide()
+    if(error.response && error.response.status===500){
+      ToastNotificationService.error("خطای 500 سرور لطفا  مجددا تلاش کنید " + error.response.data.serverErrors[0].hint,10000);
+    }
+    else if(error.response && error.response.status===400){
+      const [firstErrorKey, firstErrorMessages] :any = Object.entries(error.response.data.errors)[0];
+      const firstMessage = firstErrorMessages[0];
+      ToastNotificationService.error(  `${firstMessage}ارور 400 خطای داخلی سیستم لطفا با پشتیبانی تماس بگیرید`, 10000);
+    }
+    else if(error.code==="ERR_NETWORK"){
+      ToastNotificationService.error("خطا در برقراری ارتباط " );
+      visible.value = true
+    }
   }
 }
 
@@ -515,97 +522,97 @@ const handleFileUpload = async (event:any) => {
 };
 
 const compressImage = (file:any) => {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            const img = new Image();
-            img.src = event.target.result;
-            img.onload = () => {
-                const canvas = document.createElement("canvas");
-                const ctx = canvas.getContext("2d");
-                const maxWidth = 800;
-                const maxHeight = 600;
-                let newWidth = img.width;
-                let newHeight = img.height;
-                if (img.width > maxWidth) {
-                    newWidth = maxWidth;
-                    newHeight = (img.height * maxWidth) / img.width;
-                }
-                if (newHeight > maxHeight) {
-                    newHeight = maxHeight;
-                    newWidth = (img.width * maxHeight) / img.height;
-                }
-                canvas.width = newWidth;
-                canvas.height = newHeight;
-                ctx.drawImage(img, 0, 0, newWidth, newHeight);
-                canvas.toBlob(
-                    (blob) => {
-                        const compressedFile = new File([blob], file.name, {
-                            type: "image/jpeg",
-                        });
-                        resolve({
-                            dataURL: URL.createObjectURL(compressedFile),
-                            file: compressedFile,
-                        });
-                    },
-                    "image/jpeg",
-                    0.8
-                );
-            };
-        };
-        reader.readAsDataURL(file);
-    });
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        const maxWidth = 800;
+        const maxHeight = 600;
+        let newWidth = img.width;
+        let newHeight = img.height;
+        if (img.width > maxWidth) {
+          newWidth = maxWidth;
+          newHeight = (img.height * maxWidth) / img.width;
+        }
+        if (newHeight > maxHeight) {
+          newHeight = maxHeight;
+          newWidth = (img.width * maxHeight) / img.height;
+        }
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+        ctx.drawImage(img, 0, 0, newWidth, newHeight);
+        canvas.toBlob(
+            (blob) => {
+              const compressedFile = new File([blob], file.name, {
+                type: "image/jpeg",
+              });
+              resolve({
+                dataURL: URL.createObjectURL(compressedFile),
+                file: compressedFile,
+              });
+            },
+            "image/jpeg",
+            0.8
+        );
+      };
+    };
+    reader.readAsDataURL(file);
+  });
 };
 
 const SetSurveyImage = async (file:any, index:any) => {
-    const formData = new FormData();
-    formData.append("image", file.file);
-    const config = {
-        headers: {
-            Authorization: "Bearer " + supervisoryInfo.token,
-            "Content-Type": "multipart/form-data",
-        },
-        onUploadProgress: (progressEvent:any) => {
-            const progress = Math.round(
-                (progressEvent.loaded * 100) / progressEvent.total
-            );
-            uploadedImages.value[index].uploadProgress = progress;
-            if (progress === 100) {
-                setTimeout(() => {
-                    uploadedImages.value[index].uploadProgress = null;
-                }, 2000);
-            }
-        },
-    };
-    try {
-        IsRequest.value=true
-        requestStatus.isHaserequest = true;
-        const response = await axios.post(
-            `${Url + "api/Upload/uploadSurveyImage"}`,
-            formData,
-            config
-        );
-        form.value.guidList.push(response.data.results[0]);
-        if ((response.status === 200 && response.data.serverErrors == null)) {
-          ToastNotificationService.success("عکس با موفقیت ارسال شد");
-        }
-        requestStatus.isHaserequest = false;
-      IsRequest.value=false
-    } catch (error:any) {
-      requestStatus.isHaserequest = false;
-      IsRequest.value=true
-
-      if (error.code==="ERR_NETWORK"){
-        ToastNotificationService.warn("خطا در برقراری شبکه عکس در حافظه ذخیره شد " );
-        saveImageToIndexedDB(file);
+  const formData = new FormData();
+  formData.append("image", file.file);
+  const config = {
+    headers: {
+      Authorization: "Bearer " + supervisoryInfo.token,
+      "Content-Type": "multipart/form-data",
+    },
+    onUploadProgress: (progressEvent:any) => {
+      const progress = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+      );
+      uploadedImages.value[index].uploadProgress = progress;
+      if (progress === 100) {
+        setTimeout(() => {
+          uploadedImages.value[index].uploadProgress = null;
+        }, 2000);
       }
-      else if(error.response && error.response.status===500){
-        ToastNotificationService.error(" خطای 500 ارسال عکس با خطا روبرو شد لطفا مجدد تلاش کنید  " + error.response.data.serverErrors[0].hint,10000);
-      }
-      else if(error.response && error.response.status===500){
-        ToastNotificationService.error(" خطای 400 ارسال عکس با خطا روبرو شد لطفا با پشتیبانی تماس بگیرید  " + error.response.data.serverErrors[0].hint,10000);
-      }
+    },
+  };
+  try {
+    IsRequest.value=true
+    requestStatus.isHaserequest = true;
+    const response = await axios.post(
+        `${Url + "api/Upload/uploadSurveyImage"}`,
+        formData,
+        config
+    );
+    form.value.guidList.push(response.data.results[0]);
+    if ((response.status === 200 && response.data.serverErrors == null)) {
+      ToastNotificationService.success("عکس با موفقیت ارسال شد");
     }
+    requestStatus.isHaserequest = false;
+    IsRequest.value=false
+  } catch (error:any) {
+    requestStatus.isHaserequest = false;
+    IsRequest.value=true
+
+    if (error.code==="ERR_NETWORK"){
+      ToastNotificationService.warn("خطا در برقراری شبکه عکس در حافظه ذخیره شد " );
+      saveImageToIndexedDB(file);
+    }
+    else if(error.response && error.response.status===500){
+      ToastNotificationService.error(" خطای 500 ارسال عکس با خطا روبرو شد لطفا مجدد تلاش کنید  " + error.response.data.serverErrors[0].hint,10000);
+    }
+    else if(error.response && error.response.status===500){
+      ToastNotificationService.error(" خطای 400 ارسال عکس با خطا روبرو شد لطفا با پشتیبانی تماس بگیرید  " + error.response.data.serverErrors[0].hint,10000);
+    }
+  }
 };
 
 

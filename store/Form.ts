@@ -5,26 +5,26 @@ import {defineStore} from "pinia";
 
 export const Useform = defineStore('form', {
   state: () => (
-    {
-      addressform:{},
-      form: {
-        loanPlan:{},
-        survey:{
-          planIndustrialSurvey:null,
-          planGardenSurvey:null,
-          planLivestockSurvey:null,
-          planServiceSurvey:null
+      {
+        addressform:{},
+        form: {
+          loanPlan:{},
+          survey:{
+            planIndustrialSurvey:null,
+            planGardenSurvey:null,
+            planLivestockSurvey:null,
+            planServiceSurvey:null
+          },
+          LoanPlanNo:{
+            Id :11984,
+            LoanSurveyEconomicTypeId :null,
+            PlanNoId :11984 ,
+            UserPlanNoText :null,
+            LoanId :null,
+            UserOtherPlanNo :null
+          }
         },
-        LoanPlanNo:{
-          Id :11984,
-          LoanSurveyEconomicTypeId :null,
-          PlanNoId :11984 ,
-          UserPlanNoText :null,
-          LoanId :null,
-          UserOtherPlanNo :null
-        }
-      },
-    }
+      }
   ),
   actions: {
     getFormStepOne(data:any) {
@@ -50,14 +50,14 @@ export const Useform = defineStore('form', {
         this.form.survey.planServiceSurvey = {
           HasWorkPermission: data.HasWorkPermission,
           OwnerTypeId: data.OwnerTypeId,
-          PresenceTypeId: 1
+          PresenceTypeId: 0,
         };
       }
       if (this.form.loanPlan.loanSurveyEconomidTypeId == 4) {
         this.form.survey.planIndustrialSurvey = {
           HasWorkPermission: data.HasWorkPermission,
           OwnerTypeId: data.OwnerTypeId,
-          PresenceTypeId: 1
+          PresenceTypeId: 0,
         };
       }
       if (this.form.loanPlan.loanSurveyEconomidTypeId ==1) {
