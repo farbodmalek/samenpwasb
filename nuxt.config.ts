@@ -1,6 +1,6 @@
 // @ts-ignore
 export default defineNuxtConfig({
-    devtools: {enabled: false},
+    devtools: {enabled: true},
     ssr: false,
     css: ['~/assets/app.scss'],
     modules: ["@pinia/nuxt", "@vite-pwa/nuxt", "nuxt3-leaflet", "nuxt-primevue"],
