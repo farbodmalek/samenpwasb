@@ -1,4 +1,5 @@
 <template>
+    <surveyHeader @saveform2="Setform" ></surveyHeader>
   <Carddetails/>
   <form @submit.prevent="NextstepHandel()">
     <section v-if="loanSurvey == 1"
@@ -378,6 +379,7 @@ import {useVuelidate} from "@vuelidate/core";
 import {ToastNotificationService} from "~/core/toast-notification-service";
 import Titel from "~/components/Titel.vue";
 import { Useform } from "~/store/Form";
+import surveyHeader from "~/components/Layouts/surveyHeader.vue";
 
 
 definePageMeta({
@@ -404,6 +406,12 @@ const optionsLivestockBooklet = ref([
   {name: 'دارد', value: 1},
 ]);
 
+const Setform=()=>{
+  localStorage.setItem("SecPreForm", JSON.stringify(form));
+}
+
+
+  
 const router = useRouter();
 const route = useRoute();
 const submitted = ref(false);
