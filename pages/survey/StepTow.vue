@@ -1,5 +1,5 @@
 <template>
-  <surveyHeader @saveform2="Setform" ></surveyHeader>
+    <surveyHeader @saveform2="Setform" ></surveyHeader>
   <Carddetails/>
   <form @submit.prevent="NextstepHandel()">
     <section v-if="loanSurvey == 1"
@@ -115,12 +115,13 @@
           <div class="px-2 col-9">
               <input-text
                   @input="form.workShopCode=ConvertNUM(form.workShopCode)"
-
+              type="text"
               class="form-group input-group border-1 border-black rounded-3"
               v-model="form.workShopCode"
                :class="{'p-invalid': v$.workShopCode.$invalid && submitted}"
               style="height: 45px"
-               inputmode="numeric"
+
+              :useGrouping="false"
               maxlength="10"
               placeholder="مانند 123456"
             />
@@ -482,8 +483,7 @@ const rules = computed(() => {
       LivestockBooklet: {required},
       NumberOfMaleLivestock: '',
       Isinsurance:{required},
-      NumberOfFemaleLivestock: '',
-      planActivationTypeId:{required},
+      NumberOfFemaleLivestock: ''
 
     };
   } else if (loanSurvey == 2) {
@@ -491,7 +491,6 @@ const rules = computed(() => {
       HasAgriculturalInsurance: {required},
       planActivationTypeId: {required},
       numberOfJobsCreated: {required},
-      planActivationTypeId:{required},
       OwnerTypeId: {required},
       ProductTypeId: {required},
       LandArea: {required},
@@ -603,7 +602,6 @@ const InsuranceTabHadel = (tabNumber:any) => {
         insuranceTypeId: {required},
         workShopCode: {required},
         numberOfInsurdPerson: {required},
-        planActivationTypeId:{required},
       };
     });
     v$ = useVuelidate(rules1, form);
@@ -622,7 +620,6 @@ const InsuranceTabHadel = (tabNumber:any) => {
         insuranceTypeId: '',
         workShopCode: '',
         numberOfInsurdPerson: '',
-        planActivationTypeId:{required},
       };
     });
     form.insuranceTypeId = null
@@ -723,8 +720,7 @@ const InsuranceTabHadel = (tabNumber:any) => {
         workShopCode: {required},
         numberOfInsurdPerson: {required},
         NumberOfMaleLivestock: '',
-        NumberOfFemaleLivestock: '',
-        planActivationTypeId:{required},
+        NumberOfFemaleLivestock: ''
       };
     });
     v$ = useVuelidate(rules1, form);
@@ -744,12 +740,7 @@ const InsuranceTabHadel = (tabNumber:any) => {
         workShopCode: '',
         numberOfInsurdPerson: '',
         NumberOfMaleLivestock: '',
-<<<<<<< HEAD
-        NumberOfFemaleLivestock: '',
-        planActivationTypeId:{required},
-=======
         NumberOfFemaleLivestock: {required}
->>>>>>> e152c0ad2a0313f4f0f47bc1b7438cce40faa836
       };
     });
     form.insuranceTypeId = null
@@ -766,11 +757,7 @@ const LivestockTab = (tabNumber:number) => {
     const rules1 = computed(() => {
       return {
         NumberOfMaleLivestock: {required},
-<<<<<<< HEAD
-        planActivationTypeId:{required},
-=======
         planActivationTypeId: {required},
->>>>>>> e152c0ad2a0313f4f0f47bc1b7438cce40faa836
         LivestockTypeId: {required},
         numberOfJobsCreated: {required},
         LivestockInsurance: {required},
@@ -789,10 +776,7 @@ const LivestockTab = (tabNumber:number) => {
     const rules1 = computed(() => {
       return {
         NumberOfFemaleLivestock: {required},
-        planActivationTypeId:{required},
-ASF=======
         planActivationTypeId: {required},
->>>>>>> e152c0ad2a0313f4f0f47bc1b7438cce40faa836
         NumberOfMaleLivestock: {required},
         LivestockTypeId: {required},
         numberOfJobsCreated: {required},

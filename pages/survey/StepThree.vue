@@ -197,11 +197,18 @@ import {required} from '@vuelidate/validators';
 import {useVuelidate} from "@vuelidate/core";
 import {ToastNotificationService} from "~/core/toast-notification-service";
 import {UseLoading} from "@/store/loading-store";
+import surveyHeader from "~/components/Layouts/surveyHeader.vue";
 
 
 definePageMeta({
   layout: "survey",
 });
+
+
+
+const Setform=()=>{
+  localStorage.setItem("FinalRegistrationform", JSON.stringify(form.value));
+}
 
 const optionsApproval = ref([
   {name: 'ندارد ', value: 0},
