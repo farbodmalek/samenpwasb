@@ -45,15 +45,19 @@ const LounId = router.currentRoute._value.query.id;
 const loanSurveyEconomidTypeId = parseInt(router.currentRoute._value.query.loanType)
 const InfoMonitored = GetCartable.find((item: any) => item.id === Number(LounId));
 const store = Useform()
+const emit = defineEmits(['saveform2','saveform3',])
 
 const goBack = () => {
   if (route.path === "/survey/Stepone") {
     visible.value = true
-  } else if (route.path === "/survey/StepTow") {
+  }
+  else if (route.path === "/survey/StepTow") {
+    emit('saveform2',true);
     router.push({ path: "/survey/Stepone", query: {id:InfoMonitored.id ,loanType:loanSurveyEconomidTypeId }});
 
-  } else if (route.path === "/survey/StepThree") {
-
+  }
+  else if (route.path === "/survey/StepThree") {
+    emit('saveform3',true);
     router.push({ path: "/survey/StepTow", query: {id:InfoMonitored.id ,loanType:loanSurveyEconomidTypeId }});
   }
   else if(route.path === "/navigtion/EditAddress"){
