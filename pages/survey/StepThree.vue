@@ -453,7 +453,6 @@ const SendForm = async (data: any) => {
               store.form.survey.planGardenSurvey=null
               store.form.survey.planLivestockSurvey=null
               store.form.survey.planServiceSurvey=null
-              console.log( store.form)
               localStorage.removeItem("firPreForm");
               localStorage.removeItem("SecPreForm");
               localStorage.removeItem("FinalRegistrationform");
