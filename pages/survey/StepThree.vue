@@ -440,15 +440,24 @@ const SendForm = async (data: any) => {
         .then((response:any) => {
           loadingMethod.getLoadingHide()
           if (response.status === 200 && response.data.result == null) {
+
+            console.log( store.form)
             ToastNotificationService.warn(response.data.serverErrors[0].hint);
           }
           else if(response.status === 200 && response.data.serverErrors.length==0) {
             ToastNotificationService.success("نظارت با موفقیت ثبت شد");
             setTimeout(() => {
               router.push("/");
+              console.log( store.form)
+              store.form.survey.planIndustrialSurvey=null
+              store.form.survey.planGardenSurvey=null
+              store.form.survey.planLivestockSurvey=null
+              store.form.survey.planServiceSurvey=null
+              console.log( store.form)
               localStorage.removeItem("firPreForm");
               localStorage.removeItem("SecPreForm");
               localStorage.removeItem("FinalRegistrationform");
+
             }, 8000);
           }
         });
