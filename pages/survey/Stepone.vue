@@ -311,7 +311,8 @@ const sumbitForm = () => {
     } else if (!form.Phone.startsWith(0)) {
       ToastNotificationService.warn("تلفن ثابت باید با صفر شروع شود");
     } else if (form.address === "") {
-      error.value = true
+      ToastNotificationService.error("لطفا ادرس را انتخاب کنید");
+
     } else {
       store.getFormStepOne(form)
       router.push({ path: "/survey/StepTow", query: {id:InfoMonitored.id ,loanType:loanSurveyEconomidTypeId }});

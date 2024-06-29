@@ -468,6 +468,7 @@ const rules = computed(() => {
   if (loanSurvey == 1) {
     return {
       LivestockTypeId: {required},
+      planActivationTypeId: {required},
       numberOfJobsCreated: {required},
       LivestockInsurance: {required},
       LivestockLicense: {required},
@@ -480,6 +481,7 @@ const rules = computed(() => {
   } else if (loanSurvey == 2) {
     return {
       HasAgriculturalInsurance: {required},
+      planActivationTypeId: {required},
       numberOfJobsCreated: {required},
       OwnerTypeId: {required},
       ProductTypeId: {required},
@@ -582,6 +584,7 @@ const InsuranceTabHadel = (tabNumber:any) => {
     const rules1 = computed(() => {
       return {
         HasAgriculturalInsurance: {required},
+        planActivationTypeId: {required},
         Isinsurance:{required},
         numberOfJobsCreated: {required},
         OwnerTypeId: {required},
@@ -599,6 +602,7 @@ const InsuranceTabHadel = (tabNumber:any) => {
     const rules1 = computed(() => {
       return {
         HasAgriculturalInsurance: {required},
+        planActivationTypeId: {required},
         Isinsurance:{required},
         numberOfJobsCreated: {required},
         OwnerTypeId: {required},
@@ -619,6 +623,7 @@ const InsuranceTabHadel = (tabNumber:any) => {
     const rules1 = computed(() => {
       return {
         LivestockTypeId: {required},
+        planActivationTypeId: {required},
         Isinsurance:{required},
         LivestockInsurance: {required},
         LivestockLicense: {required},
@@ -636,6 +641,7 @@ const InsuranceTabHadel = (tabNumber:any) => {
   else if (!tabNumber && loanSurvey == 1) {
     const rules1 = computed(() => {
       return {
+        planActivationTypeId: {required},
         LivestockTypeId: {required},
         Isinsurance:{required},
         numberOfJobsCreated: {required},
@@ -663,6 +669,7 @@ const LivestockTab = (tabNumber:number) => {
     const rules1 = computed(() => {
       return {
         NumberOfMaleLivestock: {required},
+        planActivationTypeId: {required},
         LivestockTypeId: {required},
         numberOfJobsCreated: {required},
         LivestockInsurance: {required},
@@ -681,6 +688,7 @@ const LivestockTab = (tabNumber:number) => {
     const rules1 = computed(() => {
       return {
         NumberOfFemaleLivestock: {required},
+        planActivationTypeId: {required},
         NumberOfMaleLivestock: {required},
         LivestockTypeId: {required},
         numberOfJobsCreated: {required},
