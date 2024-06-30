@@ -32,7 +32,7 @@
     <div v-if="closeExitemodale" class="modal-backdrop">
       <div class="modal-home col-10">
         <p class="text-center"> کاربر گرامی شما دارای نظارت افلاین هستید.نظارت های افلاین شما تا ساعت 12شب ذخیره میماند.
-          در صورت دسترسی به اینترنت در اثر وقت به سمت سرور ارسال کنید </p>
+          در صورت دسترسی به اینترنت در در اسرع وقت  به سمت سرور ارسال کنید </p>
         <div class="col-12 d-flex justify-content-center">
           <div class="col-12 d-flex justify-content-center gap-2">
 

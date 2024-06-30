@@ -443,8 +443,8 @@ const form = reactive({
   workShopCode:  LasteSurvey ? LasteSurvey.workShopCode : "",
   numberOfInsurdPerson:  LasteSurvey ? LasteSurvey.numberOfInsurdPerson : null,
   numberOfJobsCreated:  LasteSurvey ? LasteSurvey.numberOfJobsCreated : "",
-  OwnerTypeId:  LasteSurvey ? LasteSurvey.ownerTypeId : null,
-  planActivationTypeId:  LasteSurvey ? LasteSurvey.planActivationTypeId : null,
+  OwnerTypeId:  null,
+  planActivationTypeId:  null,
   endOfActivationDate : LasteSurvey ?LasteSurvey.endOfActivationDate:null,
   Isinsurance:  LasteSurvey ? LasteSurvey.workShopCode == 0 ? 0 : 1 : null,
   Id:  LasteSurvey ? LasteSurvey.Id : 0,
@@ -455,9 +455,9 @@ const form = reactive({
   HasAgriculturalInsurance:  LasteSurvey ? LasteSurvey.hasAgriculturalInsurance : null,
   EndOfAgriculturalInsurance:  LasteSurvey ? LasteSurvey.EndOfAgriculturalInsurance : null,
   insuranceTabAgricultural:  LasteSurvey ? LasteSurvey.numberOfJobsCreated == 0 ? 0 : 1 : null,
-  NumberOfMaleLivestock:  LasteSurvey ? LasteSurvey.numberOfMaleLivestock : "",
-  NumberOfFemaleLivestock:  LasteSurvey ? LasteSurvey.numberOfFemaleLivestock : "",
-  LivestockTypeId:  LasteSurvey ? LasteSurvey.livestockTypeId : "",
+  NumberOfMaleLivestock:  null,
+  NumberOfFemaleLivestock: null,
+  LivestockTypeId: null,
   ID:  LasteSurvey ? LasteSurvey.ID : 0,
   LivestockLicense:  LasteSurvey ? LasteSurvey.livestockLicense : null,
   LivestockInsurance:  LasteSurvey ? LasteSurvey.livestockInsurance : null,
@@ -646,8 +646,8 @@ const InsuranceTabHadel = (tabNumber:any) => {
     });
     v$ = useVuelidate(rules1, form);
   }else if (!tabNumber && loanSurvey == 1 && [3, 4, 5, 7, 8, 9, 6].includes(form.LivestockTypeId)) {
-    console.log(form.LivestockTypeId)
     const rules1 = computed(() => {
+      console.log(19)
       return {
         LivestockTypeId: {required},
         planActivationTypeId: {required},
@@ -666,6 +666,7 @@ const InsuranceTabHadel = (tabNumber:any) => {
     v$ = useVuelidate(rules1, form);
   }else if (tabNumber && loanSurvey == 1 && [1, 2].includes(form.LivestockTypeId)) {
     const rules1 = computed(() => {
+      console.log(15)
       return {
         NumberOfFemaleLivestock: {required},
         planActivationTypeId: {required},
@@ -686,6 +687,7 @@ const InsuranceTabHadel = (tabNumber:any) => {
     v$ = useVuelidate(rules1, form);
   }else if (!tabNumber && loanSurvey == 1 &&[1, 2].includes(form.LivestockTypeId)) {
     const rules1 = computed(() => {
+      console.log(23)
       return {
         NumberOfFemaleLivestock: {required},
         planActivationTypeId: {required},
@@ -706,7 +708,7 @@ const InsuranceTabHadel = (tabNumber:any) => {
     v$ = useVuelidate(rules1, form);
   }
   else if (tabNumber && loanSurvey == 1) {
-    console.log(1)
+    console.log(18)
     const rules1 = computed(() => {
       return {
         LivestockTypeId: {required},
@@ -726,7 +728,7 @@ const InsuranceTabHadel = (tabNumber:any) => {
     v$ = useVuelidate(rules1, form);
   }
   else if (!tabNumber && loanSurvey == 1) {
-    console.log(2)
+    console.log(199)
     const rules1 = computed(() => {
       return {
         planActivationTypeId: {required},
@@ -739,8 +741,8 @@ const InsuranceTabHadel = (tabNumber:any) => {
         insuranceTypeId: '',
         workShopCode: '',
         numberOfInsurdPerson: '',
-        NumberOfMaleLivestock: '',
-        NumberOfFemaleLivestock: {required}
+        NumberOfMaleLivestock: {required},
+        NumberOfFemaleLivestock: ''
       };
     });
     form.insuranceTypeId = null
