@@ -656,9 +656,9 @@ const InsuranceTabHadel = (tabNumber:any) => {
         LivestockLicense: {required},
         LivestockBooklet: {required},
         numberOfJobsCreated: {required},
-        insuranceTypeId: {required},
-        workShopCode: {required},
-        numberOfInsurdPerson: {required},
+        insuranceTypeId: '',
+        workShopCode: '',
+        numberOfInsurdPerson: '',
         NumberOfMaleLivestock: {required},
         NumberOfFemaleLivestock: ''
       };
@@ -677,9 +677,9 @@ const InsuranceTabHadel = (tabNumber:any) => {
         LivestockLicense: {required},
         LivestockBooklet: {required},
         Isinsurance:{required},
-        insuranceTypeId: '',
-        workShopCode: '',
-        numberOfInsurdPerson: '',
+        insuranceTypeId: {required},
+        workShopCode: {required},
+        numberOfInsurdPerson: {required},
       };
     });
     form.NumberOfFemaleLivestock = null
