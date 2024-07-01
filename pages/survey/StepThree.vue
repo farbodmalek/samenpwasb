@@ -19,14 +19,15 @@
 
       <div v-if="ConstructionTab === 1">
         <Titel :title="'شرح عملیات'"/>
-        <input-number
+        <input-text
             inputmode="numeric"
             class=" text-end col-12 mb-2 text-end mt-3"
             id="formGroupExampleInput"
             style="height: 75px"
-            :min="0" :max="100"
+            maxlength="3"
             :class="{'p-invalid': v$.constructionPercentageProgress.$invalid && submitted}"
             v-model="form.constructionPercentageProgress"
+            @input="form.constructionPercentageProgress=ConvertNUM(form.constructionPercentageProgress)"
             placeholder="درصد پیشرفت"
         />
         <textarea
@@ -706,6 +707,37 @@ const removeImageFromDB = (file:any) => {
     ToastNotificationService.error("خطا در حذف عکس از حافظه", event)
   };
 };
+
+const ConvertNUM = (input) => {
+  console.log(input)
+  if (input>100){
+    ToastNotificationService.warn("اعداد بیشتر از  100نمیتوان  وارد کرد  ");
+    return "";
+  }
+
+  if (!input) {
+    return "";
+  }
+  if (!/^[۰-۹0-9]+$/.test(input)) {
+    ToastNotificationService.warn("از اعداد فارسی یا انگلیسی استفاده کنید ");;
+    return ''
+  }
+  const persianToEnglishMap = {
+    '۰': '0',
+    '۱': '1',
+    '۲': '2',
+    '۳': '3',
+    '۴': '4',
+    '۵': '5',
+    '۶': '6',
+    '۷': '7',
+    '۸': '8',
+    '۹': '9'
+  };
+  const convertedString = input.replace(/[۰-۹]/g, (match) => persianToEnglishMap[match]);
+  return parseInt(convertedString, 10);
+};
+
 
 onMounted(() => {
   store.loadFormData()
