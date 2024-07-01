@@ -709,7 +709,6 @@ const removeImageFromDB = (file:any) => {
 };
 
 const ConvertNUM = (input) => {
-  console.log(input)
   if (input>100){
     ToastNotificationService.warn("اعداد بیشتر از  100نمیتوان  وارد کرد  ");
     return "";
@@ -719,8 +718,8 @@ const ConvertNUM = (input) => {
     return "";
   }
   if (!/^[۰-۹0-9]+$/.test(input)) {
-    ToastNotificationService.warn("از اعداد فارسی یا انگلیسی استفاده کنید ");;
-    return ''
+    ToastNotificationService.warn("از اعداد فارسی یا انگلیسی استفاده کنید ");
+    return ""
   }
   const persianToEnglishMap = {
     '۰': '0',
