@@ -209,7 +209,6 @@ const navigateToCardDetail = (id: number, loanPlanId: number, loanType: number) 
   } else if (loanPlanId == 0) {
     const updatedLoanEconomicTypeId = loanType === 4 ? 3 : loanType === 3 ? 4 : loanType;
     router.push({path: "/survey/Stepone", query: {id, loanType: updatedLoanEconomicTypeId}});
-    // router.push({path: "MonitoringRegistrationPage", query: {id, loanType: updatedLoanEconomicTypeId}});
   } else {
     router.push({path: "/navigtion/MapPage", query: {id, loanType}});
   }
@@ -244,6 +243,10 @@ const convert = (number: any) => {
 
 const GetSurveysList = () => {
   MakeResponse.GetSurveysList()
+};
+
+const ClearStorge = () => {
+  MakeResponse.Clearlocalform()
 };
 
 const FindOfflineForm = () => {
@@ -286,6 +289,7 @@ onMounted(() => {
   FindOfflineForm()
   GetSurveysList()
   openDataDB()
+  ClearStorge()
 });
 
 </script>
@@ -315,7 +319,7 @@ onMounted(() => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* پس زمینه تاریک پشت مدال */
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -328,205 +332,5 @@ onMounted(() => {
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-}
-
-
-$font: "Inter", sans-serif;
-$white: #fff;
-$green: #fca40f;
-
-
-.middle {
-  text-align: center;
-  flex-wrap: wrap;
-  justify-content: center;
-
-  h1 {
-    font-family: $font;
-    color: $white;
-  }
-
-  input[type="radio"] {
-    display: none;
-
-    &:checked {
-      + .box {
-        background-color: $green;
-        color: white;
-        //span {
-        //  color: white;
-        //  transform: translateY(70px);
-        //  &:before {
-        //    transform: translateY(0px);
-        //    opacity: 1;
-        //  }
-        //}
-      }
-
-      + .boxeducation {
-        background-color: $green;
-        color: white;
-        //span {
-        //  color: white;
-        //  transform: translateY(70px);
-        //  &:before {
-        //    transform: translateY(0px);
-        //    opacity: 1;
-        //  }
-        //}
-      }
-
-      + .boxLoan {
-        background-color: $green;
-        color: white;
-        //span {
-        //  color: white;
-        //  transform: translateY(70px);
-        //  &:before {
-        //    transform: translateY(0px);
-        //    opacity: 1;
-        //  }
-        //}
-      }
-    }
-  }
-
-  .box {
-    height: 38px;
-    transition: all 250ms ease;
-    will-change: transition;
-    display: inline-block;
-    text-align: center;
-    cursor: pointer;
-    position: relative;
-
-    &:active {
-      transform: translateY(10px);
-    }
-
-    span {
-      transform: translate(0, 60px);
-      left: 0;
-      right: 0;
-      transition: all 300ms ease;
-      font-size: 1em;
-      user-select: none;
-
-      &:before {
-        font-size: 1.2em;
-        font-family: FontAwesome;
-        display: block;
-        transform: translateY(-80px);
-        opacity: 0;
-        transition: all 300ms ease-in-out;
-        font-weight: normal;
-        color: white;
-      }
-    }
-  }
-
-  .boxeducation {
-    transition: all 250ms ease;
-    will-change: transition;
-    display: inline-block;
-    text-align: center;
-    cursor: pointer;
-    position: relative;
-
-    &:active {
-      transform: translateY(10px);
-    }
-
-    span {
-      transform: translate(0, 60px);
-      left: 0;
-      right: 0;
-      transition: all 300ms ease;
-      font-size: 1em;
-      user-select: none;
-
-      &:before {
-        font-size: 1.2em;
-        font-family: FontAwesome;
-        display: block;
-        transform: translateY(-80px);
-        opacity: 0;
-        transition: all 300ms ease-in-out;
-        font-weight: normal;
-        color: white;
-      }
-    }
-  }
-
-  .boxLoan {
-    transition: all 250ms ease;
-    will-change: transition;
-    display: inline-block;
-    text-align: center;
-    cursor: pointer;
-    position: relative;
-
-    &:active {
-      transform: translateY(10px);
-    }
-
-    span {
-      transform: translate(0, 60px);
-      left: 0;
-      right: 0;
-      transition: all 300ms ease;
-      font-size: 1em;
-      user-select: none;
-
-      &:before {
-        font-size: 1.2em;
-        font-family: FontAwesome;
-        display: block;
-        transform: translateY(-80px);
-        opacity: 0;
-        transition: all 300ms ease-in-out;
-        font-weight: normal;
-        color: white;
-      }
-    }
-  }
-}
-
-.errorserver {
-
-  bottom: 0;
-  padding: 13px;
-  width: 100%;
-  margin-bottom: 0; /* این خط اضافه شده */
-  z-index: 999;
-
-  background-color: #fca40f;
-  color: white;
-}
-
-
-.errorsucssec {
-  position: fixed;
-  bottom: 0;
-  padding: 13px;
-  width: 100%;
-  margin-bottom: 0; /* این خط اضافه شده */
-  z-index: 999;
-  animation: moveUp 0.5s forwards;
-  background-color: #00b515;
-  color: white;
-}
-
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 </style>

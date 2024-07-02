@@ -460,13 +460,11 @@ const SendForm = async (data: any) => {
             else if(response.status === 200 && response.data.serverErrors.length==0) {
               ToastNotificationService.success("نظارت با موفقیت ثبت شد");
               setTimeout(() => {
-                // router.push("/");
-                console.log( store.form)
-                // store.form.survey.planIndustrialSurvey=null
-                // store.form.survey.planGardenSurvey=null
-                // store.form.survey.planLivestockSurvey=null
-                // store.form.survey.planServiceSurvey=null
-                console.log( store.form)
+                router.push("/");
+                store.form.survey.planIndustrialSurvey=null
+                store.form.survey.planGardenSurvey=null
+                store.form.survey.planLivestockSurvey=null
+                store.form.survey.planServiceSurvey=null
                 localStorage.removeItem("firPreForm");
                 localStorage.removeItem("SecPreForm");
                 localStorage.removeItem("FinalRegistrationform");

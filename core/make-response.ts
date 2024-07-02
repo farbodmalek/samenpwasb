@@ -8,6 +8,8 @@ const Url = useRuntimeConfig().public.base_API;
 const config = {headers: {Authorization: "Bearer " + supervisoryInfo.token}};
 const currentDate = new Date();
 const todayDateString = currentDate.toISOString().split('T')[0]
+const opt ={pageNumber: 1, take: 1000, cartableStatusTypeId:2}
+const optsupervisory = {"pageNumber": 1, "take": 1000, "userId": supervisoryInfo.id}
 
 export class MakeResponse {
   static Login(store: any, form: any, onComplete: (result: any) => void) {
@@ -25,12 +27,8 @@ export class MakeResponse {
     })
 }
   static GetCartables(store: any, onComplete: (result: any) => void) {
-    const SupervisoryInfo = localStorage.getItem("SupervisoryInfo");
-    const supervisoryInfo = SupervisoryInfo ? JSON.parse(SupervisoryInfo) : {}
-    const config = {headers: {Authorization: "Bearer " + supervisoryInfo.token}};
     store.getLoadingShow()
-    axios.post(`${Url + "api/survey/GetCartables"}`,
-      {pageNumber: 1, take: 1000, cartableStatusTypeId:1}, config)
+    axios.post(`${Url + "api/survey/GetCartables"}`, opt, config)
       .then((res: any) => {
         if (res.data.results) {
           const Cartables = res.data.results.filter((item: any) => item.expireDate.substring(0, 10) >= todayDateString);
@@ -50,8 +48,7 @@ export class MakeResponse {
     const supervisoryInfo = SupervisoryInfo ? JSON.parse(SupervisoryInfo) : {}
     const config = {headers: {Authorization: "Bearer " + supervisoryInfo.token}};
     axios.post(
-      `${Url + "api/survey/GetSurveysListForPWA"}`,
-      {"pageNumber": 1, "take": 1000, "userId": supervisoryInfo.id},
+      `${Url + "api/survey/GetSurveysListForPWA"}`, optsupervisory,
       config)
       .then((res: any) => {
         localStorage.setItem("GetSurveysList", JSON.stringify(res.data.results));
@@ -90,7 +87,8 @@ export class MakeResponse {
       const firstMessage = firstErrorMessages[0];
       ToastNotificationService.error(`${firstMessage}ارور 400 خطای داخلی سیستم لطفا با پشتیبانی تماس بگیرید`, 10000);
     } else if (err.response && err.response.status === 401) {
-      this.ClearOfflineForm()
+      this.logout()
+      ToastNotificationService.error("عدم احراز هویت");
     } else if (err.code === "ERR_NETWORK") {
       ToastNotificationService.error("خطا در برقراری ارتباط به اینترنت متصل شوید");
     } else {
@@ -99,7 +97,7 @@ export class MakeResponse {
   }
 
 
-  static ClearOfflineForm() {
+  static logout() {
     localStorage.removeItem("SurveyBaseInfo");
     localStorage.removeItem("SupervisoryInfo");
     localStorage.removeItem("GetSurveysList")
@@ -114,5 +112,13 @@ export class MakeResponse {
     const router = useRouter();
     router.push("/login");
   }
+
+  static Clearlocalform (){
+    localStorage.removeItem("firPreForm");
+    localStorage.removeItem("SecPreForm");
+    localStorage.removeItem("FinalRegistrationform");
+}
+
+
 
 }
