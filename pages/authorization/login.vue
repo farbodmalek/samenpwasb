@@ -1,12 +1,20 @@
 <template>
-<!--  <download/>-->
+  <!--  <download/>-->
+
+  <div  class="p-2 text-center bg-green-6 col-12 d-flex justify-content-between align-items-center">
+    <span class=" rounded-5 font1 col-1 text-black" type="button" @click="$pwa.cancelInstall()">&#9932;</span>
+    <p class="text-black cursor-pointer " @click="$pwa.install">
+      <img src="public/img/download.png" width="40">برای نصب
+      برنامه کلیک کنید</p>
+  </div>
+
   <div class=" justify-content-center container ">
     <form @submit.prevent="login">
       <div ref="pageContainer" class="mt-5">
         <div v-if="isMobile"
-          style="position: absolute; bottom: 0"
-          @focusin="onFocusIn"
-          @focusout="onFocusOut"></div>
+             style="position: absolute; bottom: 0"
+             @focusin="onFocusIn"
+             @focusout="onFocusOut"></div>
 
         <div class="card-body pt-5 text-center mb-5">
           <div class="text-primary pb-3">
@@ -49,9 +57,8 @@ import {required} from '@vuelidate/validators';
 import {useVuelidate} from "@vuelidate/core";
 import {UseLoading} from "~/store/loading-store";
 import {MakeResponse} from "~/core/make-response"
-import download from "@/components/download.vue"
 
-
+const {$pwa} = useNuxtApp()
 
 
 
@@ -63,7 +70,8 @@ const submitted = ref(false);
 const router = useRouter();
 const isMobile = ref(false);
 const pageContainer = ref(null);
-const store =  UseLoading();
+const store = UseLoading();
+const UpdateModal = ref(localStorage.getItem('updatemodal') ? localStorage.getItem('updatemodal') : true)
 const form = ref({
   password: null,
   username: null,
@@ -104,6 +112,10 @@ const login = async () => {
   }
 };
 
+const UpdateModalHandle = () => {
+  localStorage.setItem('updatemodal', false)
+  UpdateModal.value = false
+}
 
 onMounted(() => {
   MakeResponse.GetSurveyBaseInfo()

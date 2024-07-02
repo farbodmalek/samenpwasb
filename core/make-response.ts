@@ -8,7 +8,7 @@ const Url = useRuntimeConfig().public.base_API;
 const config = {headers: {Authorization: "Bearer " + supervisoryInfo.token}};
 const currentDate = new Date();
 const todayDateString = currentDate.toISOString().split('T')[0]
-const opt ={pageNumber: 1, take: 1000, cartableStatusTypeId:2}
+const opt ={pageNumber: 1, take: 1000, cartableStatusTypeId:1}
 const optsupervisory = {"pageNumber": 1, "take": 1000, "userId": supervisoryInfo.id}
 
 export class MakeResponse {

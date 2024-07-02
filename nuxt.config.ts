@@ -16,6 +16,7 @@ export default defineNuxtConfig({
         },
         css: ['primevue/resources/themes/aura-light-green/theme.css']
     },
+
     pwa: {
         workbox: {globPatterns: ['**/*.{js,css,html,png,svg,ico}']},
         injectManifest: {globPatterns: ['**/*.{js,css,html,png,svg,ico}']},
@@ -175,26 +176,35 @@ export default defineNuxtConfig({
                 }
             ]
         },
-        head: {
-            meta: [
-                {
-                    name: 'viewport',
-                    content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
-                },],
-            title: "اپلیکیشن نظارت کارافرینی  ",
-            link: [
-                {rel: "icon", type: "image/x-icon", href: "/icons/android-chrome-16x16.png"},
-            ],
-        },
+
         devOptions: {
             enabled: true,
             type: "module",
         },
+    }, client: {
+        installPrompt: true,
+        // you don't need to include this: only for testing purposes
+        // if enabling periodic sync for update use 1 hour or so (periodicSyncForUpdates: 3600)
+        periodicSyncForUpdates: 20,
     }
     ,
     runtimeConfig: {
         public: {
             base_API: process.env.base_API,
+        },
+    },
+    app: {
+        head: {
+            title: "اپلیکیشن نظارت کارافرینی  ",
+            meta: [
+                {charset: "utf-8"},
+                {name: "viewport", content: "width=device-width, initial-scale=1"},
+                {hid: "description", name: "description", content: "Nuxt Argon Dashboard 2 PRO by Creative Tim"},
+            ],
+            link: [
+                {rel: "icon", type: "image/x-icon", href: "/icons/android-chrome-16x16.png"},
+            ],
+            script: [],
         },
     },
 });
