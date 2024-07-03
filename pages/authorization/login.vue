@@ -1,12 +1,12 @@
 <template>
   <!--  <download/>-->
 
-  <div  class="p-2 text-center bg-green-6 col-12 d-flex justify-content-between align-items-center">
-    <span class=" rounded-5 font1 col-1 text-black" type="button" @click="$pwa.cancelInstall()">&#9932;</span>
-    <p class="text-black cursor-pointer " @click="$pwa.install()">
-      <img src="public/img/download.png" width="40">برای نصب
-      برنامه کلیک کنید</p>
-  </div>
+<!--  <div  class="p-2 text-center bg-green-6 col-12 d-flex justify-content-between align-items-center">-->
+<!--    <span class=" rounded-5 font1 col-1 text-black" type="button" @click="$pwa.cancelInstall()">&#9932;</span>-->
+<!--    <p class="text-black cursor-pointer " @click="$pwa.install()">-->
+<!--      <img src="public/img/download.png" width="40">برای نصب-->
+<!--      برنامه کلیک کنید</p>-->
+<!--  </div>-->
 
   <div class=" justify-content-center container ">
     <form @submit.prevent="login">
@@ -83,7 +83,6 @@ const onFocusIn = () => {
 const onFocusOut = () => {
   window.scroll(0, 0);
 };
-
 
 const rules = computed(() => {
   return {
