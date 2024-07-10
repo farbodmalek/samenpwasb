@@ -432,7 +432,6 @@ if (userdata) {
 }
 const SurveysList = JSON.parse(<any>localStorage.getItem("GetSurveysList"));
 const filteredSurveys = SurveysList.filter((item:any) => item.id === Number(InfoMonitored.loanId))
-console.log(filteredSurveys.sort((a:any, b:any) => a.SurveyId - b.SurveyId))
 const LasteSurvey =  filteredSurveys[0];
 // const LasteSurvey =  null;
 let previousValues = <any>{};

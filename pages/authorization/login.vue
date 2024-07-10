@@ -1,14 +1,7 @@
 <template>
-  <!--  <download/>-->
-
-<!--  <div  class="p-2 text-center bg-green-6 col-12 d-flex justify-content-between align-items-center">-->
-<!--    <span class=" rounded-5 font1 col-1 text-black" type="button" @click="$pwa.cancelInstall()">&#9932;</span>-->
-<!--    <p class="text-black cursor-pointer " @click="$pwa.install()">-->
-<!--      <img src="public/img/download.png" width="40">برای نصب-->
-<!--      برنامه کلیک کنید</p>-->
-<!--  </div>-->
 
   <div class=" justify-content-center container ">
+    <Download/>
     <form @submit.prevent="login">
       <div ref="pageContainer" class="mt-5">
         <div v-if="isMobile"
@@ -57,6 +50,7 @@ import {required} from '@vuelidate/validators';
 import {useVuelidate} from "@vuelidate/core";
 import {UseLoading} from "~/store/loading-store";
 import {MakeResponse} from "~/core/make-response"
+import Download from "~/components/Download.vue"
 
 const {$pwa} = useNuxtApp()
 

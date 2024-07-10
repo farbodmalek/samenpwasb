@@ -5,7 +5,6 @@ const router = useRouter();
 const SupervisoryInfo = localStorage.getItem("SupervisoryInfo");
 const supervisoryInfo = SupervisoryInfo ? JSON.parse(SupervisoryInfo) : {}
 const Url = useRuntimeConfig().public.base_API;
-const config = {headers: {Authorization: "Bearer " + supervisoryInfo.token}};
 const currentDate = new Date();
 const todayDateString = currentDate.toISOString().split('T')[0]
 
@@ -27,6 +26,9 @@ export class MakeResponse {
     })
 }
   static GetCartables(store: any, onComplete: (result: any) => void) {
+    const SupervisoryInfo = localStorage.getItem("SupervisoryInfo");
+    const supervisoryInfo = SupervisoryInfo ? JSON.parse(SupervisoryInfo) : {}
+    const config = {headers: {Authorization: "Bearer " + supervisoryInfo.token}};
     store.getLoadingShow()
     axios.post(`${Url + "api/survey/GetCartables"}`, {pageNumber: 1, take: 1000, cartableStatusTypeId:1}, config)
       .then((res: any) => {
@@ -48,8 +50,7 @@ export class MakeResponse {
     const supervisoryInfo = SupervisoryInfo ? JSON.parse(SupervisoryInfo) : {}
     const config = {headers: {Authorization: "Bearer " + supervisoryInfo.token}};
     axios.post(
-      `${Url + "api/survey/GetSurveysListForPWA"}`, {"pageNumber": 1, "take": 1000, "userId": supervisoryInfo.id},
-      config)
+      `${Url + "api/survey/GetSurveysListForPWA"}`, {"pageNumber": 1, "take": 1000, "userId": supervisoryInfo.id}, config)
       .then((res: any) => {
         localStorage.setItem("GetSurveysList", JSON.stringify(res.data.results));
       }).catch((err: any) => {
