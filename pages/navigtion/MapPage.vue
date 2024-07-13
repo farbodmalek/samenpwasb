@@ -74,7 +74,7 @@
 </template>
 
 <script setup lang="ts">
-
+import { ToastNotificationService } from '~/core/toast-notification-service';
 
 
 const router = useRouter();
@@ -184,12 +184,13 @@ onMounted(() => {
         if (error.code === error.PERMISSION_DENIED) {
           Error.value=true
           modal.value=false
-        } else {
+        }else {
+          ToastNotificationService.error("خطای ناشناخته در درخواست موقعیت جغرافیایی.",500000);
         }
       }
     );
   } else {
-    alert("مرورگر شما از ویژگی موقعیت جغرافیایی پشتیبانی نمی‌کند.");
+    ToastNotificationService.error("مرورگر شما از ویژگی موقعیت جغرافیایی پشتیبانی نمی‌کند.",500000);
   }
 })
 

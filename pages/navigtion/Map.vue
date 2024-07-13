@@ -66,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-
+import { ToastNotificationService } from '~/core/toast-notification-service';
 
 
 
@@ -125,13 +125,14 @@ const showMarkerInfo = (index: number) => {
       },
       (error) => {
         if (error.code === error.PERMISSION_DENIED) {
+          ToastNotificationService.error("برای دسترسی به موقعیت جغرافیایی، لطفاً اجازه دسترسی به مکان را بدهید.",500000);
           modal.value=false
           Error.value=true
           setTimeout(()=>{
             Error.value=false
           },3500)
         } else {
-          alert("خطای ناشناخته در درخواست موقعیت جغرافیایی.");
+          ToastNotificationService.error("خطای ناشناخته در درخواست موقعیت جغرافیایی.",500000);
         }
       }
     );

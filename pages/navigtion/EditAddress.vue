@@ -118,8 +118,12 @@ const MapRouteHandle = () => {
         },
         (error) => {
           if (error.code === error.PERMISSION_DENIED) {
+            ToastNotificationService.error("برای دسترسی به موقعیت جغرافیایی، لطفاً اجازه دسترسی به مکان را بدهید.",500000);
             Error.value = true;
             EditBox.value = false;
+          }
+          else {
+            ToastNotificationService.error("خطای ناشناخته در درخواست موقعیت جغرافیایی.",500000);
           }
         }
     );
