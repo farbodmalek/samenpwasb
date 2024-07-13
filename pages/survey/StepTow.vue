@@ -378,6 +378,7 @@ import {useVuelidate} from "@vuelidate/core";
 import {ToastNotificationService} from "~/core/toast-notification-service";
 import Titel from "~/components/Titel.vue";
 import {Useform} from "~/store/Form";
+import surveyHeader from "~/components/Layouts/surveyHeader.vue";
 
 
 definePageMeta({

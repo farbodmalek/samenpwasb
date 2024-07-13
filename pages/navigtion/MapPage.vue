@@ -37,9 +37,9 @@
           </strong>
           {{ form.address }}
         </div>
-        <div class="d-flex justify-content-between text-black text-end px-2 font-map ">
-          <div class="bg-gray-1 cursor-pointer col-2 text-center py-3 justify-content-center ">
-            <span @click="navigation" >
+        <div class="d-flex justify-content-between text-black text-end px-2 font-map " >
+          <div class="bg-gray-1 cursor-pointer col-2 text-center py-3 justify-content-center " @click="navigation">
+            <span  >
 
                  <img src="../../assets/images/turn-right.png" style="width:30px ; height: 30px;">
 
