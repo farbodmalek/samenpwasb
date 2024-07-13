@@ -182,6 +182,7 @@ onMounted(() => {
       },
       (error) => {
         if (error.code === error.PERMISSION_DENIED) {
+          ToastNotificationService.error("برای دسترسی به موقعیت جغرافیایی، لطفاً اجازه دسترسی به مکان را بدهید.",500000);
           Error.value=true
           modal.value=false
         }else {

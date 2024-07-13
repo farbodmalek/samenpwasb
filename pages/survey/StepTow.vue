@@ -115,16 +115,15 @@
           <div class="px-2 col-9">
               <input-text
                   @input="form.workShopCode=ConvertNUM(form.workShopCode)"
-              type="text"
-              class="form-group input-group border-1 border-black rounded-3"
-              v-model="form.workShopCode"
-               :class="{'p-invalid': v$.workShopCode.$invalid && submitted}"
-              style="height: 45px"
-
-              :useGrouping="false"
-              maxlength="10"
-              placeholder="مانند 123456"
-            />
+                  v-model="form.workShopCode"
+                  :class="{'p-invalid': v$.workShopCode.$invalid && submitted}"
+                  class="form-group input-group border-1 border-black rounded-3"
+                  inputmode="numeric"
+                  maxlength="10"
+                  placeholder="مانند 123456"
+                  style="height: 45px"
+                  type="text"
+              />
           </div>
           <label class="py-2 text-center col-3">کد کارگاه</label>
         </div>
@@ -378,8 +377,7 @@ import {required} from '@vuelidate/validators';
 import {useVuelidate} from "@vuelidate/core";
 import {ToastNotificationService} from "~/core/toast-notification-service";
 import Titel from "~/components/Titel.vue";
-import { Useform } from "~/store/Form";
-import surveyHeader from "~/components/Layouts/surveyHeader.vue";
+import {Useform} from "~/store/Form";
 
 
 definePageMeta({
