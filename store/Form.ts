@@ -1,4 +1,6 @@
+
 import {defineStore} from "pinia";
+
 
 
 export const Useform = defineStore('form', {
@@ -88,8 +90,7 @@ export const Useform = defineStore('form', {
       if (form1 && form2) {
         this.getFormStepOne(form1)
         this.getFormStepTow(form2)
-      }
-      else if(form1){
+      }else if(form1){
         this.getFormStepOne(form1)
       }
     },
