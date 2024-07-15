@@ -148,9 +148,12 @@
 
 <script lang="ts" setup>
 import {UseLoading} from "../store/loading-store";
-import {MakeResponse} from "~/core/make-response"
+import {makeResponse} from "~/core/make-response"
 import {MakeOfflineServiese} from "~/core/Make-offline-serviese"
 import {ToastNotificationService} from "~/core/toast-notification-service";
+import {CommonServices} from "~/core/base/common-services";
+import {MakeResponse} from "~/composables/make-response";
+
 
 const Data = ref();
 const searchUser = ref('');
@@ -242,30 +245,44 @@ const convert = (number: any) => {
 }
 
 const GetSurveysList = () => {
-  MakeResponse.GetSurveysList()
+  MakeResponse.makeServerResponse(CommonServices.GetSurveys(), true, result => {
+    if ( result && result.results) {
+      localStorage.setItem('Surveys', JSON.stringify(result.results));
+    }
+  });
 };
 
 const ClearStorge = () => {
-  MakeResponse.Clearlocalform()
+  makeResponse.Clearlocalform()
 };
 
 const FindOfflineForm = () => {
-  MakeResponse.FindOfflineForm((result: any) => {
+  makeResponse.FindOfflineForm((result: any) => {
     showsend.value.push(result);
   })
 };
 
 const GetCartables = () => {
-  MakeResponse.GetCartables(UseLoading(), (result: string | any[]) => {
-    if (result && result.length === 0) {
-      condition.value = true
-    } else if (result.code === "ERR_NETWORK") {
-      const GetCartable = JSON.parse(<any>localStorage.getItem('GetCartables'));
-      Data.value = GetCartable
-    } else {
-      Data.value = result
+  // MakeResponse.GetCartables(UseLoading(), (result: string | any[]) => {
+  //   if (result && result.length === 0) {
+  //     condition.value = true
+  //   } else if (result.code === "ERR_NETWORK") {
+  //     const GetCartable = JSON.parse(<any>localStorage.getItem('GetCartables'));
+  //     Data.value = GetCartable
+  //   } else {
+  //     Data.value = result
+  //   }
+  // })
+
+  MakeResponse.makeServerResponse(CommonServices.GetCartables(), true, result => {
+    if ( result && result.results) {
+      const currentDate = new Date();
+      const todayDateString = currentDate.toISOString().split('T')[0]
+      const Cartables = result.results.filter((item: any) => item.expireDate.substring(0, 10) >= todayDateString);
+      localStorage.setItem('Cartables', JSON.stringify(result.results));
     }
-  })
+  });
+
 }
 
 const SetSurvey = async (data: any) => {
@@ -286,10 +303,10 @@ const openDataDB = () => {
 
 onMounted(() => {
   GetCartables()
-  FindOfflineForm()
+  // FindOfflineForm()
   GetSurveysList()
-  openDataDB()
-  ClearStorge()
+  // openDataDB()
+  // ClearStorge()
 });
 
 </script>

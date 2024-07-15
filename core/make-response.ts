@@ -10,7 +10,7 @@ const todayDateString = currentDate.toISOString().split('T')[0]
 
 
 
-export class MakeResponse {
+export class makeResponse {
   static Login(store: any, form: any, onComplete: (result: any) => void) {
     store.getLoadingShow()
   axios.post(

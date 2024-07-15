@@ -5,12 +5,12 @@ import {BasePage} from "./base-page";
 export class BaseApi extends BasePage {
 
     public static async postApi (url:string,body:any){
-        this.loggedUserInfo()
+        this.getLoggedUser()
          return await axios.post(url,body,this.config).then((r=>r.data))
     }
 
     public static async getApi (url:string){
-        this.loggedUserInfo()
+        this.getLoggedUser()
          return await axios.get(url,this.config).then((r=>r.data))
     }
 

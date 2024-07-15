@@ -116,13 +116,24 @@ const login = async () => {
   }
 };
 
+
+
+const GetSurveyBaseInfo = async () => {
+
+    MakeResponse.makeServerResponse(CommonServices.GetSurveyBaseInfo(), true, result => {
+      if ( result && result.result) {
+        localStorage.setItem("SurveyBaseInfo", JSON.stringify(result.result))
+      }
+    });
+}
+
 const UpdateModalHandle = () => {
   localStorage.setItem('updatemodal', false)
   UpdateModal.value = false
 }
 
 onMounted(() => {
-  // MakeResponse.GetSurveyBaseInfo()
+  GetSurveyBaseInfo()
   window.addEventListener("keyboardDidShow", handleKeyboardShow);
   window.addEventListener("keyboardDidHide", handleKeyboardHide);
 });

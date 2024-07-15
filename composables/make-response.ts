@@ -49,9 +49,12 @@ export class MakeResponse {
             if (result.response && result.response.status === 404) {
                 this.notificationService.error('خطای سیستمی ');
             } else if (result.response && result.response.status === 400) {
-                this.notificationService.error('خطای سیستمی با پشتیبان تماس بگیرید');
+                const [firstErrorKey, firstErrorMessages]: any = Object.entries(result.response.data.errors)[0];
+                const firstMessage = firstErrorMessages[0];
+                ToastNotificationService.error(`${firstMessage}ارور 400 خطای داخلی سیستم لطفا با پشتیبانی تماس بگیرید`, 10000);
             }else if (result.response && result.response.status === 500) {
                 this.notificationService.error('خطای داخلی  سرور زمانی دیگر تلاش کنید');
+                ToastNotificationService.error("خطای 500 سرور لطفا  مجددا تلاش کنید " + result.response.data.serverErrors[0].hint, 10000);
             } else if (result.response && result.response.status === 401) {
                 this.notificationService.error('عدم احراز هویت توسط سیستم.');
                 localStorage.clear();
