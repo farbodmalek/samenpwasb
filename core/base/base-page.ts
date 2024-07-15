@@ -1,11 +1,11 @@
-export class BasePage{
+export class BasePage {
 
 
     public static loggedUserInfo: any;
 
     public static config = {};
 
-    public getBaseAPI(){
+    static getBaseAPI() {
         return useRuntimeConfig().public.base_API
     }
 

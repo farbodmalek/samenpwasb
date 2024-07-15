@@ -11,6 +11,7 @@ export class MakeResponse {
             loadingMethod.getLoadingShow();
         }
         method.then((result: any) => {
+            console.log(result)
             const connectionErrorMessage = 'خطا در برقراری ارتباط با سرور، لطفاً مجددا تلاش نمایید.';
             if (result === null) {
                 loadingMethod.getLoadingHide();
@@ -43,29 +44,24 @@ export class MakeResponse {
             }
 
         }).catch(result => {
+            console.log(result)
             loadingMethod.getLoadingHide();
             if (result.response && result.response.status === 404) {
-                this.notificationService.error('خطای سیستمی');
+                this.notificationService.error('خطای سیستمی ');
+            } else if (result.response && result.response.status === 400) {
+                this.notificationService.error('خطای سیستمی با پشتیبان تماس بگیرید');
+            }else if (result.response && result.response.status === 500) {
+                this.notificationService.error('خطای داخلی  سرور زمانی دیگر تلاش کنید');
             } else if (result.response && result.response.status === 401) {
-                // this.notificationService.error('عدم احراز هویت توسط سیستم.');
+                this.notificationService.error('عدم احراز هویت توسط سیستم.');
                 localStorage.clear();
-                navigateTo("/authentication/signin/basic");
-            }
-            // else if (result.response && result.response.status === 400) {
-            // console.log(result.response.data.errors)
-            // }
-            if (result && result.errors && result.errors.length > 0) {
-                for (const item of result.errors) {
-                    this.notificationService.error(item);
-                }
-                onComplete(result);
-            } else if (result !== null) {
-                onComplete(result);
+                navigateTo("/authorization/login");
+            } else if (result.code === "ERR_NETWORK"){
+                ToastNotificationService.error("خطا در برقراری ارتباط به اینترنت متصل شوید");
             } else {
                 this.notificationService.error('خطای سیستمی. لطفا به راهبر سیستم گزارش شود.');
                 onComplete(null);
             }
-
             onComplete(null);
         });
     }
