@@ -909,8 +909,7 @@ const NextstepHandel = () => {
     } else if (form.CultivatedLandArea > form.LandArea) {
       ToastNotificationService.warn(" میزان کشت نمیتواند از وسعت زمین بیشتر باشد");
     } else {
-
-      store.getFormStepTow(form)
+      store.SetFormTow(form)
       router.push({ path: "/survey/StepThree", query: {id:InfoMonitored.id ,loanType:loanSurvey }});
       localStorage.setItem("SecPreForm", JSON.stringify(form));
     }

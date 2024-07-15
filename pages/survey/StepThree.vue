@@ -737,7 +737,7 @@ const ConvertNUM = (input) => {
 
 
 onMounted(() => {
-  store.loadFormData()
+  store.LoadForm()
   setCurrentTab(form.value.planActivationTypeId)
   ConstructionHandelTab(form.value.constructionApproval)
   EquipmentBoughtHandel(form.value.isEquipmentBought)

@@ -51,6 +51,7 @@ import {useVuelidate} from "@vuelidate/core";
 import {UseLoading} from "~/store/loading-store";
 import {MakeResponse} from "~/core/make-response"
 import Download from "~/components/Download.vue"
+import {MakeResponse} from "~/composables/make-response";
 
 const {$pwa} = useNuxtApp()
 
@@ -90,6 +91,7 @@ const v$ = useVuelidate(rules, form);
 const login = async () => {
   submitted.value=true
   if (!v$.value.$invalid) {
+
     MakeResponse.Login(store,form.value,(result: any) => {
       if (result.status === 200 && result.data.result == false) {
         ToastNotificationService.error(result.data.serverErrors[0].hint);

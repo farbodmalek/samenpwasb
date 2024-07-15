@@ -140,7 +140,7 @@ const updateLocation = (lat: number, lng: number) => {
 
 const sumbit = () => {
   if (!v$.value.$invalid) {
-    store.getAddress(form);
+    store.SetAddress(form);
     router.push({
       path: '/survey/Stepone',
       query: { id: InfoMonitored.id, loanType: loanSurveyEconomidTypeId },
