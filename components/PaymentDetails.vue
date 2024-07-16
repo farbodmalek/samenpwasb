@@ -64,7 +64,7 @@
 <script lang="ts" setup>
 const route = useRouter()
 
-const Cartables = JSON.parse(localStorage.getItem('GetCartables'));
+const Cartables = JSON.parse(localStorage.getItem('Cartables'));
 const target = route.currentRoute._value.query.id;
 const loanType = route.currentRoute._value.query.loanType;
 const Monitored = ref([])

@@ -245,12 +245,12 @@ const EquipmentTab = ref();
 const submitted = ref(false);
 const visible = ref(false);
 const visibleConfirm = ref(false);
-const SurveysList = JSON.parse(<any>localStorage.getItem("GetSurveysList"));
+const SurveysList = JSON.parse(<any>localStorage.getItem("SurveysList"));
 const SurveyBasedata = JSON.parse(<any>localStorage.getItem("SurveyBaseInfo"));
 const supervisoryInfo = JSON.parse(<any>localStorage.getItem("SupervisoryInfo"))
 const FinalRegistrationform = localStorage.getItem("FinalRegistrationform");
 const FinalRegistrationForm = FinalRegistrationform ? JSON.parse(FinalRegistrationform) : {};
-const Cartables = JSON.parse(<any>localStorage.getItem("GetCartables"));
+const Cartables = JSON.parse(<any>localStorage.getItem("Cartables"));
 const targetObject = Cartables.find((item: any) => item.id === Number(route.query.id));
 if (targetObject) {
   InfoMonitored = targetObject;
@@ -431,7 +431,7 @@ const submit = () => {
       mainform.survey.userId = form.value.userId;
       mainform.survey.surveyDate = form.value.surveyDate;
       localStorage.setItem("FinalRegistrationform", JSON.stringify(form.value));
-      SendForm(mainform)
+      SetLoanPlanSurvey(mainform)
     }
 
   } else {
@@ -439,7 +439,7 @@ const submit = () => {
   }
 };
 
-const SendForm = async (data: any) => {
+const SetLoanPlanSurvey = async (data: any) => {
   try {
     if (requestStatus.isHaserequest == false) {
       loadingMethod.getLoadingShow()
@@ -491,6 +491,7 @@ const SendForm = async (data: any) => {
       visible.value = true
     }
   }
+
 }
 
 

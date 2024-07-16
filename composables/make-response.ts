@@ -11,7 +11,6 @@ export class MakeResponse {
             loadingMethod.getLoadingShow();
         }
         method.then((result: any) => {
-            console.log(result)
             const connectionErrorMessage = 'خطا در برقراری ارتباط با سرور، لطفاً مجددا تلاش نمایید.';
             if (result === null) {
                 loadingMethod.getLoadingHide();
@@ -44,7 +43,6 @@ export class MakeResponse {
             }
 
         }).catch(result => {
-            console.log(result)
             loadingMethod.getLoadingHide();
             if (result.response && result.response.status === 404) {
                 this.notificationService.error('خطای سیستمی ');
@@ -60,6 +58,7 @@ export class MakeResponse {
                 localStorage.clear();
                 navigateTo("/authorization/login");
             } else if (result.code === "ERR_NETWORK"){
+                onComplete("ERR_NETWORK");
                 ToastNotificationService.error("خطا در برقراری ارتباط به اینترنت متصل شوید");
             } else {
                 this.notificationService.error('خطای سیستمی. لطفا به راهبر سیستم گزارش شود.');

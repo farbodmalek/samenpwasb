@@ -166,9 +166,11 @@ const visible = ref(false)
 let globalCardName = 0;
 const isModalVisible = ref(false);
 const UpdateModal = ref(localStorage.getItem('updatemodal') ? localStorage.getItem('updatemodal') : true)
+const currentDate = new Date();
+const todayDateString = currentDate.toISOString().split('T')[0]
 
 watch(searchUser, (newVal: any,) => {
-  const data = JSON.parse(<any>localStorage.getItem("GetCartables"));
+  const data = JSON.parse(<any>localStorage.getItem("Cartables"));
   if (newVal) {
     const foundData = data.filter((item: any) => {
       return (
@@ -247,7 +249,7 @@ const convert = (number: any) => {
 const GetSurveysList = () => {
   MakeResponse.makeServerResponse(CommonServices.GetSurveys(), true, result => {
     if ( result && result.results) {
-      localStorage.setItem('Surveys', JSON.stringify(result.results));
+      localStorage.setItem('SurveysList', JSON.stringify(result.results));
     }
   });
 };
@@ -275,11 +277,18 @@ const GetCartables = () => {
   // })
 
   MakeResponse.makeServerResponse(CommonServices.GetCartables(), true, result => {
-    if ( result && result.results) {
-      const currentDate = new Date();
-      const todayDateString = currentDate.toISOString().split('T')[0]
+    if ( result && result.results && result.results.length>0) {
       const Cartables = result.results.filter((item: any) => item.expireDate.substring(0, 10) >= todayDateString);
-      localStorage.setItem('Cartables', JSON.stringify(result.results));
+      localStorage.setItem('Cartables', JSON.stringify(Cartables));
+      if(Cartables.length>0){
+        Data.value = Cartables
+      }else{
+        condition.value = true
+      }
+    }
+    else if (result === "ERR_NETWORK") {
+      const GetCartable = JSON.parse(<any>localStorage.getItem('Cartables'));
+      Data.value = GetCartable
     }
   });
 
@@ -303,10 +312,10 @@ const openDataDB = () => {
 
 onMounted(() => {
   GetCartables()
-  // FindOfflineForm()
+  FindOfflineForm()
   GetSurveysList()
-  // openDataDB()
-  // ClearStorge()
+  openDataDB()
+  ClearStorge()
 });
 
 </script>

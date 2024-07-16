@@ -34,7 +34,7 @@ export class makeResponse {
       .then((res: any) => {
         if (res.data.results) {
           const Cartables = res.data.results.filter((item: any) => item.expireDate.substring(0, 10) >= todayDateString);
-          localStorage.setItem("GetCartables", JSON.stringify(Cartables));
+          localStorage.setItem("Cartables", JSON.stringify(Cartables));
           onComplete(Cartables)
         }
         store.getLoadingHide()
@@ -52,7 +52,7 @@ export class makeResponse {
     axios.post(
       `${Url + "api/survey/GetSurveysListForPWA"}`, {"pageNumber": 1, "take": 1000, "userId": supervisoryInfo.id}, config)
       .then((res: any) => {
-        localStorage.setItem("GetSurveysList", JSON.stringify(res.data.results));
+        localStorage.setItem("SurveysList", JSON.stringify(res.data.results));
       }).catch((err: any) => {
       this.ErrorHandling(err)
     })
@@ -73,7 +73,7 @@ export class makeResponse {
       const key: any = localStorage.key(i);
       if (key.startsWith("user")) {
         const userId = key.substring(7)
-        const data = JSON.parse(<any>localStorage.getItem('GetCartables'));
+        const data = JSON.parse(<any>localStorage.getItem('Cartables'));
         const targetObject = data.findIndex((item: any) => item.id === Number(userId));
         onComplete(targetObject)
       }
@@ -101,9 +101,9 @@ export class makeResponse {
   static logout() {
     localStorage.removeItem("SurveyBaseInfo");
     localStorage.removeItem("SupervisoryInfo");
-    localStorage.removeItem("GetSurveysList")
+    localStorage.removeItem("SurveysList")
     localStorage.removeItem("nuxt-color-mode");
-    localStorage.removeItem("GetCartables");
+    localStorage.removeItem("Cartables");
     for (let i = 0; i < localStorage.length; i++) {
       const key: any = localStorage.key(i);
       if (key.startsWith("user")) {

@@ -143,9 +143,9 @@ const logout = (index) => {
     } else {
       localStorage.removeItem("SurveyBaseInfo");
       localStorage.removeItem("SupervisoryInfo");
-      localStorage.removeItem("GetSurveysList")
+      localStorage.removeItem("SurveysList")
       localStorage.removeItem("nuxt-color-mode");
-      localStorage.removeItem("GetCartables");
+      localStorage.removeItem("Cartables");
       router.push("/login");
     }
 
