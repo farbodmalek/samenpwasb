@@ -1,5 +1,5 @@
 <template>
-    <surveyHeader @saveform2="Setform" ></surveyHeader>
+  <surveyHeader @saveform2="Setform" ></surveyHeader>
   <Carddetails/>
   <form @submit.prevent="NextstepHandel()">
     <section v-if="loanSurvey == 1"
@@ -347,19 +347,6 @@
       </div>
     </section>
 
-<!--    <section class="flex-column px-1" v-if="loanSurvey == 3 || loanSurvey == 4">-->
-<!--      <Titel :title="'حضور وام گیرنده در محل کسب کار'"/>-->
-<!--      <div class=" px-3 col-12 form-group mb-3 d-flex justify-content-center bg-white  px-2 py-3   rounded-4">-->
-<!--        <SelectButton v-model="form.PresenceTypeId"-->
-<!--                      :class="{'p-invalid': v$.PresenceTypeId.$invalid && submitted}"-->
-<!--                      :options="SurveyBasedata.presenceTypes"-->
-<!--                      aria-labelledby="basic"-->
-<!--                      class="col-12 d-flex sec-titel"-->
-<!--                      optionLabel="value"-->
-<!--                      optionValue="key"/>-->
-<!--      </div>-->
-<!--    </section>-->
-
     <div class="d-grid col-11 mx-auto mb-5 mt-3">
       <button
         class="text-white bg-blue-1 rounded-pill p-3">
@@ -405,9 +392,6 @@ const optionsLivestockBooklet = ref([
   {name: 'دارد', value: 1},
 ]);
 
-const Setform=()=>{
-  localStorage.setItem("SecPreForm", JSON.stringify(form));
-}
 
 
 
@@ -426,14 +410,15 @@ const SurveyBasedata = JSON.parse(<any>localStorage.getItem("SurveyBaseInfo"));
 const Cartables = JSON.parse(<any>localStorage.getItem("Cartables"));
 let InfoMonitored = <any>ref('');
 const userdata = Cartables.find((item:any) => item.id === Number(route.query.id));
-if (userdata) {
-  InfoMonitored = userdata;
-}
+
 const SurveysList = JSON.parse(<any>localStorage.getItem("SurveysList"));
 const filteredSurveys = SurveysList.filter((item:any) => item.id === Number(InfoMonitored.loanId))
 const LasteSurvey =  filteredSurveys[0];
 let previousValues = <any>{};
 
+if (userdata) {
+  InfoMonitored = userdata;
+}
 const form = reactive({
   HasWorkPermission:  LasteSurvey ? LasteSurvey.hasWorkPermission : null,
   insuranceTypeId:  LasteSurvey ? LasteSurvey.insuranceTypeId : null,
@@ -463,11 +448,6 @@ const form = reactive({
   planActivationTypeId:  null,
 });
 
-
-const setCurrentTab = (Number: number) => {
-  currentTab.value = Number;
-  form.endOfActivationDate=null
-};
 
 const rules = computed(() => {
   if (loanSurvey == 1) {
@@ -861,6 +841,15 @@ const Pachvalue = () => {
   }
 
 }
+
+const Setform=()=>{
+  localStorage.setItem("SecPreForm", JSON.stringify(form));
+}
+
+const setCurrentTab = (Number: number) => {
+  currentTab.value = Number;
+  form.endOfActivationDate=null
+};
 
 
 const setCalenderLivestock = (tabNumber:any) => {

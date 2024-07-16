@@ -92,21 +92,9 @@ const login = async () => {
   submitted.value = true
   if (!v$.value.$invalid) {
 
-    // MakeResponse.Login(store,form.value,(result: any) => {
-    //   if (result.status === 200 && result.data.result == false) {
-    //     ToastNotificationService.error(result.data.serverErrors[0].hint);
-    //   }
-    //   else if(result.status === 200 && result.data.serverErrors==null) {
-    //     ToastNotificationService.success("ورود با موفقیت انجام شد");
-    //     router.push("/")
-    //
-    //   };
-    // })
-
     MakeResponse.makeServerResponse(CommonServices.login(form.value), true, result => {
       if ( result && result.result) {
         localStorage.setItem('User-data', JSON.stringify(result.result));
-        localStorage.setItem("User-data", JSON.stringify(result.result))
         router.push("/")
         ToastNotificationService.success("ورود با موفقیت انجام شد");
       }
@@ -119,7 +107,6 @@ const login = async () => {
 
 
 const GetSurveyBaseInfo = async () => {
-
     MakeResponse.makeServerResponse(CommonServices.GetSurveyBaseInfo(), true, result => {
       if ( result && result.result) {
         localStorage.setItem("SurveyBaseInfo", JSON.stringify(result.result))
@@ -127,16 +114,7 @@ const GetSurveyBaseInfo = async () => {
     });
 }
 
-const UpdateModalHandle = () => {
-  localStorage.setItem('updatemodal', false)
-  UpdateModal.value = false
-}
 
-onMounted(() => {
-  GetSurveyBaseInfo()
-  window.addEventListener("keyboardDidShow", handleKeyboardShow);
-  window.addEventListener("keyboardDidHide", handleKeyboardHide);
-});
 
 const handleKeyboardShow = () => {
   pageContainer.value.scrollIntoView({behavior: "smooth", block: "start"});
@@ -146,6 +124,11 @@ const handleKeyboardHide = () => {
   pageContainer.value.scrollIntoView({behavior: "smooth", block: "end"});
 };
 
+onMounted(() => {
+  GetSurveyBaseInfo()
+  window.addEventListener("keyboardDidShow", handleKeyboardShow);
+  window.addEventListener("keyboardDidHide", handleKeyboardHide);
+});
 </script>
 
 <style>
