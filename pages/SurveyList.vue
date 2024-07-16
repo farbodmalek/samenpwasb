@@ -15,7 +15,7 @@
 
     <section  class="mx-3 d-flex flex-column gap-3">
       <div v-for="(item, index) in Data" :key="index" class="col-md-6  col-sm-12 d-flex flex-column">
-        <div :class="getItemClass(item.loanPlan.id)"
+        <div :class="{'background-card':item.loanPlan.id===0 }"
              class="shadow-lg bg-white border-top"
              @click="navigateToCardDetail(item.id,item.loanPlan.id,item.loanDetail.loanEconomicTypeId)">
           <div class="p-3">
@@ -150,14 +150,6 @@ watch(searchUser, (newVal: any,) => {
   }
 });
 
-
-
-const getItemClass = (item: number) => {
-  return {
-    'background-card': item == 0
-  };
-};
-
 const closeDialog = () => {
   location.reload()
   visible.value = false
@@ -178,10 +170,6 @@ const navigateToCardDetail = (id: number, loanPlanId: number, loanType: number) 
     router.push({path: "/navigtion/MapPage", query: {id, loanType}});
   }
 };
-
-const routergarden = (loanType: number) => {
-  router.push({path: "/survey/Stepone", query: {id: globalCardName, loanType}});
-}
 
 const routerTypeHandel = (loanType: number) => {
   if(loanType==1){
@@ -256,7 +244,7 @@ const SetSurvey = async (data: any) => {
     getInfo.value = result.getinfo;
     sendphoto.value = result.sendphoto;
     visible.value = result.iSSend
-    setTimeout(()=>{ location.reload()},5000)
+    // setTimeout(()=>{ location.reload()},5000)
   });
 };
 
