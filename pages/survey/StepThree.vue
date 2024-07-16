@@ -249,7 +249,7 @@ const visible = ref(false);
 const visibleConfirm = ref(false);
 const SurveysList = JSON.parse(<any>localStorage.getItem("SurveysList"));
 const SurveyBasedata = JSON.parse(<any>localStorage.getItem("SurveyBaseInfo"));
-const supervisoryInfo = JSON.parse(<any>localStorage.getItem("SupervisoryInfo"))
+const supervisoryInfo = JSON.parse(<any>localStorage.getItem("User-data"))
 const FinalRegistrationform = localStorage.getItem("FinalRegistrationform");
 const FinalRegistrationForm = FinalRegistrationform ? JSON.parse(FinalRegistrationform) : {};
 const Cartables = JSON.parse(<any>localStorage.getItem("Cartables"));
@@ -432,8 +432,12 @@ const submit = () => {
       mainform.survey.guidList = form.value.guidList;
       mainform.survey.userId = form.value.userId;
       mainform.survey.surveyDate = form.value.surveyDate;
-      localStorage.setItem("FinalRegistrationform", JSON.stringify(form.value));
-      SetLoanPlanSurvey(mainform)
+      if (requestStatus.isHaserequest == false) {
+        SetLoanPlanSurvey(mainform)
+      }
+      else {
+          ToastNotificationService.warn("درحال ارسال عکس لطفا صبر کنید");
+       }
     }
 
   } else {
@@ -497,6 +501,23 @@ const SetLoanPlanSurvey = async (body: any) => {
 
   MakeResponse.makeServerResponse(CommonServices.SetLoanPlanSurvey(body), true, result => {
     console.log(result)
+    if(result==='ERR_NETWORK'){
+      visible.value = true
+    }
+    else if(result && result.serverErrors.length==0) {
+                  ToastNotificationService.success("نظارت با موفقیت ثبت شد");
+                  setTimeout(() => {
+                    router.push("/");
+                    store.form.survey.planIndustrialSurvey=null
+                    store.form.survey.planGardenSurvey=null
+                    store.form.survey.planLivestockSurvey=null
+                    store.form.survey.planServiceSurvey=null
+                    localStorage.removeItem("firPreForm");
+                    localStorage.removeItem("SecPreForm");
+                    localStorage.removeItem("FinalRegistrationform");
+
+                  }, 8000);
+                }
   });
 }
 

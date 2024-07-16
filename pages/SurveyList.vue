@@ -246,13 +246,6 @@ const convert = (number: any) => {
   }
 }
 
-const GetSurveysList = () => {
-  MakeResponse.makeServerResponse(CommonServices.GetSurveys(), true, result => {
-    if ( result && result.results) {
-      localStorage.setItem('SurveysList', JSON.stringify(result.results));
-    }
-  });
-};
 
 const ClearStorge = () => {
   makeResponse.Clearlocalform()
@@ -265,17 +258,6 @@ const FindOfflineForm = () => {
 };
 
 const GetCartables = () => {
-  // MakeResponse.GetCartables(UseLoading(), (result: string | any[]) => {
-  //   if (result && result.length === 0) {
-  //     condition.value = true
-  //   } else if (result.code === "ERR_NETWORK") {
-  //     const GetCartable = JSON.parse(<any>localStorage.getItem('GetCartables'));
-  //     Data.value = GetCartable
-  //   } else {
-  //     Data.value = result
-  //   }
-  // })
-
   MakeResponse.makeServerResponse(CommonServices.GetCartables(), true, result => {
     if ( result && result.results && result.results.length>0) {
       const Cartables = result.results.filter((item: any) => item.expireDate.substring(0, 10) >= todayDateString);
@@ -291,8 +273,15 @@ const GetCartables = () => {
       Data.value = GetCartable
     }
   });
-
 }
+
+const GetSurveysList = () => {
+  MakeResponse.makeServerResponse(CommonServices.GetSurveys(), true, result => {
+    if ( result && result.results) {
+      localStorage.setItem('SurveysList', JSON.stringify(result.results));
+    }
+  });
+};
 
 const SetSurvey = async (data: any) => {
   await MakeOfflineServiese.SetSurveyImage(data, (result: { getinfo: any; sendphoto: any; }) => {

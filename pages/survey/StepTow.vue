@@ -432,7 +432,6 @@ if (userdata) {
 const SurveysList = JSON.parse(<any>localStorage.getItem("SurveysList"));
 const filteredSurveys = SurveysList.filter((item:any) => item.id === Number(InfoMonitored.loanId))
 const LasteSurvey =  filteredSurveys[0];
-// const LasteSurvey =  null;
 let previousValues = <any>{};
 
 const form = reactive({
@@ -441,8 +440,6 @@ const form = reactive({
   workShopCode:  LasteSurvey ? LasteSurvey.workShopCode : "",
   numberOfInsurdPerson:  LasteSurvey ? LasteSurvey.numberOfInsurdPerson : null,
   numberOfJobsCreated:  LasteSurvey ? LasteSurvey.numberOfJobsCreated : "",
-  OwnerTypeId:  null,
-  planActivationTypeId:  null,
   endOfActivationDate : LasteSurvey ?LasteSurvey.endOfActivationDate:null,
   Isinsurance:  LasteSurvey ? LasteSurvey.workShopCode == 0 ? 0 : 1 : null,
   Id:  LasteSurvey ? LasteSurvey.Id : 0,
@@ -453,15 +450,17 @@ const form = reactive({
   HasAgriculturalInsurance:  LasteSurvey ? LasteSurvey.hasAgriculturalInsurance : null,
   EndOfAgriculturalInsurance:  LasteSurvey ? LasteSurvey.EndOfAgriculturalInsurance : null,
   insuranceTabAgricultural:  LasteSurvey ? LasteSurvey.numberOfJobsCreated == 0 ? 0 : 1 : null,
-  NumberOfMaleLivestock:  null,
-  NumberOfFemaleLivestock: null,
-  LivestockTypeId: null,
   ID:  LasteSurvey ? LasteSurvey.ID : 0,
   LivestockLicense:  LasteSurvey ? LasteSurvey.livestockLicense : null,
   LivestockInsurance:  LasteSurvey ? LasteSurvey.livestockInsurance : null,
   InsuranceDate:  LasteSurvey ? LasteSurvey.InsuranceDate : null,
   NumberOfInsuredLivestock:  LasteSurvey ? LasteSurvey.hasWorkPermission : null,
   LivestockBooklet:  LasteSurvey ? LasteSurvey.hasWorkPermission : null,
+  NumberOfMaleLivestock:  null,
+  NumberOfFemaleLivestock: null,
+  LivestockTypeId: null,
+  OwnerTypeId: null,
+  planActivationTypeId:  null,
 });
 
 

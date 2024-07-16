@@ -105,8 +105,8 @@ const login = async () => {
 
     MakeResponse.makeServerResponse(CommonServices.login(form.value), true, result => {
       if ( result && result.result) {
-        localStorage.setItem('user-data', JSON.stringify(result.result));
-        localStorage.setItem("SupervisoryInfo", JSON.stringify(result.result))
+        localStorage.setItem('User-data', JSON.stringify(result.result));
+        localStorage.setItem("User-data", JSON.stringify(result.result))
         router.push("/")
         ToastNotificationService.success("ورود با موفقیت انجام شد");
       }

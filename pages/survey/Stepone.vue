@@ -215,7 +215,7 @@ let InfoMonitored = <any>ref('');
 const BaseInfo = JSON.parse(<any>localStorage.getItem("SurveyBaseInfo"))
 const GetCartable = JSON.parse(<any>localStorage.getItem('Cartables'));
 const targetObject = GetCartable.find((item:any) => item.id === Number(route.query.id));
-const Supervisory = JSON.parse(<any>localStorage.getItem('SupervisoryInfo'));
+const Supervisory = JSON.parse(<any>localStorage.getItem('User-data'));
 let previousValues = <any>{};
 if (targetObject) {
   InfoMonitored = targetObject;
