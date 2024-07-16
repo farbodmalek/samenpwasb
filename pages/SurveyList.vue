@@ -128,7 +128,7 @@ const getInfo = ref(false)
 const showsend = ref([]);
 const visible = ref(false)
 let globalCardName = 0;
-const isModalVisible = ref(!false);
+const isModalVisible = ref(false);
 const currentDate = new Date();
 const todayDateString = currentDate.toISOString().split('T')[0]
 
