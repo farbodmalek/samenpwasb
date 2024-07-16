@@ -199,6 +199,8 @@ import {useVuelidate} from "@vuelidate/core";
 import {ToastNotificationService} from "~/core/toast-notification-service";
 import {UseLoading} from "@/store/loading-store";
 import surveyHeader from "~/components/Layouts/surveyHeader.vue";
+import {MakeResponse} from "~/composables/make-response";
+import {CommonServices} from "~/core/base/common-services";
 
 
 definePageMeta({
@@ -439,59 +441,63 @@ const submit = () => {
   }
 };
 
-const SetLoanPlanSurvey = async (data: any) => {
-  try {
-    if (requestStatus.isHaserequest == false) {
-      loadingMethod.getLoadingShow()
-      const config = {headers: {Authorization: "Bearer " + supervisoryInfo.token}};
-      const response = await axios
-          .post(
-              `${Url + "api/survey/SetLoanPlanSurvey"}`,
-              data,
-              config
-          )
-          .then((response:any) => {
-            loadingMethod.getLoadingHide()
-            if (response.status === 200 && response.data.result == null) {
+const SetLoanPlanSurvey = async (body: any) => {
+  // try {
+  //   if (requestStatus.isHaserequest == false) {
+  //     loadingMethod.getLoadingShow()
+  //     const config = {headers: {Authorization: "Bearer " + supervisoryInfo.token}};
+  //     const response = await axios
+  //         .post(
+  //             `${Url + "api/survey/SetLoanPlanSurvey"}`,
+  //             data,
+  //             config
+  //         )
+  //         .then((response:any) => {
+  //           loadingMethod.getLoadingHide()
+  //           if (response.status === 200 && response.data.result == null) {
+  //
+  //             console.log( store.form)
+  //             ToastNotificationService.warn(response.data.serverErrors[0].hint);
+  //           }
+  //           else if(response.status === 200 && response.data.serverErrors.length==0) {
+  //             ToastNotificationService.success("نظارت با موفقیت ثبت شد");
+  //             setTimeout(() => {
+  //               router.push("/");
+  //               store.form.survey.planIndustrialSurvey=null
+  //               store.form.survey.planGardenSurvey=null
+  //               store.form.survey.planLivestockSurvey=null
+  //               store.form.survey.planServiceSurvey=null
+  //               localStorage.removeItem("firPreForm");
+  //               localStorage.removeItem("SecPreForm");
+  //               localStorage.removeItem("FinalRegistrationform");
+  //
+  //             }, 8000);
+  //           }
+  //         });
+  //     loadingMethod.getLoadingHide()
+  //   } else {
+  //     ToastNotificationService.warn("درحال ارسال عکس لطفا صبر کنید");
+  //   }
+  // } catch (error:any) {
+  //   loadingMethod.getLoadingHide()
+  //   if(error.response && error.response.status===500){
+  //     ToastNotificationService.error("خطای 500 سرور لطفا  مجددا تلاش کنید " + error.response.data.serverErrors[0].hint,10000);
+  //   }
+  //   else if(error.response && error.response.status===400){
+  //     const [firstErrorKey, firstErrorMessages] :any = Object.entries(error.response.data.errors)[0];
+  //     const firstMessage = firstErrorMessages[0];
+  //     ToastNotificationService.error(  `${firstMessage}ارور 400 خطای داخلی سیستم لطفا با پشتیبانی تماس بگیرید`, 10000);
+  //   }
+  //   else if(error.code==="ERR_NETWORK"){
+  //     ToastNotificationService.error("خطا در برقراری ارتباط " );
+  //     visible.value = true
+  //   }
+  // }
 
-              console.log( store.form)
-              ToastNotificationService.warn(response.data.serverErrors[0].hint);
-            }
-            else if(response.status === 200 && response.data.serverErrors.length==0) {
-              ToastNotificationService.success("نظارت با موفقیت ثبت شد");
-              setTimeout(() => {
-                router.push("/");
-                store.form.survey.planIndustrialSurvey=null
-                store.form.survey.planGardenSurvey=null
-                store.form.survey.planLivestockSurvey=null
-                store.form.survey.planServiceSurvey=null
-                localStorage.removeItem("firPreForm");
-                localStorage.removeItem("SecPreForm");
-                localStorage.removeItem("FinalRegistrationform");
 
-              }, 8000);
-            }
-          });
-      loadingMethod.getLoadingHide()
-    } else {
-      ToastNotificationService.warn("درحال ارسال عکس لطفا صبر کنید");
-    }
-  } catch (error:any) {
-    loadingMethod.getLoadingHide()
-    if(error.response && error.response.status===500){
-      ToastNotificationService.error("خطای 500 سرور لطفا  مجددا تلاش کنید " + error.response.data.serverErrors[0].hint,10000);
-    }
-    else if(error.response && error.response.status===400){
-      const [firstErrorKey, firstErrorMessages] :any = Object.entries(error.response.data.errors)[0];
-      const firstMessage = firstErrorMessages[0];
-      ToastNotificationService.error(  `${firstMessage}ارور 400 خطای داخلی سیستم لطفا با پشتیبانی تماس بگیرید`, 10000);
-    }
-    else if(error.code==="ERR_NETWORK"){
-      ToastNotificationService.error("خطا در برقراری ارتباط " );
-      visible.value = true
-    }
-  }
-
+  MakeResponse.makeServerResponse(CommonServices.SetLoanPlanSurvey(body), true, result => {
+    console.log(result)
+  });
 }
 
 
