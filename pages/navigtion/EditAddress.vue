@@ -84,7 +84,7 @@ const Error = ref(false);
 const loanSurveyEconomidTypeId = route.query.loanType;
 
 let InfoMonitored = <any>ref('');
-const GetCartable = JSON.parse(<any>localStorage.getItem('GetCartables'));
+const GetCartable = JSON.parse(<any>localStorage.getItem('Cartables'));
 const targetObject = GetCartable.find((item: any) => item.id === Number(route.query.id));
 if (targetObject) {
   InfoMonitored = targetObject;
@@ -140,7 +140,7 @@ const updateLocation = (lat: number, lng: number) => {
 
 const sumbit = () => {
   if (!v$.value.$invalid) {
-    store.getAddress(form);
+    store.SetAddress(form);
     router.push({
       path: '/survey/Stepone',
       query: { id: InfoMonitored.id, loanType: loanSurveyEconomidTypeId },

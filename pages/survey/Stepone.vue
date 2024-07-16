@@ -1,5 +1,5 @@
 <template>
-  <surveyHeader @childEvent="login" ></surveyHeader>
+  <surveyHeader></surveyHeader>
   <Carddetails />
   <form  @submit.prevent="sumbitForm()">
     <section class="col col-12 d-flex align-center pt-1 flex-column mb-2 text-black ">
@@ -182,6 +182,7 @@ definePageMeta({
 });
 
 const store=Useform()
+
 const optionFamilySupervisor = ref([
   {name: 'بلی ', value: true},
   {name: 'خیر', value: false},
@@ -196,6 +197,7 @@ const options = ref([
   {name: 'شهری', value: 1},
   {name: 'روستایی', value: 2},
 ]);
+
 const optionmaritalStatus = ref([
   {name: 'مجرد', value: false},
   {name: 'متاهل', value: true},
@@ -205,28 +207,16 @@ const router = useRouter();
 const route = useRoute();
 const error = ref(false);
 const submitted = ref(false);
-const Error = ref(false);
-const highlight = ref(false)
 const loanSurveyEconomidTypeId = route.query.loanType
-const latitudeuser = ref();
-const longitudeuser = ref();
-const loctionLatLong = <any>[]
-let InfoMonitored = <any>ref('');
 const BaseInfo = JSON.parse(<any>localStorage.getItem("SurveyBaseInfo"))
-const GetCartable = JSON.parse(<any>localStorage.getItem('GetCartables'));
+const GetCartable = JSON.parse(<any>localStorage.getItem('Cartables'));
 const targetObject = GetCartable.find((item:any) => item.id === Number(route.query.id));
-const Supervisory = JSON.parse(<any>localStorage.getItem('SupervisoryInfo'));
+const Supervisory = JSON.parse(<any>localStorage.getItem('User-data'));
 let previousValues = <any>{};
+let InfoMonitored = <any>ref('');
 if (targetObject) {
   InfoMonitored = targetObject;
 }
-
-
-const login=()=>{
-  console.log("kpok")
-}
-
-
 const form = <any>reactive({
   genderType:   InfoMonitored.customerGenderType,
   residentTypeId:  InfoMonitored.loanPlan.residentTypeId == "" ? null : InfoMonitored.loanPlan.residentTypeId,
@@ -270,13 +260,22 @@ const rules = computed(() => {
 
 const v$ = useVuelidate(rules, form);
 
+const convertPersianNumbersToEnglish = (input:number) => {
+  const persianToEnglishMap = {
+    '۰': '0',
+    '۱': '1',
+    '۲': '2',
+    '۳': '3',
+    '۴': '4',
+    '۵': '5',
+    '۶': '6',
+    '۷': '7',
+    '۸': '8',
+    '۹': '9'
+  };
+  return input.replace(/[۰-۹]/g, (match) => persianToEnglishMap[match]);
+};
 
-
-const LounTypeHandel = () => {
-  if (InfoMonitored.loanPlan.id != 0) {
-    ToastNotificationService.error("بدلیل ثبت طرح برای این وام امکان ویرایش این فیلد نیست");
-  }
-}
 
 const MapRouteHandle = () => {
   localStorage.setItem("firPreForm", JSON.stringify(form))
@@ -318,9 +317,9 @@ const sumbitForm = () => {
     } else if (!form.Phone.startsWith(0)) {
       ToastNotificationService.warn("تلفن ثابت باید با صفر شروع شود");
     } else if (form.address === "") {
-      error.value = true
+      ToastNotificationService.error("لطفا ادرس را تکمیل کنید");
     } else {
-      store.getFormStepOne(form)
+      store.SetFormOne(form)
       router.push({ path: "/survey/StepTow", query: {id:InfoMonitored.id ,loanType:loanSurveyEconomidTypeId }});
       localStorage.setItem("firPreForm", JSON.stringify(form))
     }
@@ -329,29 +328,11 @@ const sumbitForm = () => {
   }
 };
 
-const convertPersianNumbersToEnglish = (input:number) => {
-  const persianToEnglishMap = {
-    '۰': '0',
-    '۱': '1',
-    '۲': '2',
-    '۳': '3',
-    '۴': '4',
-    '۵': '5',
-    '۶': '6',
-    '۷': '7',
-    '۸': '8',
-    '۹': '9'
-  };
-  return input.replace(/[۰-۹]/g, (match) => persianToEnglishMap[match]);
-};
-
-
-
-
-
 onMounted(() => {
   Pachvalue()
 })
+
 </script>
+
 <style lang="scss">
 </style>

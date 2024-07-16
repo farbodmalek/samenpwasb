@@ -60,7 +60,7 @@ import {computed, onMounted, ref, watch} from "vue";
 
 const closeExitemodale = ref(false)
 
-const SupervisoryInfo = localStorage.getItem("SupervisoryInfo")
+const SupervisoryInfo = localStorage.getItem("User-data")
 const supervisoryInfo = SupervisoryInfo ? JSON.parse(SupervisoryInfo) : {}
 const router = useRouter();
 const store = useStore();
@@ -142,10 +142,10 @@ const logout = (index) => {
       closeExitemodale.value = true
     } else {
       localStorage.removeItem("SurveyBaseInfo");
-      localStorage.removeItem("SupervisoryInfo");
-      localStorage.removeItem("GetSurveysList")
+      localStorage.removeItem("User-data");
+      localStorage.removeItem("SurveysList")
       localStorage.removeItem("nuxt-color-mode");
-      localStorage.removeItem("GetCartables");
+      localStorage.removeItem("Cartables");
       router.push("/login");
     }
 
@@ -157,7 +157,7 @@ const modalexite = () => {
 
 const modalHome = () => {
   router.push("authorization/login");
-  localStorage.removeItem("supervisoryInfo");
+  localStorage.removeItem("User-data");
   localStorage.removeItem("localStorageUserKey");
   localStorage.removeItem("SurveyBaseInfo");
   localStorage.removeItem("nuxt-color-mode");

@@ -16,27 +16,27 @@
         </div>
         <div class="container mt-5">
           <div class="mt-5">
-                <div class="form-group mb-3 col-12 px-2">
-                    <input-text
-                      v-model="form.username"
-                      class="text-center w-100"
-                      placeholder="نام کاربری  "
-                      type="text"
-                      :class="{'p-invalid': v$.username.$invalid && submitted}"
-                    />
-                </div>
-                  <div class="form-group p-icon-field mb-1 col-12 px-2">
-                  <Password
-                    v-model="form.password"
-                    :feedback="false"
-                    class="text-center w-100"
-                    placeholder="رمز عبور"
-                    :class="{'p-invalid': v$.password.$invalid && submitted}"
-                    toggleMask
-                  />
-                </div>
-                <div class="d-grid col-11 mx-auto pt-3 mt-5">
-                  <button class="text-white bg-blue-1 rounded-pill p-3">ورود</button>
+            <div class="form-group mb-3 col-12 px-2">
+              <input-text
+                  v-model="form.username"
+                  class="text-center w-100"
+                  placeholder="نام کاربری  "
+                  type="text"
+                  :class="{'p-invalid': v$.username.$invalid && submitted}"
+              />
+            </div>
+            <div class="form-group p-icon-field mb-1 col-12 px-2">
+              <Password
+                  v-model="form.password"
+                  :feedback="false"
+                  class="text-center w-100"
+                  placeholder="رمز عبور"
+                  :class="{'p-invalid': v$.password.$invalid && submitted}"
+                  toggleMask
+              />
+            </div>
+            <div class="d-grid col-11 mx-auto pt-3 mt-5">
+              <button class="text-white bg-blue-1 rounded-pill p-3">ورود</button>
             </div>
           </div>
         </div>
@@ -49,11 +49,12 @@ import {ToastNotificationService} from "~/core/toast-notification-service";
 import {required} from '@vuelidate/validators';
 import {useVuelidate} from "@vuelidate/core";
 import {UseLoading} from "~/store/loading-store";
-import {MakeResponse} from "~/core/make-response"
+// import {MakeResponse} from "~/core/make-response"
 import Download from "~/components/Download.vue"
+import {MakeResponse} from "~/composables/make-response";
+import {CommonServices} from "~/core/base/common-services";
 
 const {$pwa} = useNuxtApp()
-
 
 
 definePageMeta({
@@ -88,33 +89,32 @@ const rules = computed(() => {
 const v$ = useVuelidate(rules, form);
 
 const login = async () => {
-  submitted.value=true
+  submitted.value = true
   if (!v$.value.$invalid) {
-    MakeResponse.Login(store,form.value,(result: any) => {
-      if (result.status === 200 && result.data.result == false) {
-        ToastNotificationService.error(result.data.serverErrors[0].hint);
-      }
-      else if(result.status === 200 && result.data.serverErrors==null) {
-        ToastNotificationService.success("ورود با موفقیت انجام شد");
+
+    MakeResponse.makeServerResponse(CommonServices.login(form.value), true, result => {
+      if ( result && result.result) {
+        localStorage.setItem('User-data', JSON.stringify(result.result));
         router.push("/")
-        localStorage.setItem("SupervisoryInfo", JSON.stringify(result.data.result))
-      };
-    })
+        ToastNotificationService.success("ورود با موفقیت انجام شد");
+      }
+    });
   } else {
     ToastNotificationService.warn("فیلد های اجباری را لطفا تکمیل کنید");
   }
 };
 
-const UpdateModalHandle = () => {
-  localStorage.setItem('updatemodal', false)
-  UpdateModal.value = false
+
+
+const GetSurveyBaseInfo = async () => {
+    MakeResponse.makeServerResponse(CommonServices.GetSurveyBaseInfo(), true, result => {
+      if ( result && result.result) {
+        localStorage.setItem("SurveyBaseInfo", JSON.stringify(result.result))
+      }
+    });
 }
 
-onMounted(() => {
-  MakeResponse.GetSurveyBaseInfo()
-  window.addEventListener("keyboardDidShow", handleKeyboardShow);
-  window.addEventListener("keyboardDidHide", handleKeyboardHide);
-});
+
 
 const handleKeyboardShow = () => {
   pageContainer.value.scrollIntoView({behavior: "smooth", block: "start"});
@@ -124,6 +124,11 @@ const handleKeyboardHide = () => {
   pageContainer.value.scrollIntoView({behavior: "smooth", block: "end"});
 };
 
+onMounted(() => {
+  GetSurveyBaseInfo()
+  window.addEventListener("keyboardDidShow", handleKeyboardShow);
+  window.addEventListener("keyboardDidHide", handleKeyboardHide);
+});
 </script>
 
 <style>

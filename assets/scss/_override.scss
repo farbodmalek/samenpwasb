@@ -410,3 +410,43 @@ input[type='search']{
 .Toastify__toast {
   font-family: iranSans;
 }
+
+.background {
+  background-color: #c2c0c0;
+}
+
+
+.card {
+  border-radius: 0px 50px 0px 0px;
+}
+
+
+.background-card {
+  background-color: #e5e5e5 !important;
+  border-top-right-radius: 50px;
+}
+
+.border-top {
+  border-top-right-radius: 50px;
+}
+
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+
+.modal-home {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
