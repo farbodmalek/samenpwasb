@@ -94,13 +94,13 @@
       header="نوع نظارت را مشخص فرمایید"
       modal>
     <div class="d-flex flex-column p-2 justify-content-center align-items-center  ">
-      <div class="col-12 text-center border border-secondary p-3" @click="routerhusbandry(1)">
+      <div class="col-12 text-center border border-secondary p-3" @click="routerTypeHandel(1)">
         <span>دامپروری</span>
       </div>
-      <div class="col-12 text-center border border-secondary p-3" @click="routergarden(2)">
+      <div class="col-12 text-center border border-secondary p-3" @click="routerTypeHandel(2)">
         <span>زراعی/باغی</span>
       </div>
-      <div class="col-12 text-center border border-secondary p-3" @click="routerservice(3)">
+      <div class="col-12 text-center border border-secondary p-3" @click="routerTypeHandel(3)">
         <span>خدمات</span>
       </div>
     </div>
@@ -113,7 +113,6 @@
 
 <script lang="ts" setup>
 import {UseLoading} from "../store/loading-store";
-import {makeResponse} from "~/core/make-response"
 import {MakeOfflineServiese} from "~/core/Make-offline-serviese"
 import {ToastNotificationService} from "~/core/toast-notification-service";
 import {CommonServices} from "~/core/base/common-services";
@@ -129,7 +128,7 @@ const getInfo = ref(false)
 const showsend = ref([]);
 const visible = ref(false)
 let globalCardName = 0;
-const isModalVisible = ref(false);
+const isModalVisible = ref(!false);
 const currentDate = new Date();
 const todayDateString = currentDate.toISOString().split('T')[0]
 
@@ -184,13 +183,17 @@ const routergarden = (loanType: number) => {
   router.push({path: "/survey/Stepone", query: {id: globalCardName, loanType}});
 }
 
-const routerhusbandry = (loanType: number) => {
-  router.push({path: "/survey/Stepone", query: {id: globalCardName, loanType}});
+const routerTypeHandel = (loanType: number) => {
+  if(loanType==1){
+    router.push({path: "/survey/Stepone", query: {id: globalCardName, loanType}});
+  }
+  if(loanType==2){
+    router.push({path: "/survey/Stepone", query: {id: globalCardName, loanType}});
+  } if(loanType==3){
+    router.push({path: "/survey/Stepone", query: {id: globalCardName, loanType}});
+  }
 }
 
-const routerservice = (loanType: number) => {
-  router.push({path: "/survey/Stepone", query: {id: globalCardName, loanType}});
-}
 
 const convert = (number: any) => {
   switch (number) {
@@ -209,11 +212,11 @@ const convert = (number: any) => {
 
 
 const ClearStorge = () => {
-  makeResponse.Clearlocalform()
+  CommonServices.Clearform()
 };
 
 const FindOfflineForm = () => {
-  makeResponse.FindOfflineForm((result: any) => {
+  CommonServices.FindOfflineForm((result: any) => {
     showsend.value.push(result);
   })
 };

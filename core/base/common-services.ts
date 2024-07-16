@@ -30,5 +30,22 @@ export class CommonServices extends BaseApi {
         return BaseApi.postApi(url, body);
     }
 
+    static FindOfflineForm(onComplete: (result: any) => void) {
+        console.log("hi")
+        for (let i = 0; i < localStorage.length; i++) {
+            const key: any = localStorage.key(i);
+            if (key.startsWith("user")) {
+                const userId = key.substring(7)
+                const data = JSON.parse(<any>localStorage.getItem('Cartables'));
+                const targetObject = data.findIndex((item: any) => item.id === Number(userId));
+                onComplete(targetObject)
+            }
+        }
+    }
+    static Clearform() {
+        localStorage.removeItem("firPreForm");
+        localStorage.removeItem("SecPreForm");
+        localStorage.removeItem("FinalRegistrationform");
+    }
 
 }
