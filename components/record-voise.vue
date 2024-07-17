@@ -1,6 +1,6 @@
-<template><input type="file" accept="audio/*" capture="microphone">
+<template>
   <div class="recorder-container">
-    <button @click="toggleRecording">{{ isRecording ? 'متوقف کردن ضبط' : 'شروع ضبط' }}</button>
+    <button @click="toggleRecording" type="button">{{ isRecording ? 'متوقف کردن ضبط' : 'شروع ضبط' }}</button>
 
     <div v-if="audioUrl" class="audio-player">
       <div class="audio-info">
@@ -14,7 +14,7 @@
             <span v-else>⏸️</span>
           </button>
           <div class="audio-time">{{ currentTime }}</div>
-          <button @click="deleteRecording" class="delete-button">حذف</button>
+          <button @click="deleteRecording" class="delete-button" type="button">حذف</button>
         </div>
       </div>
     </div>

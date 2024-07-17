@@ -109,6 +109,7 @@
                 style="height: 75px"
                 :class="{'p-invalid-textarea': v$.customerOffer.$invalid && submitted}"
                 v-model="form.customerOffer"/>
+      <record/>
     </section>
 
     <section class="px-1 form-group">
@@ -199,6 +200,7 @@ import {useVuelidate} from "@vuelidate/core";
 import {ToastNotificationService} from "~/core/toast-notification-service";
 import {UseLoading} from "@/store/loading-store";
 import surveyHeader from "~/components/Layouts/surveyHeader.vue";
+import record from "~/components/record-voise.vue";
 
 
 definePageMeta({
