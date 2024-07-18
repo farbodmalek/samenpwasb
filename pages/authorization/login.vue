@@ -98,7 +98,7 @@ const login = async () => {
         router.push("/")
         ToastNotificationService.success("ورود با موفقیت انجام شد");
       }
-    });
+    },true);
   } else {
     ToastNotificationService.warn("فیلد های اجباری را لطفا تکمیل کنید");
   }
@@ -111,7 +111,7 @@ const GetSurveyBaseInfo = async () => {
       if ( result && result.result) {
         localStorage.setItem("SurveyBaseInfo", JSON.stringify(result.result))
       }
-    });
+    },false);
 }
 
 

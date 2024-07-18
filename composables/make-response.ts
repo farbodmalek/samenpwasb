@@ -5,7 +5,7 @@ import {promises} from "dns";
 export class MakeResponse {
     static notificationService = ToastNotificationService;
 
-    static makeServerResponse(method: Promise<any>, isLoading: boolean, onComplete: (result: any) => void) {
+    static makeServerResponse(method: Promise<any>, isLoading: boolean, onComplete: (result: any) => void,isToast: boolean,) {
         const loadingMethod = UseLoading();
         if (isLoading) {
             loadingMethod.getLoadingShow();
@@ -67,6 +67,7 @@ export class MakeResponse {
                 navigateTo("/authorization/login");
             } else if (result.code === "ERR_NETWORK"){
                 onComplete("ERR_NETWORK");
+                if(isToast)
                 ToastNotificationService.error("خطا در برقراری ارتباط به اینترنت متصل شوید");
             } else {
                 this.notificationService.error('خطای سیستمی. لطفا به راهبر سیستم گزارش شود.');

@@ -25,13 +25,18 @@ export class CommonServices extends BaseApi {
         return BaseApi.getApiLogin(url);
     }
 
-    static SetLoanPlanSurvey(body:any){
+    static SetLoanPlanSurvey(body: any) {
         const url = this.getBaseAPI() + 'api/survey/SetLoanPlanSurvey';
         return BaseApi.postApi(url, body);
     }
 
+    static async SetSurveyImage(body: any) {
+        const url = this.getBaseAPI() + 'api/Upload/uploadSurveyImage';
+        await this.getLoggedUser();
+        return BaseApi.postApi(url, body)
+    }
+
     static FindOfflineForm(onComplete: (result: any) => void) {
-        console.log("hi")
         for (let i = 0; i < localStorage.length; i++) {
             const key: any = localStorage.key(i);
             if (key.startsWith("user")) {

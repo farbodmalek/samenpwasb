@@ -119,6 +119,7 @@ import {CommonServices} from "~/core/base/common-services";
 import {MakeResponse} from "~/composables/make-response";
 
 
+
 const Data = ref();
 const searchUser = ref('');
 const router = useRouter();
@@ -224,7 +225,7 @@ const GetCartables = () => {
       const GetCartable = JSON.parse(<any>localStorage.getItem('Cartables'));
       Data.value = GetCartable
     }
-  });
+  },true);
 }
 
 const GetSurveysList = () => {
@@ -232,7 +233,7 @@ const GetSurveysList = () => {
     if ( result && result.results) {
       localStorage.setItem('SurveysList', JSON.stringify(result.results));
     }
-  });
+  },false);
 };
 
 const SetSurvey = async (data: any) => {

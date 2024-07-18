@@ -5,7 +5,7 @@ let db: any
 const DB_NAME = '"offlineImagesDB"';
 const DB_VERSION = 1;
 
-export class SaveImgoffline {
+export class ServicesImg {
 
     static openDatabase() {
         const request = window.indexedDB.open(DB_NAME, DB_VERSION);
@@ -55,5 +55,9 @@ export class SaveImgoffline {
             ToastNotificationService.error("خطا در حذف عکس از حافظه", event)
         };
     };
+
+
+
+
 
 }

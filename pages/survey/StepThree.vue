@@ -201,15 +201,14 @@ import {UseLoading} from "@/store/loading-store";
 import surveyHeader from "~/components/Layouts/surveyHeader.vue";
 import {MakeResponse} from "~/composables/make-response";
 import {CommonServices} from "~/core/base/common-services";
-import {SaveImgoffline} from "~/core/base/save-Img-DB.ts";
+import {ServicesImg} from "~/core/base/Services-Img.ts";
+import {BaseApi} from "~/core/base/base-api.ts";
+
 
 
 definePageMeta({
   layout: "survey",
 });
-
-
-
 
 
 const optionsApproval = ref([
@@ -428,7 +427,7 @@ const submit = () => {
       mainform.survey.guidList = form.value.guidList;
       mainform.survey.userId = form.value.userId;
       mainform.survey.surveyDate = form.value.surveyDate;
-      if (requestStatus.isHaserequest == false) {
+      if (IsRequest.value == false) {
         SetLoanPlanSurvey(mainform)
       }
       else {
@@ -460,7 +459,7 @@ const SetLoanPlanSurvey = async (body: any) => {
 
                   }, 8000);
                 }
-  });
+  },true);
 }
 
 
@@ -541,63 +540,81 @@ const compressImage = (file:any) => {
 };
 
 const SetSurveyImage = async (file:any, index:any) => {
+  IsRequest.value=true
   const formData = new FormData();
   formData.append("image", file.file);
-  const config = {
-    headers: {
-      Authorization: "Bearer " + supervisoryInfo.token,
-      "Content-Type": "multipart/form-data",
-    },
-    onUploadProgress: (progressEvent:any) => {
-      const progress = Math.round(
-          (progressEvent.loaded * 100) / progressEvent.total
-      );
-      uploadedImages.value[index].uploadProgress = progress;
-      if (progress === 100) {
-        setTimeout(() => {
-          uploadedImages.value[index].uploadProgress = null;
-        }, 2000);
-      }
-    },
-  };
-  try {
-    IsRequest.value=true
-    requestStatus.isHaserequest = true;
-    const response = await axios.post(
-        `${Url + "api/Upload/uploadSurveyImage"}`,
-        formData,
-        config
-    );
-    form.value.guidList.push(response.data.results[0]);
-    if ((response.status === 200 && response.data.serverErrors == null)) {
-      ToastNotificationService.success("عکس با موفقیت ارسال شد");
+  MakeResponse.makeServerResponse(CommonServices.SetSurveyImage(formData), false, result => {
+    uploadedImages.value[index].uploadProgress = BaseApi.progress.value;
+    if(result==='ERR_NETWORK'){
+      uploadedImages.value[index].uploadProgress = null;
+      IsRequest.value=false
+      ToastNotificationService.warn("خطا در برقراری شبکه عکس در حافظه ذخیره شد ",8000 );
+          SaveImgDB(file);
     }
-    requestStatus.isHaserequest = false;
-    IsRequest.value=false
-  } catch (error:any) {
-    requestStatus.isHaserequest = false;
-    IsRequest.value=true
+    else if(result && result.results.length>0) {
+      uploadedImages.value[index].uploadProgress = null;
 
-    if (error.code==="ERR_NETWORK"){
-      ToastNotificationService.warn("خطا در برقراری شبکه عکس در حافظه ذخیره شد " );
-      SaveImgDB(file);
+      IsRequest.value=false
+      ToastNotificationService.success("عکس با موفقیت ارسال شد ",);
     }
-    else if(error.response && error.response.status===500){
-      ToastNotificationService.error(" خطای 500 ارسال عکس با خطا روبرو شد لطفا مجدد تلاش کنید  " + error.response.data.serverErrors[0].hint,10000);
-    }
-    else if(error.response && error.response.status===400){
-      ToastNotificationService.error(" خطای 400 ارسال عکس با خطا روبرو شد لطفا با پشتیبانی تماس بگیرید  " + error.response.data.serverErrors[0].hint,10000);
-    }
-  }
+  },false);
+
+
+  // const config = {
+  //   headers: {
+  //     Authorization: "Bearer " + supervisoryInfo.token,
+  //     "Content-Type": "multipart/form-data",
+  //   },
+  //   onUploadProgress: (progressEvent:any) => {
+  //     const progress = Math.round(
+  //         (progressEvent.loaded * 100) / progressEvent.total
+  //     );
+  //     uploadedImages.value[index].uploadProgress = progress;
+  //     if (progress === 100) {
+  //       setTimeout(() => {
+  //         uploadedImages.value[index].uploadProgress = null;
+  //       }, 2000);
+  //     }
+  //   },
+  // };
+  // try {
+  //   IsRequest.value=true
+  //   requestStatus.isHaserequest = true;
+  //   const response = await axios.post(
+  //       `${Url + "api/Upload/uploadSurveyImage"}`,
+  //       formData,
+  //       config
+  //   );
+  //   form.value.guidList.push(response.data.results[0]);
+  //   if ((response.status === 200 && response.data.serverErrors == null)) {
+  //     ToastNotificationService.success("عکس با موفقیت ارسال شد");
+  //   }
+  //   requestStatus.isHaserequest = false;
+  //   IsRequest.value=false
+  // } catch (error:any) {
+  //   requestStatus.isHaserequest = false;
+  //   IsRequest.value=true
+  //
+  //   if (error.code==="ERR_NETWORK"){
+  //     ToastNotificationService.warn("خطا در برقراری شبکه عکس در حافظه ذخیره شد " );
+  //     SaveImgDB(file);
+  //   }
+  //   else if(error.response && error.response.status===500){
+  //     ToastNotificationService.error(" خطای 500 ارسال عکس با خطا روبرو شد لطفا مجدد تلاش کنید  " + error.response.data.serverErrors[0].hint,10000);
+  //   }
+  //   else if(error.response && error.response.status===400){
+  //     ToastNotificationService.error(" خطای 400 ارسال عکس با خطا روبرو شد لطفا با پشتیبانی تماس بگیرید  " + error.response.data.serverErrors[0].hint,10000);
+  //   }
+  // }
 };
 
 
 const openDatabase =()=>{
-  SaveImgoffline.openDatabase()
+  ServicesImg.openDatabase()
 }
 
 const SaveImgDB = (file:any) => {
-  SaveImgoffline.saveImgTodDB(file,route.query.id,InfoMonitored.loanPlan.loanId)
+  ServicesImg.saveImgTodDB(file,route.query.id,InfoMonitored.loanPlan.loanId)
 };
 
 const removeImage = (index:any) => {
@@ -605,7 +622,7 @@ const removeImage = (index:any) => {
   uploadedImages.value.splice(index, 1);
   totalUploadedFiles--;
   form.value.guidList.splice(index, 1);
-  SaveImgoffline.removeImgDB(removedImage.file)
+  ServicesImg.removeImgDB(removedImage.file)
 };
 
 const ConvertNUM = (input) => {

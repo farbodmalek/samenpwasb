@@ -3,7 +3,7 @@ export class BasePage {
     public static config = {};
 
     static getBaseAPI() {
-        return useRuntimeConfig().public.base_API
+        return useRuntimeConfig().public.base_API;
     }
 
     public static getLoggedUser() {
