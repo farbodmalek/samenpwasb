@@ -117,7 +117,7 @@ import {MakeOfflineServiese} from "~/core/Make-offline-serviese"
 import {ToastNotificationService} from "~/core/toast-notification-service";
 import {CommonServices} from "~/core/base/common-services";
 import {MakeResponse} from "~/composables/make-response";
-
+import {ServicesImg} from "~/core/base/Services-Img.ts";
 
 
 const Data = ref();
@@ -176,9 +176,9 @@ const routerTypeHandel = (loanType: number) => {
   if(loanType==1){
     router.push({path: "/survey/Stepone", query: {id: globalCardName, loanType}});
   }
-  if(loanType==2){
+  else if(loanType==2){
     router.push({path: "/survey/Stepone", query: {id: globalCardName, loanType}});
-  } if(loanType==3){
+  } else if(loanType==3){
     router.push({path: "/survey/Stepone", query: {id: globalCardName, loanType}});
   }
 }
@@ -251,6 +251,7 @@ const SetSurvey = async (data: any) => {
 
 const openDataDB = () => {
   MakeOfflineServiese.openDatabase()
+  ServicesImg.openDatabase(true)
 }
 
 onMounted(() => {
