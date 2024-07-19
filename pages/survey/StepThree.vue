@@ -553,7 +553,7 @@ const SetSurveyImage = async (file:any, index:any) => {
     }
     else if(result && result.results.length>0) {
       uploadedImages.value[index].uploadProgress = null;
-
+      form.value.guidList.push(result.results[0]);
       IsRequest.value=false
       ToastNotificationService.success("عکس با موفقیت ارسال شد ",);
     }

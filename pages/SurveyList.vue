@@ -264,6 +264,8 @@ const SetLoanPlanSurvey = async (body: any) => {
   setloun.value=true
   MakeResponse.makeServerResponse(CommonServices.SetLoanPlanSurvey(body), true, result => {
      if(result && result.serverErrors.length==0) {
+       const keyToDelete = `userId_${body.loanPlan.cartableId}`;
+       localStorage.removeItem(keyToDelete);
       ToastNotificationService.success("نظارت با موفقیت ثبت شد");
       setTimeout(()=>{
         location.reload()
