@@ -53,17 +53,17 @@
           <div v-if="index===item1" class="d-flex col-12 col-12 bg-orange-1">
             <button
                 class="bg-white btn btn-light  col-4 d-flex p-2 date-font gap-2 py-4 cursor-pointer justify-content-center  "
-                @click="SetSurveyImage(item)">
+                @click="SetSurveyImage(item,index)">
               ارسال به سرور
               <i class="bi bi-cloud-arrow-up"></i>
             </button>
             <p class=" text-center pt-2  pt-4 date-font data ">
               نظارت انجام شده را حتما پس از برقراری اینترنت ارسال نمایید
             </p>
-            <p v-if="setphoto" class="col-12 bg-orange-1 text-center pt-2  pt-4 position-absolute" style="height: 100%">
+            <p v-if="setphoto[index]" class="col-12 bg-orange-1 text-center pt-2  pt-4 position-absolute" style="height: 100%">
               درحال ارسال عکس لطفا صبر کنید
             </p>
-            <p v-if="setloun" class="col-12 bg-orange-1 text-center pt-2  pt-4 position-absolute" style="height: 100%">
+            <p v-if="setloun[index]" class="col-12 bg-orange-1 text-center pt-2  pt-4 position-absolute" style="height: 100%">
               درحال ارسال اطلاعات نظارت صبر کنید
             </p>
           </div>
@@ -123,8 +123,8 @@ const Data = ref();
 const searchUser = ref('');
 const router = useRouter();
 const condition = ref(false)
-const setphoto = ref(false)
-const setloun = ref(false)
+const setloun = ref<boolean[]>([]);
+const setphoto = ref<boolean[]>([]);
 const showsend = ref([]);
 const visible = ref(false)
 let images: any[] = [];
@@ -216,12 +216,15 @@ const GetCartables = () => {
       const Cartables = result.results.filter((item: any) => item.expireDate.substring(0, 10) >= todayDateString);
       localStorage.setItem('Cartables', JSON.stringify(Cartables));
       if(Cartables.length>0){
+        FindOfflineForm()
         Data.value = Cartables
       }else{
+        FindOfflineForm()
         condition.value = true
       }
     }
     else if (result === "ERR_NETWORK") {
+      FindOfflineForm()
       const GetCartable = JSON.parse(<any>localStorage.getItem('Cartables'));
       Data.value = GetCartable
     }
@@ -236,8 +239,9 @@ const GetSurveysList = () => {
   },false);
 };
 
-const SetSurveyImage = async (data:any) => {
-  setphoto.value=true
+const SetSurveyImage = async (data:any,id:number) => {
+  console.log(id)
+  setphoto.value[id] = true;
   const formData = new FormData();
   const filteredImages = images.filter((i) => i.userId == data.id);
   filteredImages.map((image, index)=>{
@@ -247,33 +251,32 @@ const SetSurveyImage = async (data:any) => {
   MakeResponse.makeServerResponse(CommonServices.SetSurveyImage(formData), false, result => {
     const LoanPlanSurvey = JSON.parse(<any>localStorage.getItem(`userId_${data.id}`));
     if(result && result.results.length>0) {
-      setphoto.value=false
+      setphoto.value[id] = false;
       LoanPlanSurvey.survey.guidList=result.results
       ToastNotificationService.success("عکس با موفقیت ارسال شد ",);
       if (result.results.length>0){
-        SetLoanPlanSurvey(LoanPlanSurvey)
+        SetLoanPlanSurvey(LoanPlanSurvey,id)
       }
     }else{
-      setphoto.value=false
+      setphoto.value[id] = false;
     }
   },false);
 
 };
 
-const SetLoanPlanSurvey = async (body: any) => {
-  setloun.value=true
+const SetLoanPlanSurvey = async (body: any,id:number) => {
+  setloun.value[id] = true;
   MakeResponse.makeServerResponse(CommonServices.SetLoanPlanSurvey(body), true, result => {
      if(result && result.serverErrors.length==0) {
        const keyToDelete = `userId_${body.loanPlan.cartableId}`;
        localStorage.removeItem(keyToDelete);
-      ToastNotificationService.success("نظارت با موفقیت ثبت شد");
-      setTimeout(()=>{
-        location.reload()
-      },3000)
-       setloun.value=false
+       ServicesImg.RemoveAllPhotoDB(body.loanPlan.cartableId)
+       GetCartables()
+       setloun.value[id] = false;
+       ToastNotificationService.success("نظارت با موفقیت ثبت شد");
     }
      else{
-       setloun.value=false
+       setloun.value[id] = false;
      }
 
   },true);
@@ -291,7 +294,6 @@ const openDataDB = () => {
 
 onMounted(() => {
   GetCartables()
-  FindOfflineForm()
   GetSurveysList()
   openDataDB()
   ClearStorge()

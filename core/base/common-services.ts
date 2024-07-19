@@ -26,12 +26,12 @@ export class CommonServices extends BaseApi {
     }
 
     static SetLoanPlanSurvey(body: any) {
-        const url = this.getBaseAPI() + 'api/survey/SetLoanPlanSurvey2';
+        const url = this.getBaseAPI() + 'api/survey/SetLoanPlanSurvey';
         return BaseApi.postApi(url, body);
     }
 
     static async SetSurveyImage(body: any) {
-        const url = this.getBaseAPI() + 'api/Upload/uploadSurveyImage2';
+        const url = this.getBaseAPI() + 'api/Upload/uploadSurveyImage';
         await this.getLoggedUser();
         return BaseApi.postApi(url, body)
     }
