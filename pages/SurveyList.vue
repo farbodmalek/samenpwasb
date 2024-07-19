@@ -125,7 +125,7 @@ const router = useRouter();
 const condition = ref(false)
 const setloun = ref<boolean[]>([]);
 const setphoto = ref<boolean[]>([]);
-const showsend = ref([]);
+const showsend = <any>ref([]);
 const visible = ref(false)
 let images: any[] = [];
 let globalCardName = 0;
@@ -206,6 +206,7 @@ const ClearStorge = () => {
 
 const FindOfflineForm = () => {
   CommonServices.FindOfflineForm((result: any) => {
+    console.log(result)
     showsend.value.push(result);
   })
 };
@@ -216,19 +217,19 @@ const GetCartables = () => {
       const Cartables = result.results.filter((item: any) => item.expireDate.substring(0, 10) >= todayDateString);
       localStorage.setItem('Cartables', JSON.stringify(Cartables));
       if(Cartables.length>0){
-        FindOfflineForm()
+
         Data.value = Cartables
       }else{
-        FindOfflineForm()
+
         condition.value = true
       }
     }
     else if (result === "ERR_NETWORK") {
-      FindOfflineForm()
       const GetCartable = JSON.parse(<any>localStorage.getItem('Cartables'));
       Data.value = GetCartable
     }
   },true);
+  FindOfflineForm()
 }
 
 const GetSurveysList = () => {
@@ -271,6 +272,7 @@ const SetLoanPlanSurvey = async (body: any,id:number) => {
        const keyToDelete = `userId_${body.loanPlan.cartableId}`;
        localStorage.removeItem(keyToDelete);
        ServicesImg.RemoveAllPhotoDB(body.loanPlan.cartableId)
+       showsend.value=null
        GetCartables()
        setloun.value[id] = false;
        ToastNotificationService.success("نظارت با موفقیت ثبت شد");
