@@ -49,23 +49,22 @@
             </p>
           </div>
         </div>
-
         <div v-for="(item1 ,i) in showsend " :key="i" class='d-flex  position-relative'>
           <div v-if="index===item1" class="d-flex col-12 col-12 bg-orange-1">
             <button
                 class="bg-white btn btn-light  col-4 d-flex p-2 date-font gap-2 py-4 cursor-pointer justify-content-center  "
-                @click="SetSurvey(item)">
+                @click="SetSurveyImage(item)">
               ارسال به سرور
               <i class="bi bi-cloud-arrow-up"></i>
             </button>
             <p class=" text-center pt-2  pt-4 date-font data ">
               نظارت انجام شده را حتما پس از برقراری اینترنت ارسال نمایید
             </p>
-            <p v-if="getInfo" class="col-12 bg-orange-1 text-center pt-2  pt-4 position-absolute" style="height: 100%">
-              درحال دریافت اطلاعات لطفا صبر کنید
-            </p>
-            <p v-if="sendphoto" class="col-12 bg-orange-1 text-center pt-2  pt-4 position-absolute" style="height: 100%">
+            <p v-if="setphoto" class="col-12 bg-orange-1 text-center pt-2  pt-4 position-absolute" style="height: 100%">
               درحال ارسال عکس لطفا صبر کنید
+            </p>
+            <p v-if="setloun" class="col-12 bg-orange-1 text-center pt-2  pt-4 position-absolute" style="height: 100%">
+              درحال ارسال اطلاعات نظارت صبر کنید
             </p>
           </div>
         </div>
@@ -124,10 +123,11 @@ const Data = ref();
 const searchUser = ref('');
 const router = useRouter();
 const condition = ref(false)
-const sendphoto = ref(false)
-const getInfo = ref(false)
+const setphoto = ref(false)
+const setloun = ref(false)
 const showsend = ref([]);
 const visible = ref(false)
+let images: any[] = [];
 let globalCardName = 0;
 const isModalVisible = ref(false);
 const currentDate = new Date();
@@ -236,22 +236,55 @@ const GetSurveysList = () => {
   },false);
 };
 
-const SetSurvey = async (data: any) => {
-  await MakeOfflineServiese.SetSurveyImage(data, (result: { getinfo: any; sendphoto: any; }) => {
-    getInfo.value = result.getinfo;
-    sendphoto.value = result.sendphoto;
-  });
-  await MakeOfflineServiese.SetLoanPlanSurvey((result: { getinfo: any; sendphoto: any; iSSend: any; }) => {
-    getInfo.value = result.getinfo;
-    sendphoto.value = result.sendphoto;
-    visible.value = result.iSSend
-    // setTimeout(()=>{ location.reload()},5000)
-  });
+const SetSurveyImage = async (data:any) => {
+  setphoto.value=true
+  const formData = new FormData();
+  const filteredImages = images.filter((i) => i.userId == data.id);
+  filteredImages.map((image, index)=>{
+    formData.append("image",image.file.file);
+  })
+
+  MakeResponse.makeServerResponse(CommonServices.SetSurveyImage(formData), false, result => {
+    const LoanPlanSurvey = JSON.parse(<any>localStorage.getItem(`userId_${data.id}`));
+    if(result && result.results.length>0) {
+      setphoto.value=false
+      LoanPlanSurvey.survey.guidList=result.results
+      ToastNotificationService.success("عکس با موفقیت ارسال شد ",);
+      if (result.results.length>0){
+        SetLoanPlanSurvey(LoanPlanSurvey)
+      }
+    }else{
+      setphoto.value=false
+    }
+  },false);
+
 };
 
+const SetLoanPlanSurvey = async (body: any) => {
+  setloun.value=true
+  MakeResponse.makeServerResponse(CommonServices.SetLoanPlanSurvey(body), true, result => {
+     if(result && result.serverErrors.length==0) {
+      ToastNotificationService.success("نظارت با موفقیت ثبت شد");
+      setTimeout(()=>{
+        location.reload()
+      },3000)
+       setloun.value=false
+    }
+     else{
+       setloun.value=false
+     }
+
+  },true);
+}
+
+
+
+
+
 const openDataDB = () => {
-  MakeOfflineServiese.openDatabase()
-  ServicesImg.openDatabase(true)
+  ServicesImg.openDatabase(true,result => {
+    images=result
+  })
 }
 
 onMounted(() => {

@@ -610,7 +610,7 @@ const SetSurveyImage = async (file:any, index:any) => {
 
 
 const openDatabase =()=>{
-  ServicesImg.openDatabase(false)
+  ServicesImg.openDatabase()
 }
 
 const SaveImgDB = (file:any) => {
