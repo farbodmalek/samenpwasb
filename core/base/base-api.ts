@@ -19,7 +19,6 @@ export class BaseApi extends BasePage {
         };
         console.log()
          return await axios.post(url,body,this.con).then((r=>r.data))
-
     }
 
     public static async getApi (url:string){
