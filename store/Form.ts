@@ -1,13 +1,10 @@
 
 import {defineStore} from "pinia";
-
-
-
 export const Useform = defineStore('form', {
   state: () => (
       {
         addressform:{},
-        form: {
+        form:<any> {
           loanPlan:{},
           survey:{
             planIndustrialSurvey:null,
@@ -27,15 +24,14 @@ export const Useform = defineStore('form', {
       }
   ),
   actions: {
-    getFormStepOne(data:any) {
-      this.form.loanPlan =  data
+    SetFormOne(data:any) {
       this.form.loanPlan = data;
       this.form.survey.isValidPlanNo = data.isValidPlanNo;
       this.form.LoanPlanNo.UserPlanNoText = data.UserPlanNoText;
       this.form.LoanPlanNo.UserOtherPlanNo = data.UserOtherPlanNo;
       this.form.LoanPlanNo.LoanId = data.LoanId;
     },
-    getFormStepTow(data:any){
+    SetFormTow(data:any){
       this.form.loanPlan.insuranceTypeId = data.insuranceTypeId;
       this.form.loanPlan.workShopCode = data.workShopCode;
       this.form.survey.longitude = this.form.loanPlan.longitude;
@@ -84,17 +80,17 @@ export const Useform = defineStore('form', {
         };
       }
     },
-    loadFormData() {
+    LoadForm() {
       const form1 = JSON.parse(<any>localStorage.getItem('firPreForm'));
       const form2 = JSON.parse(<any>localStorage.getItem('SecPreForm'));
       if (form1 && form2) {
-        this.getFormStepOne(form1)
-        this.getFormStepTow(form2)
+        this.SetFormOne(form1)
+        this.SetFormTow(form2)
       }else if(form1){
-        this.getFormStepOne(form1)
+        this.SetFormOne(form1)
       }
     },
-    getAddress(data:any){
+    SetAddress(data:any){
       this.addressform=data
     }
   }

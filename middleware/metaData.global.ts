@@ -1,5 +1,5 @@
 export default defineNuxtRouteMiddleware((to, from) => {
-  const SupervisoryInfo = localStorage.getItem("SupervisoryInfo");
+  const SupervisoryInfo = localStorage.getItem("User-data");
   const supervisoryInfo = SupervisoryInfo ? JSON.parse(SupervisoryInfo) : {}
   const token = supervisoryInfo.token
   const router = useRouter();

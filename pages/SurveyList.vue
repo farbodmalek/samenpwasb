@@ -1,39 +1,4 @@
 <template>
-  <div v-if="UpdateModal===true" class="modal-container">
-    <div class="modal-home col-10 text-center">
-      <div class="col-12 d-flex justify-content-end">
-        <div class="col-12 d-flex justify-content-start gap-2">
-          <span
-              class=" rounded-5 font1 col-1 text-black   "
-              type="button"
-              @click="UpdateModalHandle">
-   &#9932;
-          </span>
-        </div>
-      </div>
-      <h1 class="text-center fs-6 my-3">
-        نسخه جدید اپلیکیشن نظارت
-      </h1>
-      <p class="text-center">
-        بهبود عملکرد
-      </p>
-      <p class="text-center">
-        اضافه شدن مسیر یابی
-      </p>
-      <p class="text-center">
-        بهبود عملکرد در حالت آفلاین
-      </p>
-      <p class="text-center">
-        گرفتن عکس از دوربین وآپلود
-      </p>
-      <p class="text-center">
-        انتخاب چند تایی عکس از گالری
-      </p>
-      <p class="text-center">
-        اضافه شدن آخرین نظارت ثبت شده به پرونده ها </p>
-    </div>
-  </div>
-
   <div class="page-heading">
     <div class="page-title position-sticky top-0 z-20 bg-gray-1 mb-2 ">
       <div class="">
@@ -50,7 +15,7 @@
 
     <section  class="mx-3 d-flex flex-column gap-3">
       <div v-for="(item, index) in Data" :key="index" class="col-md-6  col-sm-12 d-flex flex-column">
-        <div :class="getItemClass(item.loanPlan.id)"
+        <div :class="{'background-card':item.loanPlan.id===0 }"
              class="shadow-lg bg-white border-top"
              @click="navigateToCardDetail(item.id,item.loanPlan.id,item.loanDetail.loanEconomicTypeId)">
           <div class="p-3">
@@ -84,23 +49,22 @@
             </p>
           </div>
         </div>
-
         <div v-for="(item1 ,i) in showsend " :key="i" class='d-flex  position-relative'>
-          <div v-if="index===item1" class="d-flex col-12">
+          <div v-if="index===item1" class="d-flex col-12 col-12 bg-orange-1">
             <button
                 class="bg-white btn btn-light  col-4 d-flex p-2 date-font gap-2 py-4 cursor-pointer justify-content-center  "
-                @click="SetSurvey(item)">
+                @click="SetSurveyImage(item,index)">
               ارسال به سرور
               <i class="bi bi-cloud-arrow-up"></i>
             </button>
-            <p class="errorserver text-center pt-2  pt-4 date-font data ">
+            <p class=" text-center pt-2  pt-4 date-font data ">
               نظارت انجام شده را حتما پس از برقراری اینترنت ارسال نمایید
             </p>
-            <p v-if="getInfo" class="errorserver text-center pt-2  pt-4 position-absolute" style="height: 100%">
-              درحال دریافت اطلاعات لطفا صبر کنید
-            </p>
-            <p v-if="sendphoto" class="errorserver text-center pt-2  pt-4 position-absolute" style="height: 100%">
+            <p v-if="setphoto[index]" class="col-12 bg-orange-1 text-center pt-2  pt-4 position-absolute" style="height: 100%">
               درحال ارسال عکس لطفا صبر کنید
+            </p>
+            <p v-if="setloun[index]" class="col-12 bg-orange-1 text-center pt-2  pt-4 position-absolute" style="height: 100%">
+              درحال ارسال اطلاعات نظارت صبر کنید
             </p>
           </div>
         </div>
@@ -129,13 +93,13 @@
       header="نوع نظارت را مشخص فرمایید"
       modal>
     <div class="d-flex flex-column p-2 justify-content-center align-items-center  ">
-      <div class="col-12 text-center border border-secondary p-3" @click="routerhusbandry(1)">
+      <div class="col-12 text-center border border-secondary p-3" @click="routerTypeHandel(1)">
         <span>دامپروری</span>
       </div>
-      <div class="col-12 text-center border border-secondary p-3" @click="routergarden(2)">
+      <div class="col-12 text-center border border-secondary p-3" @click="routerTypeHandel(2)">
         <span>زراعی/باغی</span>
       </div>
-      <div class="col-12 text-center border border-secondary p-3" @click="routerservice(3)">
+      <div class="col-12 text-center border border-secondary p-3" @click="routerTypeHandel(3)">
         <span>خدمات</span>
       </div>
     </div>
@@ -148,24 +112,29 @@
 
 <script lang="ts" setup>
 import {UseLoading} from "../store/loading-store";
-import {MakeResponse} from "~/core/make-response"
 import {MakeOfflineServiese} from "~/core/Make-offline-serviese"
 import {ToastNotificationService} from "~/core/toast-notification-service";
+import {CommonServices} from "~/core/base/common-services";
+import {MakeResponse} from "~/composables/make-response";
+import {ServicesImg} from "~/core/base/Services-Img.ts";
+
 
 const Data = ref();
 const searchUser = ref('');
 const router = useRouter();
 const condition = ref(false)
-const sendphoto = ref(false)
-const getInfo = ref(false)
-const showsend = ref([]);
+const setloun = ref<boolean[]>([]);
+const setphoto = ref<boolean[]>([]);
+const showsend = <any>ref([]);
 const visible = ref(false)
+let images: any[] = [];
 let globalCardName = 0;
 const isModalVisible = ref(false);
-const UpdateModal = ref(localStorage.getItem('updatemodal') ? localStorage.getItem('updatemodal') : true)
+const currentDate = new Date();
+const todayDateString = currentDate.toISOString().split('T')[0]
 
 watch(searchUser, (newVal: any,) => {
-  const data = JSON.parse(<any>localStorage.getItem("GetCartables"));
+  const data = JSON.parse(<any>localStorage.getItem("Cartables"));
   if (newVal) {
     const foundData = data.filter((item: any) => {
       return (
@@ -181,17 +150,6 @@ watch(searchUser, (newVal: any,) => {
     Data.value = data;
   }
 });
-
-const UpdateModalHandle = () => {
-  localStorage.setItem('updatemodal', false)
-  UpdateModal.value = false
-}
-
-const getItemClass = (item: number) => {
-  return {
-    'background-card': item == 0
-  };
-};
 
 const closeDialog = () => {
   location.reload()
@@ -214,17 +172,17 @@ const navigateToCardDetail = (id: number, loanPlanId: number, loanType: number) 
   }
 };
 
-const routergarden = (loanType: number) => {
-  router.push({path: "/survey/Stepone", query: {id: globalCardName, loanType}});
+const routerTypeHandel = (loanType: number) => {
+  if(loanType==1){
+    router.push({path: "/survey/Stepone", query: {id: globalCardName, loanType}});
+  }
+  else if(loanType==2){
+    router.push({path: "/survey/Stepone", query: {id: globalCardName, loanType}});
+  } else if(loanType==3){
+    router.push({path: "/survey/Stepone", query: {id: globalCardName, loanType}});
+  }
 }
 
-const routerhusbandry = (loanType: number) => {
-  router.push({path: "/survey/Stepone", query: {id: globalCardName, loanType}});
-}
-
-const routerservice = (loanType: number) => {
-  router.push({path: "/survey/Stepone", query: {id: globalCardName, loanType}});
-}
 
 const convert = (number: any) => {
   switch (number) {
@@ -241,52 +199,103 @@ const convert = (number: any) => {
   }
 }
 
-const GetSurveysList = () => {
-  MakeResponse.GetSurveysList()
-};
 
 const ClearStorge = () => {
-  MakeResponse.Clearlocalform()
+  CommonServices.Clearform()
 };
 
 const FindOfflineForm = () => {
-  MakeResponse.FindOfflineForm((result: any) => {
+  CommonServices.FindOfflineForm((result: any) => {
+    console.log(result)
     showsend.value.push(result);
   })
 };
 
 const GetCartables = () => {
-  MakeResponse.GetCartables(UseLoading(), (result: string | any[]) => {
-    if (result && result.length === 0) {
-      condition.value = true
-    } else if (result.code === "ERR_NETWORK") {
-      const GetCartable = JSON.parse(<any>localStorage.getItem('GetCartables'));
-      Data.value = GetCartable
-    } else {
-      Data.value = result
+  MakeResponse.makeServerResponse(CommonServices.GetCartables(), true, result => {
+    if ( result && result.results && result.results.length>0) {
+      const Cartables = result.results.filter((item: any) => item.expireDate.substring(0, 10) >= todayDateString);
+      localStorage.setItem('Cartables', JSON.stringify(Cartables));
+      if(Cartables.length>0){
+
+        Data.value = Cartables
+      }else{
+
+        condition.value = true
+      }
     }
-  })
+    else if (result === "ERR_NETWORK") {
+      const GetCartable = JSON.parse(<any>localStorage.getItem('Cartables'));
+      Data.value = GetCartable
+    }
+  },true);
+  FindOfflineForm()
 }
 
-const SetSurvey = async (data: any) => {
-  await MakeOfflineServiese.SetSurveyImage(data, (result: { getinfo: any; sendphoto: any; }) => {
-    getInfo.value = result.getinfo;
-    sendphoto.value = result.sendphoto;
-  });
-  await MakeOfflineServiese.SetLoanPlanSurvey((result: { getinfo: any; sendphoto: any; iSSend: any; }) => {
-    getInfo.value = result.getinfo;
-    sendphoto.value = result.sendphoto;
-    visible.value = result.iSSend
-  });
+const GetSurveysList = () => {
+  MakeResponse.makeServerResponse(CommonServices.GetSurveys(), true, result => {
+    if ( result && result.results) {
+      localStorage.setItem('SurveysList', JSON.stringify(result.results));
+    }
+  },false);
 };
 
+const SetSurveyImage = async (data:any,id:number) => {
+  console.log(id)
+  setphoto.value[id] = true;
+  const formData = new FormData();
+  const filteredImages = images.filter((i) => i.userId == data.id);
+  filteredImages.map((image, index)=>{
+    formData.append("image",image.file.file);
+  })
+
+  MakeResponse.makeServerResponse(CommonServices.SetSurveyImage(formData), false, result => {
+    const LoanPlanSurvey = JSON.parse(<any>localStorage.getItem(`userId_${data.id}`));
+    if(result && result.results.length>0) {
+      setphoto.value[id] = false;
+      LoanPlanSurvey.survey.guidList=result.results
+      ToastNotificationService.success("عکس با موفقیت ارسال شد ",);
+      if (result.results.length>0){
+        SetLoanPlanSurvey(LoanPlanSurvey,id)
+      }
+    }else{
+      setphoto.value[id] = false;
+    }
+  },false);
+
+};
+
+const SetLoanPlanSurvey = async (body: any,id:number) => {
+  setloun.value[id] = true;
+  MakeResponse.makeServerResponse(CommonServices.SetLoanPlanSurvey(body), true, result => {
+     if(result && result.serverErrors.length==0) {
+       const keyToDelete = `userId_${body.loanPlan.cartableId}`;
+       localStorage.removeItem(keyToDelete);
+       ServicesImg.RemoveAllPhotoDB(body.loanPlan.cartableId)
+       showsend.value=null
+       GetCartables()
+       setloun.value[id] = false;
+       ToastNotificationService.success("نظارت با موفقیت ثبت شد");
+    }
+     else{
+       setloun.value[id] = false;
+     }
+
+  },true);
+}
+
+
+
+
+
 const openDataDB = () => {
-  MakeOfflineServiese.openDatabase()
+  ServicesImg.openDatabase(true,result => {
+    images=result
+  })
 }
 
 onMounted(() => {
   GetCartables()
-  FindOfflineForm()
   GetSurveysList()
   openDataDB()
   ClearStorge()
@@ -294,43 +303,5 @@ onMounted(() => {
 
 </script>
 <style lang="scss">
-.background {
-  background-color: #c2c0c0;
-}
 
-
-.card {
-  border-radius: 0px 50px 0px 0px;
-}
-
-
-.background-card {
-  background-color: #e5e5e5 !important;
-  border-top-right-radius: 50px;
-}
-
-.border-top {
-  border-top-right-radius: 50px;
-}
-
-.modal-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-
-.modal-home {
-  background: white;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-}
 </style>

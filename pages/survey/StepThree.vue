@@ -109,7 +109,6 @@
                 style="height: 75px"
                 :class="{'p-invalid-textarea': v$.customerOffer.$invalid && submitted}"
                 v-model="form.customerOffer"/>
-      <record/>
     </section>
 
     <section class="px-1 form-group">
@@ -200,18 +199,17 @@ import {useVuelidate} from "@vuelidate/core";
 import {ToastNotificationService} from "~/core/toast-notification-service";
 import {UseLoading} from "@/store/loading-store";
 import surveyHeader from "~/components/Layouts/surveyHeader.vue";
-import record from "~/components/record-voise.vue";
+import {MakeResponse} from "~/composables/make-response";
+import {CommonServices} from "~/core/base/common-services";
+import {ServicesImg} from "~/core/base/Services-Img.ts";
+import {BaseApi} from "~/core/base/base-api.ts";
+
 
 
 definePageMeta({
   layout: "survey",
 });
 
-
-
-const Setform=()=>{
-  localStorage.setItem("FinalRegistrationform", JSON.stringify(form.value));
-}
 
 const optionsApproval = ref([
   {name: 'ندارد ', value: 0},
@@ -239,20 +237,21 @@ const route = useRoute();
 const fileInput = ref<any>([]);
 const uploadedImages = ref<any>([]);
 let InfoMonitored = <any>ref('');
-let mainform = reactive({})
+let mainform = <any>reactive({})
 const ConstructionTab = ref(0);
 let totalUploadedFiles = 0;
+let db:any;
 const currentTab = ref();
 const EquipmentTab = ref();
 const submitted = ref(false);
 const visible = ref(false);
 const visibleConfirm = ref(false);
-const SurveysList = JSON.parse(<any>localStorage.getItem("GetSurveysList"));
+const SurveysList = JSON.parse(<any>localStorage.getItem("SurveysList"));
 const SurveyBasedata = JSON.parse(<any>localStorage.getItem("SurveyBaseInfo"));
-const supervisoryInfo = JSON.parse(<any>localStorage.getItem("SupervisoryInfo"))
+const supervisoryInfo = JSON.parse(<any>localStorage.getItem("User-data"))
 const FinalRegistrationform = localStorage.getItem("FinalRegistrationform");
 const FinalRegistrationForm = FinalRegistrationform ? JSON.parse(FinalRegistrationform) : {};
-const Cartables = JSON.parse(<any>localStorage.getItem("GetCartables"));
+const Cartables = JSON.parse(<any>localStorage.getItem("Cartables"));
 const targetObject = Cartables.find((item: any) => item.id === Number(route.query.id));
 if (targetObject) {
   InfoMonitored = targetObject;
@@ -274,14 +273,12 @@ const form = ref({
   constructionDescription: FinalRegistrationForm.hasOwnProperty("constructionDescription") ? FinalRegistrationForm.constructionDescription : LasteSurvey ? LasteSurvey.constructionDescription : null,
   equipmentTypeId: FinalRegistrationForm.hasOwnProperty("equipmentTypeId") ? FinalRegistrationForm.equipmentTypeId : LasteSurvey ? LasteSurvey.equipmentTypeId : null,
   equipmentDescription: FinalRegistrationForm.hasOwnProperty("equipmentDescription") ? FinalRegistrationForm.equipmentDescription : LasteSurvey ? LasteSurvey.equipmentDescription : null,
-  confirmation: null,
   cartableId: InfoMonitored.loanPlan.cartableId,
   surveyDate: surveyDate,
   userId: InfoMonitored.userId,
+  confirmation: null,
   guidList: [],
 });
-
-
 
 const rules = computed(() => {
   return {
@@ -407,8 +404,6 @@ const EquipmentBoughtHandel = (Number: number) => {
   }
 };
 
-
-
 const submit = () => {
   mainform = store.form
   submitted.value = true
@@ -419,7 +414,7 @@ const submit = () => {
       ToastNotificationService.error("شرایط ثبت نظارت حتما باید انتخاب شود");
     } else {
       mainform.survey.constructionApproval = form.value.constructionApproval;
-      mainform.survey.surveyReport = form.value.surveyReport+"-";
+      mainform.survey.surveyReport = form.value.surveyReport+"..";
       mainform.survey.customerOffer = form.value.customerOffer;
       mainform.survey.isEquipmentBought = form.value.isEquipmentBought;
       mainform.survey.isFactorMatch = form.value.isFactorMatch;
@@ -432,8 +427,12 @@ const submit = () => {
       mainform.survey.guidList = form.value.guidList;
       mainform.survey.userId = form.value.userId;
       mainform.survey.surveyDate = form.value.surveyDate;
-      localStorage.setItem("FinalRegistrationform", JSON.stringify(form.value));
-      SendForm(mainform)
+      if (IsRequest.value == false) {
+        SetLoanPlanSurvey(mainform)
+      }
+      else {
+          ToastNotificationService.warn("درحال ارسال عکس لطفا صبر کنید");
+       }
     }
 
   } else {
@@ -441,62 +440,27 @@ const submit = () => {
   }
 };
 
-const SendForm = async (data: any) => {
-  try {
-    if (requestStatus.isHaserequest == false) {
-      loadingMethod.getLoadingShow()
-      const config = {headers: {Authorization: "Bearer " + supervisoryInfo.token}};
-      const response = await axios
-          .post(
-              `${Url + "api/survey/SetLoanPlanSurvey"}`,
-              data,
-              config
-          )
-          .then((response:any) => {
-            loadingMethod.getLoadingHide()
-            if (response.status === 200 && response.data.result == null) {
-
-              console.log( store.form)
-              ToastNotificationService.warn(response.data.serverErrors[0].hint);
-            }
-            else if(response.status === 200 && response.data.serverErrors.length==0) {
-              ToastNotificationService.success("نظارت با موفقیت ثبت شد");
-              setTimeout(() => {
-                router.push("/");
-                store.form.survey.planIndustrialSurvey=null
-                store.form.survey.planGardenSurvey=null
-                store.form.survey.planLivestockSurvey=null
-                store.form.survey.planServiceSurvey=null
-                localStorage.removeItem("firPreForm");
-                localStorage.removeItem("SecPreForm");
-                localStorage.removeItem("FinalRegistrationform");
-
-              }, 8000);
-            }
-          });
-      loadingMethod.getLoadingHide()
-    } else {
-      ToastNotificationService.warn("درحال ارسال عکس لطفا صبر کنید");
-    }
-  } catch (error:any) {
-    loadingMethod.getLoadingHide()
-    if(error.response && error.response.status===500){
-      ToastNotificationService.error("خطای 500 سرور لطفا  مجددا تلاش کنید " + error.response.data.serverErrors[0].hint,10000);
-    }
-    else if(error.response && error.response.status===400){
-      const [firstErrorKey, firstErrorMessages] :any = Object.entries(error.response.data.errors)[0];
-      const firstMessage = firstErrorMessages[0];
-      ToastNotificationService.error(  `${firstMessage}ارور 400 خطای داخلی سیستم لطفا با پشتیبانی تماس بگیرید`, 10000);
-    }
-    else if(error.code==="ERR_NETWORK"){
-      ToastNotificationService.error("خطا در برقراری ارتباط " );
+const SetLoanPlanSurvey = async (body: any) => {
+  MakeResponse.makeServerResponse(CommonServices.SetLoanPlanSurvey(body), true, result => {
+    if(result==='ERR_NETWORK'){
       visible.value = true
     }
-  }
+    else if(result && result.serverErrors.length==0) {
+                  ToastNotificationService.success("نظارت با موفقیت ثبت شد");
+                  setTimeout(() => {
+                    router.push("/");
+                    store.form.survey.planIndustrialSurvey=null
+                    store.form.survey.planGardenSurvey=null
+                    store.form.survey.planLivestockSurvey=null
+                    store.form.survey.planServiceSurvey=null
+                    localStorage.removeItem("firPreForm");
+                    localStorage.removeItem("SecPreForm");
+                    localStorage.removeItem("FinalRegistrationform");
+
+                  }, 8000);
+                }
+  },true);
 }
-
-
-
 
 
 const SendOffline = () => {
@@ -509,7 +473,9 @@ const SendOffline = () => {
   visibleConfirm.value = true;
 };
 
-
+const Setform=()=>{
+  localStorage.setItem("FinalRegistrationform", JSON.stringify(form.value));
+}
 
 const handleFileUpload = async (event:any) => {
   const files = fileInput.value.files;
@@ -574,110 +540,81 @@ const compressImage = (file:any) => {
 };
 
 const SetSurveyImage = async (file:any, index:any) => {
+  IsRequest.value=true
   const formData = new FormData();
   formData.append("image", file.file);
-  const config = {
-    headers: {
-      Authorization: "Bearer " + supervisoryInfo.token,
-      "Content-Type": "multipart/form-data",
-    },
-    onUploadProgress: (progressEvent:any) => {
-      const progress = Math.round(
-          (progressEvent.loaded * 100) / progressEvent.total
-      );
-      uploadedImages.value[index].uploadProgress = progress;
-      if (progress === 100) {
-        setTimeout(() => {
-          uploadedImages.value[index].uploadProgress = null;
-        }, 2000);
-      }
-    },
-  };
-  try {
-    IsRequest.value=true
-    requestStatus.isHaserequest = true;
-    const response = await axios.post(
-        `${Url + "api/Upload/uploadSurveyImage"}`,
-        formData,
-        config
-    );
-    form.value.guidList.push(response.data.results[0]);
-    if ((response.status === 200 && response.data.serverErrors == null)) {
-      ToastNotificationService.success("عکس با موفقیت ارسال شد");
+  MakeResponse.makeServerResponse(CommonServices.SetSurveyImage(formData), false, result => {
+    uploadedImages.value[index].uploadProgress = BaseApi.progress.value;
+    if(result==='ERR_NETWORK'){
+      uploadedImages.value[index].uploadProgress = null;
+      IsRequest.value=false
+      ToastNotificationService.warn("خطا در برقراری شبکه عکس در حافظه ذخیره شد ",8000 );
+          SaveImgDB(file);
     }
-    requestStatus.isHaserequest = false;
-    IsRequest.value=false
-  } catch (error:any) {
-    requestStatus.isHaserequest = false;
-    IsRequest.value=true
+    else if(result && result.results.length>0) {
+      uploadedImages.value[index].uploadProgress = null;
+      form.value.guidList.push(result.results[0]);
+      IsRequest.value=false
+      ToastNotificationService.success("عکس با موفقیت ارسال شد ",);
+    }
+  },false);
 
-    if (error.code==="ERR_NETWORK"){
-      ToastNotificationService.warn("خطا در برقراری شبکه عکس در حافظه ذخیره شد " );
-      saveImageToIndexedDB(file);
-    }
-    else if(error.response && error.response.status===500){
-      ToastNotificationService.error(" خطای 500 ارسال عکس با خطا روبرو شد لطفا مجدد تلاش کنید  " + error.response.data.serverErrors[0].hint,10000);
-    }
-    else if(error.response && error.response.status===500){
-      ToastNotificationService.error(" خطای 400 ارسال عکس با خطا روبرو شد لطفا با پشتیبانی تماس بگیرید  " + error.response.data.serverErrors[0].hint,10000);
-    }
-  }
+
+  // const config = {
+  //   headers: {
+  //     Authorization: "Bearer " + supervisoryInfo.token,
+  //     "Content-Type": "multipart/form-data",
+  //   },
+  //   onUploadProgress: (progressEvent:any) => {
+  //     const progress = Math.round(
+  //         (progressEvent.loaded * 100) / progressEvent.total
+  //     );
+  //     uploadedImages.value[index].uploadProgress = progress;
+  //     if (progress === 100) {
+  //       setTimeout(() => {
+  //         uploadedImages.value[index].uploadProgress = null;
+  //       }, 2000);
+  //     }
+  //   },
+  // };
+  // try {
+  //   IsRequest.value=true
+  //   requestStatus.isHaserequest = true;
+  //   const response = await axios.post(
+  //       `${Url + "api/Upload/uploadSurveyImage"}`,
+  //       formData,
+  //       config
+  //   );
+  //   form.value.guidList.push(response.data.results[0]);
+  //   if ((response.status === 200 && response.data.serverErrors == null)) {
+  //     ToastNotificationService.success("عکس با موفقیت ارسال شد");
+  //   }
+  //   requestStatus.isHaserequest = false;
+  //   IsRequest.value=false
+  // } catch (error:any) {
+  //   requestStatus.isHaserequest = false;
+  //   IsRequest.value=true
+  //
+  //   if (error.code==="ERR_NETWORK"){
+  //     ToastNotificationService.warn("خطا در برقراری شبکه عکس در حافظه ذخیره شد " );
+  //     SaveImgDB(file);
+  //   }
+  //   else if(error.response && error.response.status===500){
+  //     ToastNotificationService.error(" خطای 500 ارسال عکس با خطا روبرو شد لطفا مجدد تلاش کنید  " + error.response.data.serverErrors[0].hint,10000);
+  //   }
+  //   else if(error.response && error.response.status===400){
+  //     ToastNotificationService.error(" خطای 400 ارسال عکس با خطا روبرو شد لطفا با پشتیبانی تماس بگیرید  " + error.response.data.serverErrors[0].hint,10000);
+  //   }
+  // }
 };
 
 
-const DB_NAME = '"offlineImagesDB"';
-const DB_VERSION = 1;
-let db:any;
-const openDatabase = () => {
-  const request = window.indexedDB.open(DB_NAME, DB_VERSION);
-  request.onerror = (event) => {
-    console.error("Error opening indexedDB:", event);
-  };
-  request.onupgradeneeded = (event) => {
-    db = event.target.result;
-    db.createObjectStore("offlineImages", {autoIncrement: true});
-  };
-  request.onsuccess = (event) => {
-    db = event.target.result;
-    getSavedImagesFromIndexedDB();
-  };
-};
-const getSavedImagesFromIndexedDB = () => {
-  if (!db) {
-    ToastNotificationService.error("IndexedDB is not initialized")
-    return;
-  }
-  const transaction = db.transaction(["offlineImages"], "readonly");
-  const objectStore = transaction.objectStore("offlineImages");
-  const images = [];
-  const request = objectStore.openCursor();
-  request.onsuccess = (event:any) => {
-    const cursor = event.target.result;
-    if (cursor) {
-      images.push(cursor.value.file);
-      cursor.continue();
-    }
-  };
-  request.onerror = (event:any) => {
-    ToastNotificationService.error("Error fetching images from IndexedDB:", event)
-  };
-};
+const openDatabase =()=>{
+  ServicesImg.openDatabase()
+}
 
-openDatabase();
-
-const saveImageToIndexedDB = (file:any) => {
-  const transaction = db.transaction([`offlineImages`], "readwrite");
-  const objectStore = transaction.objectStore("offlineImages");
-  const request = objectStore.add({
-    file: file,
-    userId: route.query.id,
-    lounId: InfoMonitored.loanPlan.loanId,
-  });
-  request.onsuccess = () => {
-  };
-  request.onerror = (event:any) => {
-    ToastNotificationService.error("خطا در ذخیره عکس در حافظه", event)
-  };
+const SaveImgDB = (file:any) => {
+  ServicesImg.saveImgTodDB(file,route.query.id,InfoMonitored.loanPlan.loanId)
 };
 
 const removeImage = (index:any) => {
@@ -685,33 +622,13 @@ const removeImage = (index:any) => {
   uploadedImages.value.splice(index, 1);
   totalUploadedFiles--;
   form.value.guidList.splice(index, 1);
-  removeImageFromDB(removedImage.file);
-};
-
-const removeImageFromDB = (file:any) => {
-  const transaction = db.transaction(["offlineImages"], "readwrite");
-  const objectStore = transaction.objectStore("offlineImages");
-  const request = objectStore.openCursor();
-  request.onsuccess = (event:any) => {
-    const cursor = event.target.result;
-    if (cursor) {
-      const storedFile = cursor.value.file;
-      if (storedFile.name === file.name) {
-        cursor.delete();
-        return;
-      }
-      cursor.continue();
-    }
-  };
-  request.onerror = (event:any) => {
-    ToastNotificationService.error("خطا در حذف عکس از حافظه", event)
-  };
+  ServicesImg.removeImgDB(removedImage.file)
 };
 
 const ConvertNUM = (input) => {
   if (input>100){
-    ToastNotificationService.warn("اعداد بیشتر از  100نمیتوان  وارد کرد  ");
-    return "";
+    ToastNotificationService.warn("اعداد بیشتر از 100 نمیتوان وارد کرد");
+    return "";1
   }
 
   if (!input) {
@@ -721,6 +638,7 @@ const ConvertNUM = (input) => {
     ToastNotificationService.warn("از اعداد فارسی یا انگلیسی استفاده کنید ");
     return ""
   }
+
   const persianToEnglishMap = {
     '۰': '0',
     '۱': '1',
@@ -739,11 +657,13 @@ const ConvertNUM = (input) => {
 
 
 onMounted(() => {
-  store.loadFormData()
+  store.LoadForm()
   setCurrentTab(form.value.planActivationTypeId)
   ConstructionHandelTab(form.value.constructionApproval)
   EquipmentBoughtHandel(form.value.isEquipmentBought)
+  openDatabase()
 })
+
 </script>
 
 <style lang="scss">

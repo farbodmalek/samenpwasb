@@ -1,5 +1,5 @@
 <template>
-    <surveyHeader @saveform2="Setform" ></surveyHeader>
+  <surveyHeader @saveform2="Setform" ></surveyHeader>
   <Carddetails/>
   <form @submit.prevent="NextstepHandel()">
     <section v-if="loanSurvey == 1"
@@ -347,19 +347,6 @@
       </div>
     </section>
 
-<!--    <section class="flex-column px-1" v-if="loanSurvey == 3 || loanSurvey == 4">-->
-<!--      <Titel :title="'حضور وام گیرنده در محل کسب کار'"/>-->
-<!--      <div class=" px-3 col-12 form-group mb-3 d-flex justify-content-center bg-white  px-2 py-3   rounded-4">-->
-<!--        <SelectButton v-model="form.PresenceTypeId"-->
-<!--                      :class="{'p-invalid': v$.PresenceTypeId.$invalid && submitted}"-->
-<!--                      :options="SurveyBasedata.presenceTypes"-->
-<!--                      aria-labelledby="basic"-->
-<!--                      class="col-12 d-flex sec-titel"-->
-<!--                      optionLabel="value"-->
-<!--                      optionValue="key"/>-->
-<!--      </div>-->
-<!--    </section>-->
-
     <div class="d-grid col-11 mx-auto mb-5 mt-3">
       <button
         class="text-white bg-blue-1 rounded-pill p-3">
@@ -405,9 +392,6 @@ const optionsLivestockBooklet = ref([
   {name: 'دارد', value: 1},
 ]);
 
-const Setform=()=>{
-  localStorage.setItem("SecPreForm", JSON.stringify(form));
-}
 
 
 
@@ -423,26 +407,24 @@ const AgriculturalCalender = ref()
 const insuranceTabAgricultural = ref();
 const loanSurvey =<any> route.query.loanType;
 const SurveyBasedata = JSON.parse(<any>localStorage.getItem("SurveyBaseInfo"));
-const Cartables = JSON.parse(<any>localStorage.getItem("GetCartables"));
+const Cartables = JSON.parse(<any>localStorage.getItem("Cartables"));
 let InfoMonitored = <any>ref('');
 const userdata = Cartables.find((item:any) => item.id === Number(route.query.id));
+
+const SurveysList = JSON.parse(<any>localStorage.getItem("SurveysList"));
+const filteredSurveys = SurveysList.filter((item:any) => item.id === Number(InfoMonitored.loanId))
+const LasteSurvey =  filteredSurveys[0];
+let previousValues = <any>{};
+
 if (userdata) {
   InfoMonitored = userdata;
 }
-const SurveysList = JSON.parse(<any>localStorage.getItem("GetSurveysList"));
-const filteredSurveys = SurveysList.filter((item:any) => item.id === Number(InfoMonitored.loanId))
-const LasteSurvey =  filteredSurveys[0];
-// const LasteSurvey =  null;
-let previousValues = <any>{};
-
 const form = reactive({
   HasWorkPermission:  LasteSurvey ? LasteSurvey.hasWorkPermission : null,
   insuranceTypeId:  LasteSurvey ? LasteSurvey.insuranceTypeId : null,
   workShopCode:  LasteSurvey ? LasteSurvey.workShopCode : "",
   numberOfInsurdPerson:  LasteSurvey ? LasteSurvey.numberOfInsurdPerson : null,
   numberOfJobsCreated:  LasteSurvey ? LasteSurvey.numberOfJobsCreated : "",
-  OwnerTypeId:  null,
-  planActivationTypeId:  null,
   endOfActivationDate : LasteSurvey ?LasteSurvey.endOfActivationDate:null,
   Isinsurance:  LasteSurvey ? LasteSurvey.workShopCode == 0 ? 0 : 1 : null,
   Id:  LasteSurvey ? LasteSurvey.Id : 0,
@@ -453,22 +435,19 @@ const form = reactive({
   HasAgriculturalInsurance:  LasteSurvey ? LasteSurvey.hasAgriculturalInsurance : null,
   EndOfAgriculturalInsurance:  LasteSurvey ? LasteSurvey.EndOfAgriculturalInsurance : null,
   insuranceTabAgricultural:  LasteSurvey ? LasteSurvey.numberOfJobsCreated == 0 ? 0 : 1 : null,
-  NumberOfMaleLivestock:  null,
-  NumberOfFemaleLivestock: null,
-  LivestockTypeId: null,
   ID:  LasteSurvey ? LasteSurvey.ID : 0,
   LivestockLicense:  LasteSurvey ? LasteSurvey.livestockLicense : null,
   LivestockInsurance:  LasteSurvey ? LasteSurvey.livestockInsurance : null,
   InsuranceDate:  LasteSurvey ? LasteSurvey.InsuranceDate : null,
   NumberOfInsuredLivestock:  LasteSurvey ? LasteSurvey.hasWorkPermission : null,
   LivestockBooklet:  LasteSurvey ? LasteSurvey.hasWorkPermission : null,
+  NumberOfMaleLivestock:  null,
+  NumberOfFemaleLivestock: null,
+  LivestockTypeId: null,
+  OwnerTypeId: null,
+  planActivationTypeId:  null,
 });
 
-
-const setCurrentTab = (Number: number) => {
-  currentTab.value = Number;
-  form.endOfActivationDate=null
-};
 
 const rules = computed(() => {
   if (loanSurvey == 1) {
@@ -863,6 +842,15 @@ const Pachvalue = () => {
 
 }
 
+const Setform=()=>{
+  localStorage.setItem("SecPreForm", JSON.stringify(form));
+}
+
+const setCurrentTab = (Number: number) => {
+  currentTab.value = Number;
+  form.endOfActivationDate=null
+};
+
 
 const setCalenderLivestock = (tabNumber:any) => {
   calender.value = tabNumber;
@@ -909,8 +897,7 @@ const NextstepHandel = () => {
     } else if (form.CultivatedLandArea > form.LandArea) {
       ToastNotificationService.warn(" میزان کشت نمیتواند از وسعت زمین بیشتر باشد");
     } else {
-
-      store.getFormStepTow(form)
+      store.SetFormTow(form)
       router.push({ path: "/survey/StepThree", query: {id:InfoMonitored.id ,loanType:loanSurvey }});
       localStorage.setItem("SecPreForm", JSON.stringify(form));
     }
