@@ -414,7 +414,7 @@ const submit = () => {
       ToastNotificationService.error("شرایط ثبت نظارت حتما باید انتخاب شود");
     } else {
       mainform.survey.constructionApproval = form.value.constructionApproval;
-      mainform.survey.surveyReport = form.value.surveyReport+"..";
+      mainform.survey.surveyReport = form.value.surveyReport+"-";
       mainform.survey.customerOffer = form.value.customerOffer;
       mainform.survey.isEquipmentBought = form.value.isEquipmentBought;
       mainform.survey.isFactorMatch = form.value.isFactorMatch;
