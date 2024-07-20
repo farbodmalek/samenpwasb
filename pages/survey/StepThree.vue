@@ -109,7 +109,7 @@
                 style="height: 75px"
                 :class="{'p-invalid-textarea': v$.customerOffer.$invalid && submitted}"
                 v-model="form.customerOffer"/>
-      <record/>
+<!--      <record/>-->
     </section>
 
     <section class="px-1 form-group">
