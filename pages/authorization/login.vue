@@ -1,8 +1,7 @@
 <template>
-
-  <div class=" justify-content-center container ">
-    <Download/>
-    <form @submit.prevent="login">
+  <div class="justify-content-center container">
+    <Download v-if="isMobile"/>
+    <form v-if="isMobile" @submit.prevent="login">
       <div ref="pageContainer" class="mt-5">
         <div v-if="isMobile"
              style="position: absolute; bottom: 0"
@@ -42,20 +41,23 @@
         </div>
       </div>
     </form>
+    <div v-else class="text-center mt-5">
+      <access/>
+    </div>
   </div>
 </template>
+
 <script lang="ts" setup>
 import {ToastNotificationService} from "~/core/toast-notification-service";
 import {required} from '@vuelidate/validators';
 import {useVuelidate} from "@vuelidate/core";
 import {UseLoading} from "~/store/loading-store";
-// import {MakeResponse} from "~/core/make-response"
 import Download from "~/components/Download.vue"
 import {MakeResponse} from "~/composables/make-response";
 import {CommonServices} from "~/core/base/common-services";
+import access from "../../pages/access.vue"
 
 const {$pwa} = useNuxtApp()
-
 
 definePageMeta({
   layout: "login",
@@ -91,30 +93,25 @@ const v$ = useVuelidate(rules, form);
 const login = async () => {
   submitted.value = true
   if (!v$.value.$invalid) {
-
     MakeResponse.makeServerResponse(CommonServices.login(form.value), true, result => {
-      if ( result && result.result) {
+      if (result && result.result) {
         localStorage.setItem('User-data', JSON.stringify(result.result));
         router.push("/")
         ToastNotificationService.success("ورود با موفقیت انجام شد");
       }
-    },true);
+    }, true);
   } else {
-    ToastNotificationService.warn("فیلد های اجباری را لطفا تکمیل کنید");
+    ToastNotificationService.warn("فیلدهای اجباری را لطفا تکمیل کنید");
   }
 };
 
-
-
 const GetSurveyBaseInfo = async () => {
-    MakeResponse.makeServerResponse(CommonServices.GetSurveyBaseInfo(), true, result => {
-      if ( result && result.result) {
-        localStorage.setItem("SurveyBaseInfo", JSON.stringify(result.result))
-      }
-    },false);
+  MakeResponse.makeServerResponse(CommonServices.GetSurveyBaseInfo(), true, result => {
+    if (result && result.result) {
+      localStorage.setItem("SurveyBaseInfo", JSON.stringify(result.result))
+    }
+  }, false);
 }
-
-
 
 const handleKeyboardShow = () => {
   pageContainer.value.scrollIntoView({behavior: "smooth", block: "start"});
@@ -125,7 +122,10 @@ const handleKeyboardHide = () => {
 };
 
 onMounted(() => {
-  GetSurveyBaseInfo()
+  // Detect mobile device
+  isMobile.value = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+
+  GetSurveyBaseInfo();
   window.addEventListener("keyboardDidShow", handleKeyboardShow);
   window.addEventListener("keyboardDidHide", handleKeyboardHide);
 });

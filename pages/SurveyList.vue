@@ -212,14 +212,13 @@ const FindOfflineForm = () => {
 
 const GetCartables = () => {
   MakeResponse.makeServerResponse(CommonServices.GetCartables(), true, result => {
-    if ( result && result.results && result.results.length>0) {
+    if ( result && result.results && result.results.length>=0) {
       const Cartables = result.results.filter((item: any) => item.expireDate.substring(0, 10) >= todayDateString);
       localStorage.setItem('Cartables', JSON.stringify(Cartables));
+      console.log(result.results)
       if(Cartables.length>0){
-
         Data.value = Cartables
       }else{
-
         condition.value = true
       }
     }
@@ -240,7 +239,6 @@ const GetSurveysList = () => {
 };
 
 const SetSurveyImage = async (data:any,id:number) => {
-  console.log(id)
   setphoto.value[id] = true;
   const formData = new FormData();
   const filteredImages = images.filter((i) => i.userId == data.id);
