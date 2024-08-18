@@ -1,7 +1,7 @@
 <template>
   <div class="justify-content-center container">
     <Download v-if="isMobile"/>
-    <form v-if="isMobile" @submit.prevent="login">
+    <form v-if="!isMobile" @submit.prevent="login">
       <div ref="pageContainer" class="mt-5">
         <div v-if="isMobile"
              style="position: absolute; bottom: 0"
@@ -65,7 +65,7 @@ definePageMeta({
 
 const submitted = ref(false);
 const router = useRouter();
-const isMobile = ref(false);
+const isMobile = ref();
 const pageContainer = ref(null);
 const store = UseLoading();
 const UpdateModal = ref(localStorage.getItem('updatemodal') ? localStorage.getItem('updatemodal') : true)
@@ -121,13 +121,38 @@ const handleKeyboardHide = () => {
   pageContainer.value.scrollIntoView({behavior: "smooth", block: "end"});
 };
 
-onMounted(() => {
-  // Detect mobile device
-  isMobile.value = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+const  detectDevice =()=> {
+  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
+
+  if (/android/i.test(userAgent)) {
+    return "Android";
+  }
+
+  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+    return "iOS";
+  }
+
+
+  if (/Macintosh|Windows|Linux/.test(userAgent)) {
+    return "Desktop";
+  }
+
+  return "Unknown device";
+}
+
+
+
+
+
+onMounted(() => {
   GetSurveyBaseInfo();
   window.addEventListener("keyboardDidShow", handleKeyboardShow);
   window.addEventListener("keyboardDidHide", handleKeyboardHide);
+
+  const deviceType = detectDevice();
+  isMobile.value = (deviceType === "Android" || deviceType === "iOS");
+  console.log("Device type:", deviceType);
 });
 </script>
 
