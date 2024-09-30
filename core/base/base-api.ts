@@ -9,7 +9,10 @@ export class BaseApi extends BasePage {
     public static async postApi (url:string,body:any){
         this.getLoggedUser()
         this.con = {
-            headers: { 'Authorization': 'Bearer ' + this.loggedUserInfo.token },
+            headers: { 'Authorization': 'Bearer ' + this.loggedUserInfo.token,
+                       'DeviceName':'IsPwa'
+
+            },
             onUploadProgress: (progressEvent: any) => {
                 const progress = Math.round(
                     (progressEvent.loaded * 100) / progressEvent.total

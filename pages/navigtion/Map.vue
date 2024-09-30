@@ -93,7 +93,7 @@ const Error = ref(false);
 const filteredData =dataArray.filter(item => item.cartableStatusTypeId === 1 );
 const currentDate = new Date();
 const todayDateString = currentDate.toISOString().split('T')[0]
-const filteredExpireDate = filteredData.filter(item => item.expireDate.substring(0,10) >= todayDateString);
+const filteredExpireDate = filteredData.filter(item => item.expireDate.substring(10) >= todayDateString);
 const filteredItems = filteredExpireDate.filter(item => {
   const statusTypeId = item.loanPlan.loanSurveyEconomidTypeId;
   return typeof statusTypeId === 'number' && statusTypeId >= 1 && statusTypeId <= 4;
@@ -107,7 +107,7 @@ if (filteredItems) {
 const center = ref([filteredItems[0].loanPlan.latitude,filteredItems[0].loanPlan.longitude]);
 
 
-const showMarkerInfo = (index: number) => {
+const showMarkerInfo = (index: number) =>   {
 
   selectedData.value = filteredItems[index];
 

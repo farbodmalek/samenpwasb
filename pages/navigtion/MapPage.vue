@@ -140,7 +140,7 @@ const updateMarkerLocation = (event: { latlng: { lat: number; lng: number } }) =
   distance.value = calculateDistance(userLat.value, userLng.value, markerLat, markerLng);
 };
 
-const   getMarkerIcon = (item) => {
+const getMarkerIcon = (item) => {
   const typeId = item;
 
   if (typeof typeId === 'number' && typeId >= 1 && typeId <= 4) {

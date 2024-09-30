@@ -32,53 +32,23 @@ export default defineNuxtConfig({
           "theme_color": "#14213D",
           icons: [
               {
-                  "src": "/icons/android-chrome-16x16.png",
-                  "sizes": "16x16",
-                  "type": "image/png"
-              },
-              {
-                  "src": "/icons/android-chrome-24x24.png",
-                  "sizes": "24x24",
-                  "type": "image/png"
-              }, {
-                  "src": "/icons/android-chrome-32x32.png",
-                  "sizes": "32x32",
-                  "type": "image/png"
-              }, {
                   "src": "/icons/android-chrome-57x57.png",
                   "sizes": "57x57",
                   "type": "image/png"
-              }, {
-                  "src": "/icons/android-chrome-60x60.png",
-                  "sizes": "60x60",
-                  "type": "image/png"
-              }, {
-                  "src": "/icons/android-chrome-64x64.png",
-                  "sizes": "64x64",
-                  "type": "image/png"
-              }, {
+              },
+              {
                   "src": "/icons/android-chrome-72x72.png",
                   "sizes": "72x72",
                   "type": "image/png"
-              }, {
-                  "src": "/icons/android-chrome-76x76.png",
-                  "sizes": "76x76",
-                  "type": "image/png"
-              }, {
+              },
+              {
                   "src": "/icons/android-chrome-114x114.png",
                   "sizes": "114x114",
                   "type": "image/png"
-              }, {
-                  "src": "/icons/android-chrome-120x120.png",
-                  "sizes": "120x120",
-                  "type": "image/png"
-              }, {
+              },
+              {
                   "src": "/icons/android-chrome-144x144.png",
                   "sizes": "144x144",
-                  "type": "image/png"
-              }, {
-                  "src": "/icons/android-chrome-180x180.png",
-                  "sizes": "180x180",
                   "type": "image/png"
               },
               {
@@ -92,37 +62,8 @@ export default defineNuxtConfig({
                   "type": "image/png"
               },
               {
-                  "src": "/icons/android-chrome-maskable-16x16.png",
-                  "sizes": "16x16",
-                  "type": "image/png",
-                  "purpose": "maskable"
-              }, {
-                  "src": "/icons/android-chrome-maskable-24x24.png",
-                  "sizes": "24x24",
-                  "type": "image/png",
-                  "purpose": "maskable"
-              },
-              {
-                  "src": "/icons/android-chrome-maskable-32x32.png",
-                  "sizes": "32x32",
-                  "type": "image/png",
-                  "purpose": "maskable"
-              },
-              {
                   "src": "/icons/android-chrome-maskable-57x57.png",
                   "sizes": "57x57",
-                  "type": "image/png",
-                  "purpose": "maskable"
-              },
-              {
-                  "src": "/icons/android-chrome-maskable-60x60.png",
-                  "sizes": "60x60",
-                  "type": "image/png",
-                  "purpose": "maskable"
-              },
-              {
-                  "src": "/icons/android-chrome-maskable-64x64.png",
-                  "sizes": "64x64",
                   "type": "image/png",
                   "purpose": "maskable"
               },
@@ -133,35 +74,10 @@ export default defineNuxtConfig({
                   "purpose": "maskable"
               },
               {
-                  "src": "/icons/android-chrome-maskable-76x76.png",
-                  "sizes": "76x76",
-                  "type": "image/png",
-                  "purpose": "maskable"
-              },
-              {
-                  "src": "/icons/android-chrome-maskable-114x114.png",
-                  "sizes": "114x114",
-                  "type": "image/png",
-                  "purpose": "maskable"
-              },
-              {
-                  "src": "/icons/android-chrome-maskable-120x120.png",
-                  "sizes": "120x120",
-                  "type": "image/png",
-                  "purpose": "maskable"
-              },
-              {
                   "src": "/icons/android-chrome-maskable-144x144.png",
                   "sizes": "144x144",
                   "type": "image/png",
                   "purpose": "maskable"
-              },
-              {
-                  "src": "/icons/android-chrome-maskable-180x180.png",
-                  "sizes": "180x180",
-                  "type": "image/png",
-                  "purpose": "maskable"
-
               },
               {
                   "src": "/icons/android-chrome-maskable-192x192.png",
