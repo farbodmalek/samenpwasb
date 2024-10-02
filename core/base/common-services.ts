@@ -4,7 +4,7 @@ import {BaseApi} from "../base/base-api";
 export class CommonServices extends BaseApi {
 
     static login(body: any) {
-        const url = this.getBaseAPI() + 'api/auth/login';
+        const url = this.getBaseAPI() + 'api/Auth/Login';
         return BaseApi.postApiLogin(url, body);
     }
     static GetCartables() {

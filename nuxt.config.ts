@@ -125,6 +125,9 @@ export default defineNuxtConfig({
           script: [],
       },
   },
+    // devServer: {
+    //     https: true
+    // },
 
   compatibilityDate: "2024-07-15",
 });

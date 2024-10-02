@@ -10,7 +10,7 @@ export class BaseApi extends BasePage {
         this.getLoggedUser()
         this.con = {
             headers: { 'Authorization': 'Bearer ' + this.loggedUserInfo.token,
-                       // 'DeviceName':'IsPwa'
+                       'DeviceName':'IsPwa'
 
             },
             onUploadProgress: (progressEvent: any) => {
@@ -29,16 +29,18 @@ export class BaseApi extends BasePage {
     }
 
     public static async postApiLogin(url: string, body: any) {
-        return await axios.post(url, body).then((r:any) => r.data);
+        this.con = {
+            headers: {
+                'Content-Type': 'application/json',  // تعیین نوع محتوا
+                'DeviceName': 'IsPwa'
+            }
+        };
+        return await axios.post(url, body, this.con).then((r: any) => r.data);
     }
 
     public static async getApiLogin(url: string) {
-        // this.con = {
-        //     headers: {
-        //         'DeviceName':'IsPwa'
-        //
-        //     }}
-        return await axios.get(url,this.con).then((r:any) => r.data);
+
+        return await axios.get(url,null,this.con).then((r:any) => r.data);
     }
 
 }
