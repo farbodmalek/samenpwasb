@@ -414,7 +414,7 @@ const submit = () => {
       ToastNotificationService.error("شرایط ثبت نظارت حتما باید انتخاب شود");
     } else {
       mainform.survey.constructionApproval = form.value.constructionApproval;
-      mainform.survey.surveyReport = form.value.surveyReport+"-";
+      mainform.survey.surveyReport = form.value.surveyReport;
       mainform.survey.customerOffer = form.value.customerOffer;
       mainform.survey.isEquipmentBought = form.value.isEquipmentBought;
       mainform.survey.isFactorMatch = form.value.isFactorMatch;
@@ -558,54 +558,6 @@ const SetSurveyImage = async (file:any, index:any) => {
       ToastNotificationService.success("عکس با موفقیت ارسال شد ",);
     }
   },false);
-
-
-  // const config = {
-  //   headers: {
-  //     Authorization: "Bearer " + supervisoryInfo.token,
-  //     "Content-Type": "multipart/form-data",
-  //   },
-  //   onUploadProgress: (progressEvent:any) => {
-  //     const progress = Math.round(
-  //         (progressEvent.loaded * 100) / progressEvent.total
-  //     );
-  //     uploadedImages.value[index].uploadProgress = progress;
-  //     if (progress === 100) {
-  //       setTimeout(() => {
-  //         uploadedImages.value[index].uploadProgress = null;
-  //       }, 2000);
-  //     }
-  //   },
-  // };
-  // try {
-  //   IsRequest.value=true
-  //   requestStatus.isHaserequest = true;
-  //   const response = await axios.post(
-  //       `${Url + "api/Upload/uploadSurveyImage"}`,
-  //       formData,
-  //       config
-  //   );
-  //   form.value.guidList.push(response.data.results[0]);
-  //   if ((response.status === 200 && response.data.serverErrors == null)) {
-  //     ToastNotificationService.success("عکس با موفقیت ارسال شد");
-  //   }
-  //   requestStatus.isHaserequest = false;
-  //   IsRequest.value=false
-  // } catch (error:any) {
-  //   requestStatus.isHaserequest = false;
-  //   IsRequest.value=true
-  //
-  //   if (error.code==="ERR_NETWORK"){
-  //     ToastNotificationService.warn("خطا در برقراری شبکه عکس در حافظه ذخیره شد " );
-  //     SaveImgDB(file);
-  //   }
-  //   else if(error.response && error.response.status===500){
-  //     ToastNotificationService.error(" خطای 500 ارسال عکس با خطا روبرو شد لطفا مجدد تلاش کنید  " + error.response.data.serverErrors[0].hint,10000);
-  //   }
-  //   else if(error.response && error.response.status===400){
-  //     ToastNotificationService.error(" خطای 400 ارسال عکس با خطا روبرو شد لطفا با پشتیبانی تماس بگیرید  " + error.response.data.serverErrors[0].hint,10000);
-  //   }
-  // }
 };
 
 

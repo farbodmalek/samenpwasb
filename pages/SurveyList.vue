@@ -205,7 +205,6 @@ const ClearStorge = () => {
 
 const FindOfflineForm = () => {
   CommonServices.FindOfflineForm((result: any) => {
-    console.log(result)
     showsend.value.push(result);
   })
 };
@@ -215,7 +214,6 @@ const GetCartables = () => {
     if ( result && result.results && result.results.length>=0) {
       const Cartables = result.results.filter((item: any) => item.expireDate.substring(0, 10) >= todayDateString);
       localStorage.setItem('Cartables', JSON.stringify(Cartables));
-      console.log(result.results)
       if(Cartables.length>0){
         Data.value = Cartables
       }else{
@@ -296,6 +294,7 @@ onMounted(() => {
   GetSurveysList()
   openDataDB()
   ClearStorge()
+
 });
 
 </script>

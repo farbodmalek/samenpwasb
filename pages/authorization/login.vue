@@ -1,7 +1,8 @@
 <template>
   <div class="justify-content-center container">
     <Download v-if="isMobile"/>
-    <form v-if="!isMobile" @submit.prevent="login">
+<!--    v-if="!isMobile"-->
+    <form  @submit.prevent="login">
       <div ref="pageContainer" class="mt-5">
         <div v-if="isMobile"
              style="position: absolute; bottom: 0"
@@ -41,9 +42,9 @@
         </div>
       </div>
     </form>
-    <div v-else class="text-center mt-5">
-      <access/>
-    </div>
+<!--    <div v-else class="text-center mt-5">-->
+<!--      <access/>-->
+<!--    </div>-->
   </div>
 </template>
 

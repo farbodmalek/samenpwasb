@@ -10,7 +10,7 @@ export class BaseApi extends BasePage {
         this.getLoggedUser()
         this.con = {
             headers: { 'Authorization': 'Bearer ' + this.loggedUserInfo.token,
-                       'DeviceName':'IsPwa'
+                       // 'DeviceName':'IsPwa'
 
             },
             onUploadProgress: (progressEvent: any) => {
@@ -34,7 +34,12 @@ export class BaseApi extends BasePage {
     }
 
     public static async getApiLogin(url: string) {
-        return await axios.get(url).then(r => r.data);
+        // this.con = {
+        //     headers: {
+        //         'DeviceName':'IsPwa'
+        //
+        //     }}
+        return await axios.get(url,this.con).then(r => r.data);
     }
 
 }
