@@ -20,17 +20,16 @@ export class BaseApi extends BasePage {
                 this.progress.value=progress
             },
         };
-        console.log()
-         return await axios.post(url,body,this.con).then((r=>r.data))
+         return await axios.post(url,body,this.con).then(((r:any)=>r.data))
     }
 
     public static async getApi (url:string){
         this.getLoggedUser()
-         return await axios.get(url,this.config).then((r=>r.data))
+         return await axios.get(url,this.config).then(((r:any) =>r.data))
     }
 
     public static async postApiLogin(url: string, body: any) {
-        return await axios.post(url, body).then(r => r.data);
+        return await axios.post(url, body).then((r:any) => r.data);
     }
 
     public static async getApiLogin(url: string) {
@@ -39,7 +38,7 @@ export class BaseApi extends BasePage {
         //         'DeviceName':'IsPwa'
         //
         //     }}
-        return await axios.get(url,this.con).then(r => r.data);
+        return await axios.get(url,this.con).then((r:any) => r.data);
     }
 
 }
