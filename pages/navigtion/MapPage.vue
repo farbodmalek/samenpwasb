@@ -70,7 +70,6 @@
     <p v-if="Error" class="error  text-center pt-4">
       برای دسترسی به موقعیت جغرافیایی، لطفاً اجازه دسترسی به مکان را بدهید.
     </p>
-    <button class="retry-button mt-2" @click="retryGeolocation()">دوباره امتحان کنید</button>
   </div>
 </template>
 
@@ -171,38 +170,6 @@ const  navigation=()=>{
   window.open(mapsLink, '_blank');
 }
 
-const retryGeolocation = () => {
-  if ("geolocation" in navigator) {
-    navigator.geolocation.getCurrentPosition(
-        (position) => {
-          modal.value = true;
-          latitude.value = position.coords.latitude;
-          longitude.value = position.coords.longitude;
-          updateMarkerLocation({
-            latlng: { lat: latitude.value, lng: longitude.value },
-          });
-          Error.value = false; // Error پیام را حذف کنید
-        },
-        (error) => {
-          if (error.code === error.PERMISSION_DENIED) {
-            // ToastNotificationService.error("برای دسترسی به موقعیت جغرافیایی، لطفاً اجازه دسترسی به مکان را بدهید.", 500000);
-            Error.value=true
-            modal.value=false
-            setTimeout(() => {
-              Error.value = false;
-            }, 3500);
-          } else {
-            ToastNotificationService.error("خطای ناشناخته در درخواست موقعیت جغرافیایی.", 500000);
-          }
-        }
-    );
-  } else {
-    alert("مرورگر شما از ویژگی موقعیت جغرافیایی پشتیبانی نمی‌کند.");
-  }
-};
-
-
-
 onMounted(() => {
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(
@@ -216,8 +183,7 @@ onMounted(() => {
       (error) => {
         if (error.code === error.PERMISSION_DENIED) {
           ToastNotificationService.error("برای دسترسی به موقعیت جغرافیایی، لطفاً اجازه دسترسی به مکان را بدهید.",500000);
-          Error.value=false
-          modal.value=true
+          modal.value=false
         }else {
           ToastNotificationService.error("خطای ناشناخته در درخواست موقعیت جغرافیایی.",500000);
         }
