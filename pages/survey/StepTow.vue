@@ -411,7 +411,7 @@ const Cartables = JSON.parse(<any>localStorage.getItem("Cartables"));
 let InfoMonitored = <any>ref('');
 const userdata = Cartables.find((item:any) => item.id === Number(route.query.id));
 
-const SurveysList = JSON.parse(<any>localStorage.getItem("SurveysList"));
+const SurveysList = JSON.parse(<any>localStorage.getItem("SurveysList") || "[]");
 const filteredSurveys = SurveysList.filter((item:any) => item.id === Number(InfoMonitored.loanId))
 const LasteSurvey =  filteredSurveys[0];
 let previousValues = <any>{};
