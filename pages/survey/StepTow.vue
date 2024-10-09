@@ -25,7 +25,7 @@
           :class="{'p-invalid': v$.NumberOfMaleLivestock.$invalid && submitted}"
           inputmode="numeric"
           @input="form.NumberOfMaleLivestock=ConvertNUM(form.NumberOfMaleLivestock)"
-            maxlength="3"
+            maxlength="5"
           />
 
         <input-text
@@ -35,7 +35,7 @@
           class=" text-end col-12  text-end mt-3"
           v-model="form.NumberOfFemaleLivestock"
           inputmode="numeric"
-            maxlength="3"
+            maxlength="5"
         />
       </div>
       <div class="mb-3 px-0 d-flex p-2 col-12 flex-wrap justify-content-center pos"
@@ -47,7 +47,7 @@
           v-model="form.NumberOfMaleLivestock"
           :class="{'p-invalid': v$.NumberOfMaleLivestock.$invalid && submitted}"
           inputmode="numeric"
-            maxlength="3"
+            maxlength="5"
         />
 
       </div>
@@ -253,7 +253,7 @@
           <input-text
               @input="form.NumberOfInsuredLivestock=ConvertNUM(form.NumberOfInsuredLivestock)"
               inputmode="numeric"
-              maxlength="3"
+              maxlength="5"
             type="text "
             placeholder="تعداد دام بیمه شده"
             class="form-group input-group border-1 border-black rounded-3"
