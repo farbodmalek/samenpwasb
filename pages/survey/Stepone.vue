@@ -144,18 +144,18 @@
         <p class=""> {{ InfoMonitored.loanPlan.planNo.name }}</p>
       </div>
       <div class="col-12">
-        <p class="mx-2 text-end py-1  text-danger font-text font-0-7 ">
-          در صورت مغایرت رشته فعالیت با عنوان اعلام شده تیک را بزنید
-          <input v-model="form.isValidPlanNo" class="ms-3 " type="checkbox"/>
-        </p>
-        <input-text
-          v-if="form.isValidPlanNo"
-          v-model="form.UserPlanNoText"
-          class="  text-end border-secondary col-12 rounded-3"
-          placeholder="رشته فعالیت  جدید را وارد کنید "
-          style="height: 50px"
-          type="text"
-      />
+<!--        <p class="mx-2 text-end py-1  text-danger font-text font-0-7 ">-->
+<!--          در صورت مغایرت رشته فعالیت با عنوان اعلام شده تیک را بزنید-->
+<!--          <input v-model="form.isValidPlanNo" class="ms-3 " type="checkbox"/>-->
+<!--        </p>-->
+<!--        <input-text-->
+<!--          v-if="form.isValidPlanNo"-->
+<!--          v-model="form.UserPlanNoText"-->
+<!--          class="  text-end border-secondary col-12 rounded-3"-->
+<!--          placeholder="رشته فعالیت  جدید را وارد کنید "-->
+<!--          style="height: 50px"-->
+<!--          type="text"-->
+<!--      />-->
       </div>
     </div>
 
