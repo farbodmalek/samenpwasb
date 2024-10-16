@@ -12,14 +12,14 @@ export const Useform = defineStore('form', {
             planLivestockSurvey:null,
             planServiceSurvey:null
           },
-          LoanPlanNo:{
-            Id :11984,
-            LoanSurveyEconomicTypeId :null,
-            PlanNoId :11984 ,
-            UserPlanNoText :null,
-            LoanId :null,
-            UserOtherPlanNo :null
-          }
+          // LoanPlanNo:{
+          //   Id :11984,
+          //   LoanSurveyEconomicTypeId :null,
+          //   PlanNoId :11984 ,
+          //   UserPlanNoText :null,
+          //   LoanId :null,
+          //   UserOtherPlanNo :null
+          // }
         },
       }
   ),
@@ -27,9 +27,9 @@ export const Useform = defineStore('form', {
     SetFormOne(data:any) {
       this.form.loanPlan = data;
       this.form.survey.isValidPlanNo = data.isValidPlanNo;
-      this.form.LoanPlanNo.UserPlanNoText = data.UserPlanNoText;
-      this.form.LoanPlanNo.UserOtherPlanNo = data.UserOtherPlanNo;
-      this.form.LoanPlanNo.LoanId = data.LoanId;
+      // this.form.LoanPlanNo.UserPlanNoText = data.UserPlanNoText;
+      // this.form.LoanPlanNo.UserOtherPlanNo = data.UserOtherPlanNo;
+      // this.form.LoanPlanNo.LoanId = data.LoanId;
     },
     SetFormTow(data:any){
       this.form.loanPlan.insuranceTypeId = data.insuranceTypeId;
