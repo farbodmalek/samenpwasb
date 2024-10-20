@@ -72,7 +72,7 @@
         />
         <input-text
           v-model="form.Phone"
-          :class="{'p-invalid': v$.phone.$invalid && submitted}"
+          :class="{'p-invalid': v$.Phone.$invalid && submitted}"
           class="w-100 text-center mt-2"
           inputmode="numeric"
           placeholder="تلفن ثابت"
@@ -170,7 +170,7 @@
 <!--  residentTypeId:  InfoMonitored.loanPlan.residentTypeId == "" ? null : InfoMonitored.loanPlan.residentTypeId,-->
 <!--  maritalStatusId:  InfoMonitored.loanPlan.maritalStatusId ?InfoMonitored.loanPlan.maritalStatusId : InfoMonitored.loanPlan.maritalStatusId,-->
 <!--  isFamilySupervisor:  InfoMonitored.loanPlan.isFamilySupervisor == "" ? null : InfoMonitored.loanPlan.isFamilySupervisor,-->
-<!--  Phone:  InfoMonitored.loanPlan.phone,-->
+<!--  Phone:  InfoMonitored.loanPlan.Phone,-->
 <!--  mobileNo:  InfoMonitored.mobileNo.slice(-11) == "" ? null : InfoMonitored.mobileNo.slice(-11),-->
 <!--  planTypeId:  InfoMonitored.loanPlan.planTypeId == "" ? null : InfoMonitored.loanPlan.planTypeId,-->
 <!--  educationTypeId: InfoMonitored.loanPlan.educationTypeId == "" ? null : InfoMonitored.loanPlan.educationTypeId,-->
@@ -317,7 +317,6 @@ const form = reactive({
   residentTypeId: surveyData.loanPlan.residentTypeId || null,
   maritalStatusId: surveyData.loanPlan.maritalStatusId || null,
   isFamilySupervisor: surveyData.loanPlan.isFamilySupervisor || null,
-  phone: surveyData.loanPlan.phone || null,
   mobileNo: surveyData.mobileNo.slice(-11) || null,
   planTypeId: surveyData.loanPlan.planTypeId || null,
   educationTypeId: surveyData.loanPlan.educationTypeId || null,
@@ -328,16 +327,20 @@ const form = reactive({
   longitude: formStore.addressForm.longitude || surveyData.loanPlan.longitude,
   address: formStore.addressForm.address || surveyData.loanPlan.address,
   villageName: formStore.addressForm.villageName || surveyData.loanPlan.villageName,
-  userPlanNo: userData.id,
   insuranceTypeId: surveyData.loanPlan.insuranceTypeId,
   workShopCode: surveyData.loanPlan.workShopCode,
   isValidPlanNo: false,
-  loanSurveyEconomicTypeId: loanTypeId,
-  otherPlanNo: surveyData.loanPlan.otherPlanNo || null
+  otherPlanNo: surveyData.loanPlan.otherPlanNo || null,
+  Phone:  surveyData.loanPlan.phone,
+  id:  surveyData.loanPlan.id,
+  loanSurveyEconomidTypeId: loanTypeId,
+  UserOtherPlanNo: userData.id,
+  UserPlanNoText: null,
+  planNoDto: null,
 });
 
 const rules = computed(() => ({
-  phone: { required },
+  Phone: { required },
   mobileNo: { required },
   planTypeId: { required },
   isValidPlanNo: { required },
@@ -359,12 +362,12 @@ const convertPersianNumbersToEnglish = (input: string): string => {
 };
 
 const navigateToEditAddress = () => {
-  localStorage.setItem("formState", JSON.stringify(form));
+  localStorage.setItem("firPreForm", JSON.stringify(form));
   router.push({ path: "/navigation/EditAddress", query: { id: surveyData.id, loanType: loanTypeId } });
 };
 
 const loadPreviousValues = () => {
-  const savedForm = JSON.parse(<any>localStorage.getItem("formState"));
+  const savedForm = JSON.parse(<any>localStorage.getItem("firPreForm"));
   if (savedForm) {
     Object.assign(form, savedForm);
   }
@@ -373,16 +376,16 @@ const loadPreviousValues = () => {
 const submitForm = () => {
   submitted.value = true;
   if (!v$.value.$invalid) {
-    if (form.mobileNo.length < 11 || form.phone.length < 11) {
+    if (form.mobileNo.length < 11 || form.Phone.length < 11) {
       ToastNotificationService.warn("تلفن همراه یا تلفن ثابت باید 11 رقم باشد");
-    } else if (!form.phone.startsWith('0')) {
+    } else if (!form.Phone.startsWith('0')) {
       ToastNotificationService.warn("تلفن ثابت باید با صفر شروع شود");
     } else if (!form.address) {
       ToastNotificationService.error("لطفا آدرس را تکمیل کنید");
     } else {
       formStore.SetFormOne(form);
       router.push({ path: "/survey/StepTwo", query: { id: surveyData.id, loanType: loanTypeId } });
-      localStorage.setItem("formState", JSON.stringify(form));
+      localStorage.setItem("firPreForm", JSON.stringify(form));
     }
   } else {
     ToastNotificationService.error("فیلدهای اجباری را لطفا تکمیل کنید");

@@ -150,7 +150,6 @@
       </div>
     </section>
 
-
     <section class="flex-column px-1 form-group">
       <Titel :title="'فعال بودن طرح'"/>
       <SelectButton v-model="form.planActivationTypeId"
@@ -174,7 +173,6 @@
         <p class="py-2 fw-bold text-black date">{{ form.endOfActivationDate }}:تاریخ اتمام مهلت فعال بودن </p>
       </div>
     </section>
-
 
     <section class="flex-column">
       <Titel :title="'وضعیت اشتغال'"/>
@@ -905,6 +903,7 @@ const NextstepHandel = () => {
     } else if (form.CultivatedLandArea > form.LandArea) {
       ToastNotificationService.warn(" میزان کشت نمیتواند از وسعت زمین بیشتر باشد");
     } else {
+
       store.SetFormTow(form)
       router.push({ path: "/survey/StepThree", query: {id:userdata.id ,loanType:loanSurvey }});
       localStorage.setItem("SecPreForm", JSON.stringify(form));
