@@ -436,7 +436,7 @@ const exportedObjects = {
     optionsPresence
     ,optionsInsurance
     ,optionsInsurance1,
-    maritalStatusTypes, // اصلاح نام
+    maritalStatusTypes,
     cartableStatusTypes,
     genders,
     ownerTypes,

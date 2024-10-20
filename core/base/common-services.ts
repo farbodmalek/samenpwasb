@@ -1,6 +1,5 @@
 import {BaseApi} from "../base/base-api";
 
-
 export class CommonServices extends BaseApi {
 
     static login(body: any) {
