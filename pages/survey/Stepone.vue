@@ -17,7 +17,7 @@
       <div class="col-12 form-group px-4 d-flex justify-content-between">
         <SelectButton v-model="form.residentTypeId"
                       :class="{'p-invalid': v$.residentTypeId.$invalid && submitted}"
-                      :options="options"
+                      :options="exportedObjects.options"
                       aria-labelledby="basic"
                       class="col-8 d-flex sec-titel"
                       optionLabel="name"
@@ -27,7 +27,7 @@
       <div class="col-12 form-group px-4 d-flex justify-content-between">
         <SelectButton v-model="form.maritalStatusId"
                       :class="{'p-invalid': v$.maritalStatusId.$invalid && submitted}"
-                      :options="optionmaritalStatus"
+                      :options="exportedObjects.optionmaritalStatus"
                       aria-labelledby="basic"
                       class="col-8 d-flex sec-titel"
                       optionLabel="name"
@@ -37,7 +37,7 @@
       <div class="col-12 form-group px-4 d-flex justify-content-between">
         <SelectButton v-model="form.isFamilySupervisor"
                       :class="{'p-invalid': v$.isFamilySupervisor.$invalid && submitted}"
-                      :options="optionFamilySupervisor"
+                      :options="exportedObjects.optionFamilySupervisor"
                       aria-labelledby="basic"
                       class="col-8 d-flex sec-titel"
                       optionLabel="name"
@@ -51,7 +51,7 @@
         <SelectButton
                       v-model="form.educationTypeId"
                       :class="{'p-invalid': v$.educationTypeId.$invalid && submitted,}"
-                      :options="BaseInfo.educationTypes"
+                      :options="exportedObjects.educationTypes"
                       aria-labelledby="basic"
                       class=" d-flex border-secondary gap-2 flex-direction-row  justify-content-center flex-wrap group-titel"
                       optionLabel="value"
@@ -112,29 +112,13 @@
           <SelectButton
             v-model="form.planTypeId"
             :class="{'p-invalid': v$.planTypeId.$invalid && submitted}"
-            :options="BaseInfo.planTypes"
+            :options="exportedObjects.planTypes"
             aria-labelledby="basic"
             class=" d-flex border-secondary gap-2 flex-direction-row  justify-content-center flex-wrap group-titel lounplan-titel"
             optionLabel="value"
             optionValue="key"
        />
         </div>
-<!--        .filter((i:any) =>i.parentKey===null)-->
-<!--        :disabled="InfoMonitored.loanPlan.id != 0"-->
-<!--        <p class=" col-12 d-block text-start my-4">نوع طرح را مشخص نمایید </p>-->
-<!--        <div class="d-flex form-group">-->
-<!--          <SelectButton-->
-<!--            v-model="form.planTypeId"-->
-<!--            v-if="[3,4,5,6,7,8,9,10].includes(form.planTypeId)"-->
-<!--            :class="{'p-invalid': v$.planTypeId.$invalid && submitted,}"-->
-<!--            :options="BaseInfo.planTypes.filter((i:any) =>i.parentKey==3)"-->
-<!--            :disabled="InfoMonitored.loanPlan.id != 0"-->
-<!--            aria-labelledby="basic"-->
-<!--            class=" d-flex border-secondary gap-2 flex-direction-row  justify-content-center flex-wrap group-titel lounplan-titel"-->
-<!--            optionLabel="value"-->
-<!--            optionValue="key"-->
-<!--          />-->
-<!--        </div>-->
       </div>
 
     </section>
@@ -144,18 +128,6 @@
         <p class=""> {{ InfoMonitored.loanPlan.planNo.name }}</p>
       </div>
       <div class="col-12">
-<!--        <p class="mx-2 text-end py-1  text-danger font-text font-0-7 ">-->
-<!--          در صورت مغایرت رشته فعالیت با عنوان اعلام شده تیک را بزنید-->
-<!--          <input v-model="form.isValidPlanNo" class="ms-3 " type="checkbox"/>-->
-<!--        </p>-->
-<!--        <input-text-->
-<!--          v-if="form.isValidPlanNo"-->
-<!--          v-model="form.UserPlanNoText"-->
-<!--          class="  text-end border-secondary col-12 rounded-3"-->
-<!--          placeholder="رشته فعالیت  جدید را وارد کنید "-->
-<!--          style="height: 50px"-->
-<!--          type="text"-->
-<!--      />-->
       </div>
     </div>
 
@@ -175,10 +147,9 @@ import {ToastNotificationService} from "~/core/toast-notification-service";
 import {required} from '@vuelidate/validators';
 import {useVuelidate} from "@vuelidate/core";
 import { Useform } from "~/store/Form";
-import surveyHeader from "~/components/Layouts/surveyHeader.vue";
 import { useSurveyStore } from "~/store/useSurveyStore";
-import {loadFile} from "magicast";
 import exportedObjects from '~/core/Enum/baseEnum';
+import surveyHeader from "~/components/Layouts/surveyHeader.vue";
 
 definePageMeta({
   layout: "survey",
@@ -186,34 +157,12 @@ definePageMeta({
 
 
 const store=Useform()
-
-const optionFamilySupervisor = ref([
-  {name: 'بلی ', value: true},
-  {name: 'خیر', value: false},
-]);
-
-// const genderoptions = ref([
-//   {name: ' مرد', value: false},
-//   {name: 'زن', value: true},
-// ]);
-
-const options = ref([
-  {name: 'شهری', value: 1},
-  {name: 'روستایی', value: 2},
-]);
-
-const optionmaritalStatus = ref([
-  {name: 'مجرد', value: false},
-  {name: 'متاهل', value: true},
-]);
-
 const router = useRouter();
 const route = useRoute();
 const error = ref(false);
 const submitted = ref(false);
 const Mainstore = useSurveyStore();
 const loanSurveyEconomidTypeId = route.query.loanType
-const BaseInfo = JSON.parse(<any>localStorage.getItem("SurveyBaseInfo"))
 const InfoMonitored = Mainstore.getCartableUserDataById(Number(route.query.id));
 const Supervisory = JSON.parse(<any>localStorage.getItem('User-data'));
 let previousValues = <any>{};
