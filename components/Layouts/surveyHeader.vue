@@ -51,14 +51,14 @@ const goBack = () => {
   if (route.path === "/survey/Stepone") {
     visible.value = true
   }
-  else if (route.path === "/survey/StepTow") {
+  else if (route.path === "/survey/StepTwo") {
     emit('saveform2',true);
     router.push({ path: "/survey/Stepone", query: {id:InfoMonitored.id ,loanType:loanSurveyEconomidTypeId }});
 
   }
   else if (route.path === "/survey/StepThree") {
     emit('saveform3',true);
-    router.push({ path: "/survey/StepTow", query: {id:InfoMonitored.id ,loanType:loanSurveyEconomidTypeId }});
+    router.push({ path: "/survey/StepTwo", query: {id:InfoMonitored.id ,loanType:loanSurveyEconomidTypeId }});
   }
   else if(route.path === "/navigtion/EditAddress"){
     router.push({ path: "/survey/Stepone", query: {id:InfoMonitored.id ,loanType:loanSurveyEconomidTypeId }});

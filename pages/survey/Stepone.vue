@@ -4,7 +4,6 @@
   <form  @submit.prevent="submitForm()">
     <section class="col col-12 d-flex align-center pt-1 flex-column mb-2 text-black ">
       <div class="col-12 form-group px-4 d-flex justify-content-between">
-        {{}}
         <SelectButton v-model="form.genderType"
                       :class="{'p-invalid': v$.genderType.$invalid && submitted}"
                       :options="exportedObjects.genderoptions"
