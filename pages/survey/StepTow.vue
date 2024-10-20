@@ -366,6 +366,8 @@ import {ToastNotificationService} from "~/core/toast-notification-service";
 import Titel from "~/components/Titel.vue";
 import {Useform} from "~/store/Form";
 import surveyHeader from "~/components/Layouts/surveyHeader.vue";
+import { useSurveyStore } from "~/store/useSurveyStore";
+
 
 
 definePageMeta({
@@ -402,23 +404,29 @@ const Tab = ref();
 const animalsTab = ref(1);
 const calender = ref();
 const store=Useform()
+const Mainstore = useSurveyStore();
+
 const currentTab = ref();
 const AgriculturalCalender = ref()
 const insuranceTabAgricultural = ref();
 const loanSurvey =<any> route.query.loanType;
 const SurveyBasedata = JSON.parse(<any>localStorage.getItem("SurveyBaseInfo"));
 const Cartables = JSON.parse(<any>localStorage.getItem("Cartables"));
-let InfoMonitored = <any>ref('');
-const userdata = Cartables.find((item:any) => item.id === Number(route.query.id));
+// let InfoMonitored = <any>ref('');
+// const userdata = Cartables.find((item:any) => item.id === Number(route.query.id));
+// if (userdata) {
+//   InfoMonitored = userdata;
+// }
+// const SurveysList = JSON.parse(<any>localStorage.getItem("SurveysList") || "[]");
+// const filteredSurveys = SurveysList.filter((item:any) => item.id === Number(InfoMonitored.loanId))
+// const LasteSurvey =  filteredSurveys[0];
 
-const SurveysList = JSON.parse(<any>localStorage.getItem("SurveysList") || "[]");
-const filteredSurveys = SurveysList.filter((item:any) => item.id === Number(InfoMonitored.loanId))
-const LasteSurvey =  filteredSurveys[0];
+const userdata = Mainstore.getCartableUserDataById(Number(route.query.id));
+const filteredSurveys = Mainstore.getFilteredSurveys(userdata ? userdata.loanId : 0);
+const LasteSurvey = filteredSurveys.length ? filteredSurveys[0] : null;
 let previousValues = <any>{};
 
-if (userdata) {
-  InfoMonitored = userdata;
-}
+
 const form = reactive({
   HasWorkPermission:  LasteSurvey ? LasteSurvey.hasWorkPermission : null,
   insuranceTypeId:  LasteSurvey ? LasteSurvey.insuranceTypeId : null,
@@ -898,7 +906,7 @@ const NextstepHandel = () => {
       ToastNotificationService.warn(" میزان کشت نمیتواند از وسعت زمین بیشتر باشد");
     } else {
       store.SetFormTow(form)
-      router.push({ path: "/survey/StepThree", query: {id:InfoMonitored.id ,loanType:loanSurvey }});
+      router.push({ path: "/survey/StepThree", query: {id:userdata.id ,loanType:loanSurvey }});
       localStorage.setItem("SecPreForm", JSON.stringify(form));
     }
   } else {
@@ -907,8 +915,10 @@ const NextstepHandel = () => {
 };
 
 
+
 onMounted(() => {
   Pachvalue()
+  Mainstore.loadFromLocalStorage();
   setCurrentTab(form.planActivationTypeId)
   setCalenderLivestock(form.LivestockInsurance)
   setCalenderForAgricultural(form.HasAgriculturalInsurance)
