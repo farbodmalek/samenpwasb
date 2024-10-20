@@ -7,7 +7,7 @@
         {{}}
         <SelectButton v-model="form.genderType"
                       :class="{'p-invalid': v$.genderType.$invalid && submitted}"
-                      :options="genderoptions"
+                      :options="exportedObjects.genderoptions"
                       aria-labelledby="basic"
                       class="col-8 d-flex sec-titel"
                       optionLabel="name"
@@ -178,10 +178,12 @@ import { Useform } from "~/store/Form";
 import surveyHeader from "~/components/Layouts/surveyHeader.vue";
 import { useSurveyStore } from "~/store/useSurveyStore";
 import {loadFile} from "magicast";
+import exportedObjects from '~/core/Enum/baseEnum';
 
 definePageMeta({
   layout: "survey",
 });
+
 
 const store=Useform()
 
@@ -190,10 +192,10 @@ const optionFamilySupervisor = ref([
   {name: 'خیر', value: false},
 ]);
 
-const genderoptions = ref([
-  {name: ' مرد', value: false},
-  {name: 'زن', value: true},
-]);
+// const genderoptions = ref([
+//   {name: ' مرد', value: false},
+//   {name: 'زن', value: true},
+// ]);
 
 const options = ref([
   {name: 'شهری', value: 1},
