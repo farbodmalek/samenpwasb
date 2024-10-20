@@ -1,7 +1,7 @@
 <template>
-  <surveyHeader></surveyHeader>
-  <Carddetails />
-  <form  @submit.prevent="sumbitForm()">
+  <SurveyHeader/>
+  <CardDetails />
+  <form  @submit.prevent="submitForm()">
     <section class="col col-12 d-flex align-center pt-1 flex-column mb-2 text-black ">
       <div class="col-12 form-group px-4 d-flex justify-content-between">
         {{}}
@@ -284,16 +284,18 @@
 
 <!--</script>-->
 <script lang="ts" setup>
-import CardDetails from "../../../components/PaymentDetails.vue";
+import CardDetails from "../../components/PaymentDetails.vue";
+import SurveyHeader from "../../components/Layouts/surveyHeader.vue";
 import { ToastNotificationService } from "~/core/toast-notification-service";
 import { required } from '@vuelidate/validators';
 import { useVuelidate } from "@vuelidate/core";
 import { useFormStore } from "~/store/Form";
 import { useSurveyStore } from "~/store/useSurveyStore";
-import surveyHeader from "~/components/Layouts/surveyHeader.vue";
+
 import exportedObjects from '~/core/Enum/baseEnum';
 import { ref, reactive, computed, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+
 
 definePageMeta({
   layout: "survey",
@@ -381,7 +383,7 @@ const submitForm = () => {
     } else if (!form.address) {
       ToastNotificationService.error("لطفا آدرس را تکمیل کنید");
     } else {
-      formStore.setFormState(form);
+      formStore.SetFormOne(form);
       router.push({ path: "/survey/StepTwo", query: { id: surveyData.id, loanType: loanTypeId } });
       localStorage.setItem("formState", JSON.stringify(form));
     }
