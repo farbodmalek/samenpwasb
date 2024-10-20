@@ -286,11 +286,10 @@
 import CardDetails from "../../components/PaymentDetails.vue";
 import SurveyHeader from "../../components/Layouts/surveyHeader.vue";
 import { ToastNotificationService } from "~/core/toast-notification-service";
-import { required } from '@vuelidate/validators';
-import { useVuelidate } from "@vuelidate/core";
 import { useFormStore } from "~/store/Form";
 import { useSurveyStore } from "~/store/useSurveyStore";
-
+import { required } from '@vuelidate/validators';
+import { useVuelidate } from "@vuelidate/core";
 import exportedObjects from '~/core/Enum/baseEnum';
 import { ref, reactive, computed, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
@@ -337,7 +336,6 @@ const form = reactive({
   otherPlanNo: surveyData.loanPlan.otherPlanNo || null
 });
 
-// Validation rules
 const rules = computed(() => ({
   phone: { required },
   mobileNo: { required },
@@ -396,7 +394,5 @@ onMounted(() => {
   surveyStore.loadFromLocalStorage();
 });
 </script>
-
-
 <style lang="scss">
 </style>
