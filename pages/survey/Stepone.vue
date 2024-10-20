@@ -176,6 +176,8 @@ import {required} from '@vuelidate/validators';
 import {useVuelidate} from "@vuelidate/core";
 import { Useform } from "~/store/Form";
 import surveyHeader from "~/components/Layouts/surveyHeader.vue";
+import { useSurveyStore } from "~/store/useSurveyStore";
+import {loadFile} from "magicast";
 
 definePageMeta({
   layout: "survey",
@@ -207,16 +209,12 @@ const router = useRouter();
 const route = useRoute();
 const error = ref(false);
 const submitted = ref(false);
+const Mainstore = useSurveyStore();
 const loanSurveyEconomidTypeId = route.query.loanType
 const BaseInfo = JSON.parse(<any>localStorage.getItem("SurveyBaseInfo"))
-const GetCartable = JSON.parse(<any>localStorage.getItem('Cartables'));
-const targetObject = GetCartable.find((item:any) => item.id === Number(route.query.id));
+const InfoMonitored = Mainstore.getCartableUserDataById(Number(route.query.id));
 const Supervisory = JSON.parse(<any>localStorage.getItem('User-data'));
 let previousValues = <any>{};
-let InfoMonitored = <any>ref('');
-if (targetObject) {
-  InfoMonitored = targetObject;
-}
 const form = <any>reactive({
   genderType:   InfoMonitored.customerGenderType,
   residentTypeId:  InfoMonitored.loanPlan.residentTypeId == "" ? null : InfoMonitored.loanPlan.residentTypeId,
@@ -330,6 +328,7 @@ const sumbitForm = () => {
 
 onMounted(() => {
   Pachvalue()
+  Mainstore.loadFromLocalStorage();
 })
 
 </script>
