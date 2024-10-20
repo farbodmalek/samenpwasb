@@ -1,9 +1,9 @@
 
 import {defineStore} from "pinia";
-export const Useform = defineStore('form', {
+export const useFormStore = defineStore('form', {
   state: () => (
       {
-        addressform:{},
+        addressForm:{},
         form:<any> {
           loanPlan:{},
           survey:{
@@ -92,7 +92,7 @@ export const Useform = defineStore('form', {
       }
     },
     SetAddress(data:any){
-      this.addressform=data
+      this.addressForm=data
     }
   }
 })

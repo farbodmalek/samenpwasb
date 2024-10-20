@@ -64,14 +64,14 @@ import { useRouter, useRoute } from 'vue-router';
 import { ToastNotificationService } from '~/core/toast-notification-service';
 import { required } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
-import { Useform } from '~/store/Form';
+import { useFormStore } from '~/store/Form';
 import surveyHeader from "~/components/Layouts/surveyHeader.vue";
 
 definePageMeta({
   layout: 'survey',
 });
 
-const store = Useform();
+const store = useFormStore();
 const router = useRouter();
 const route = useRoute();
 const center = ref([30, 50]);

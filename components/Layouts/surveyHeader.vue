@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts" setup>
-import {Useform} from "~/store/Form";
+import {useFormStore} from "~/store/Form";
 
 const router = useRouter();
 const route = useRoute();
@@ -44,7 +44,7 @@ const GetCartable = JSON.parse(<any>localStorage.getItem('Cartables'));
 const LounId = router.currentRoute._value.query.id;
 const loanSurveyEconomidTypeId = parseInt(router.currentRoute._value.query.loanType)
 const InfoMonitored = GetCartable.find((item: any) => item.id === Number(LounId));
-const store = Useform()
+const store = useFormStore()
 const emit = defineEmits(['saveform2','saveform3',])
 
 const goBack = () => {
@@ -69,7 +69,7 @@ const homeHandle = () => {
   localStorage.removeItem("firPreForm");
   localStorage.removeItem("SecPreForm");
   localStorage.removeItem("FinalRegistrationform");
-  store.addressform={}
+  store.addressForm={}
   router.push("/");
 };
 

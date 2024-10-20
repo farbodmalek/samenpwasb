@@ -364,7 +364,7 @@ import {required} from '@vuelidate/validators';
 import {useVuelidate} from "@vuelidate/core";
 import {ToastNotificationService} from "~/core/toast-notification-service";
 import Titel from "~/components/Titel.vue";
-import {Useform} from "~/store/Form";
+import {useFormStore} from "~/store/Form";
 import surveyHeader from "~/components/Layouts/surveyHeader.vue";
 import { useSurveyStore } from "~/store/useSurveyStore";
 
@@ -403,7 +403,7 @@ const submitted = ref(false);
 const Tab = ref();
 const animalsTab = ref(1);
 const calender = ref();
-const store=Useform()
+const store=useFormStore()
 const Mainstore = useSurveyStore();
 
 const currentTab = ref();

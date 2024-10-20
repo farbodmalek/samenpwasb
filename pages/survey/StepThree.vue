@@ -190,7 +190,7 @@
 <script lang="ts" setup>
 import axios from "axios";
 import Carddetails from "~/components/PaymentDetails.vue";
-import {Useform} from "~/store/Form";
+import {useFormStore} from "~/store/Form";
 import {RequestStatus} from "~/store/RequestStatus"
 import Titel from "~/components/Titel.vue";
 import SelectButton from "primevue/selectbutton";
@@ -227,7 +227,7 @@ const optionsEquipmentBought = ref([
   {name: 'تجهیزات ندارد', value: 0},
 ]);
 
-const store = Useform()
+const store = useFormStore()
 const requestStatus = RequestStatus()
 const IsRequest = ref()
 const loadingMethod = UseLoading();
