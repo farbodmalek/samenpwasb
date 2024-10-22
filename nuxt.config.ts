@@ -111,6 +111,20 @@ export default defineNuxtConfig({
       },
   },
 
+    components: {
+        global: true,
+        dirs: [
+            {
+                path: '~/components',
+                pathPrefix: false,
+            }
+        ],
+    },
+
+    imports: {
+        autoImport: true,
+    },
+
   app: {
       head: {
           title: "اپلیکیشن نظارت کارافرینی  ",

@@ -6,6 +6,10 @@ export class BasePage {
         return useRuntimeConfig().public.base_API;
     }
 
+    static getEnv() {
+        return useRuntimeConfig().public.base_API;
+    }
+
     public static getLoggedUser() {
         this.loggedUserInfo = JSON.parse(<string>localStorage.getItem('User-data'));
         if (this.loggedUserInfo) {
