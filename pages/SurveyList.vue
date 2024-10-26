@@ -212,13 +212,7 @@ const FindOfflineForm = () => {
 };
 
 const GetCartables = () => {
-  const body={
-    pageNumber: 1,
-    take: 1000,
-    cartableStatusTypeId:1,
-    userId: BasePage.getLoggedUser().id}
-  useFetchServices.postApi(baseUrl.getCartables(),body).then(result => {
-  // MakeResponse.makeServerResponse(CommonServices.GetCartables(), true, result => {
+  MakeResponse.makeServerResponse(CommonServices.GetCartables(), true, result => {
     if ( result && result.results && result.results.length>=0) {
       const Cartables = result.results.filter((item: any) => item.expireDate.substring(0, 10) >= todayDateString);
       localStorage.setItem('Cartables', JSON.stringify(Cartables));
