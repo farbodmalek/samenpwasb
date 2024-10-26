@@ -1,6 +1,6 @@
 <template>
   <div class="justify-content-center container">
-    <Download v-if="isMobile"/>
+<!--    <Download v-if="isMobile"/>-->
 <!--    v-if="!isMobile"-->
     <form  @submit.prevent="login">
       <div ref="pageContainer" class="mt-5">

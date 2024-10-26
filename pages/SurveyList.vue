@@ -169,7 +169,7 @@ const navigateToCardDetail = (id: number, loanPlanId: number, loanType: number) 
     const updatedLoanEconomicTypeId = loanType === 4 ? 3 : loanType === 3 ? 4 : loanType;
     router.push({path: "/survey/Stepone", query: {id, loanType: updatedLoanEconomicTypeId}});
   } else {
-    router.push({path: "/navigtion/MapPage", query: {id, loanType}});
+    router.push({path: "/navigation/MapPage", query: {id, loanType}});
   }
 };
 

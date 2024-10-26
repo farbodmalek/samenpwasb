@@ -227,7 +227,7 @@
 
 <!--const MapRouteHandle = () => {-->
 <!--  localStorage.setItem("firPreForm", JSON.stringify(form))-->
-<!--  router.push({ path: "/navigtion/EditAddress", query: {id:InfoMonitored.id ,loanType:loanSurveyEconomidTypeId }});-->
+<!--  router.push({ path: "/navigation/EditAddress", query: {id:InfoMonitored.id ,loanType:loanSurveyEconomidTypeId }});-->
 <!--};-->
 
 <!--const Pachvalue = () => {-->

@@ -79,7 +79,7 @@ const mapPage = () => {
       mapError.value = false;
     }, 2500);
   } else {
-    router.push("navigtion/Map");
+    router.push("navigation/Map");
   }
 };
 

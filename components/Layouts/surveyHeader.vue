@@ -60,7 +60,7 @@ const goBack = () => {
     emit('saveform3',true);
     router.push({ path: "/survey/StepTwo", query: {id:InfoMonitored.id ,loanType:loanSurveyEconomidTypeId }});
   }
-  else if(route.path === "/navigtion/EditAddress"){
+  else if(route.path === "/navigation/EditAddress"){
     router.push({ path: "/survey/Stepone", query: {id:InfoMonitored.id ,loanType:loanSurveyEconomidTypeId }});
   }
 };
