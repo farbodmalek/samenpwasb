@@ -192,27 +192,6 @@
 <!--  planNoDto: null,-->
 <!--});-->
 
-<!--const rules = computed(() => {-->
-<!--  return {-->
-<!--    Phone: {required},-->
-<!--    mobileNo: {required},-->
-<!--    planTypeId: {required},-->
-<!--    isValidPlanNo: {required},-->
-<!--    educationTypeId: {required},-->
-<!--    genderType: {required},-->
-<!--    residentTypeId: {required},-->
-<!--    maritalStatusId: {required},-->
-<!--    isFamilySupervisor: {required},-->
-<!--  };-->
-<!--});-->
-
-<!--const v$ = useVuelidate(rules, form);-->
-
-
-
-
-
-
 <!--const Pachvalue = () => {-->
 <!--  previousValues=JSON.parse(<any>localStorage.getItem("firPreForm"));-->
 <!--  if(previousValues){-->
@@ -292,10 +271,10 @@ const userData = JSON.parse(<any>localStorage.getItem('User-data')) || {};
 let previousFormValues = reactive({});
 
 const form = reactive({
-  genderType: surveyData.customerGenderType,
-  residentTypeId: surveyData.loanPlan.residentTypeId || null,
-  maritalStatusId: surveyData.loanPlan.maritalStatusId || null,
-  isFamilySupervisor: surveyData.loanPlan.isFamilySupervisor || null,
+  genderType: surveyData.loanPlan?.genderType,
+  residentTypeId: surveyData.loanPlan?.residentTypeId ,
+  maritalStatusId: surveyData.loanPlan.maritalStatusId ,
+  isFamilySupervisor: surveyData.loanPlan?.isFamilySupervisor ,
   mobileNo: surveyData.mobileNo.slice(-11) || null,
   planTypeId: surveyData.loanPlan.planTypeId || null,
   educationTypeId: surveyData.loanPlan.educationTypeId || null,
@@ -348,7 +327,6 @@ const navigateToEditAddress = () => {
 const loadPreviousValues = () => {
   const savedForm = JSON.parse(<any>localStorage.getItem("firPreForm"));
   if (savedForm) {
-
     Object.assign(form, savedForm);
     form.latitude= formStore?.addressForm?.latitude? formStore.addressForm.latitude: savedForm.latitude
         form.longitude=  formStore?.addressForm?.longitude? formStore.addressForm?.longitude :savedForm.longitude
