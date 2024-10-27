@@ -208,27 +208,10 @@
 
 <!--const v$ = useVuelidate(rules, form);-->
 
-<!--const convertPersianNumbersToEnglish = (input:number) => {-->
-<!--  const persianToEnglishMap = {-->
-<!--    '۰': '0',-->
-<!--    '۱': '1',-->
-<!--    '۲': '2',-->
-<!--    '۳': '3',-->
-<!--    '۴': '4',-->
-<!--    '۵': '5',-->
-<!--    '۶': '6',-->
-<!--    '۷': '7',-->
-<!--    '۸': '8',-->
-<!--    '۹': '9'-->
-<!--  };-->
-<!--  return input.replace(/[۰-۹]/g, (match) => persianToEnglishMap[match]);-->
-<!--};-->
 
 
-<!--const MapRouteHandle = () => {-->
-<!--  localStorage.setItem("firPreForm", JSON.stringify(form))-->
-<!--  router.push({ path: "/navigation/EditAddress", query: {id:InfoMonitored.id ,loanType:loanSurveyEconomidTypeId }});-->
-<!--};-->
+
+
 
 <!--const Pachvalue = () => {-->
 <!--  previousValues=JSON.parse(<any>localStorage.getItem("firPreForm"));-->
@@ -276,10 +259,6 @@
 <!--  }-->
 <!--};-->
 
-<!--onMounted(() => {-->
-<!--  Pachvalue()-->
-<!--  Mainstore.loadFromLocalStorage();-->
-<!--})-->
 
 <!--</script>-->
 <script lang="ts" setup>
@@ -323,10 +302,10 @@ const form = reactive({
   planNoId: surveyData.loanPlan.planNoId || null,
   loanId: surveyData.loanPlan.loanId,
   cartableId: surveyData.loanPlan.cartableId,
-  latitude: formStore.addressForm.latitude || surveyData.loanPlan.latitude,
-  longitude: formStore.addressForm.longitude || surveyData.loanPlan.longitude,
-  address: formStore.addressForm.address || surveyData.loanPlan.address,
-  villageName: formStore.addressForm.villageName || surveyData.loanPlan.villageName,
+  latitude:  surveyData.loanPlan.latitude,
+  longitude:  surveyData.loanPlan.longitude,
+  address:  surveyData.loanPlan.address,
+  villageName:  surveyData.loanPlan.villageName,
   insuranceTypeId: surveyData.loanPlan.insuranceTypeId,
   workShopCode: surveyData.loanPlan.workShopCode,
   isValidPlanNo: false,
@@ -369,7 +348,12 @@ const navigateToEditAddress = () => {
 const loadPreviousValues = () => {
   const savedForm = JSON.parse(<any>localStorage.getItem("firPreForm"));
   if (savedForm) {
+
     Object.assign(form, savedForm);
+    form.latitude= formStore?.addressForm?.latitude? formStore.addressForm.latitude: savedForm.latitude
+        form.longitude=  formStore?.addressForm?.longitude? formStore.addressForm?.longitude :savedForm.longitude
+        form.address= formStore?.addressForm?.address ? formStore.addressForm.address : savedForm.address
+        form.villageName=formStore?.addressForm?.villageName ? formStore.addressForm.villageName : savedForm.villageName
   }
 };
 

@@ -38,6 +38,9 @@
             <div class="d-grid col-11 mx-auto pt-3 mt-5">
               <button class="text-white bg-blue-1 rounded-pill p-3">ورود</button>
             </div>
+<!--            <div class="d-grid col-11 mx-auto pt-3 mt-3">-->
+<!--              <button @click.prevent="clearCache" class="text-white bg-danger rounded-pill p-3">پاک کردن کش</button>-->
+<!--            </div>-->
           </div>
         </div>
       </div>
@@ -106,6 +109,17 @@ const login = async () => {
     ToastNotificationService.warn("فیلدهای اجباری را لطفا تکمیل کنید");
   }
 };
+
+const clearCache = async () => {
+  if ('caches' in window) {
+    const cacheNames = await caches.keys();
+    await Promise.all(cacheNames.map(name => caches.delete(name)));
+    ToastNotificationService.success("کش با موفقیت پاک شد");
+  } else {
+    ToastNotificationService.warn("امکان پاک کردن کش وجود ندارد");
+  }
+};
+
 
 const GetSurveyBaseInfo = async () => {
   MakeResponse.makeServerResponse(CommonServices.GetSurveyBaseInfo(), true, result => {

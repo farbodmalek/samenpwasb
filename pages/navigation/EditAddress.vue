@@ -140,6 +140,7 @@ const updateLocation = (lat: number, lng: number) => {
 
 const sumbit = () => {
   if (!v$.value.$invalid) {
+    console.log(form)
     store.SetAddress(form);
     router.push({
       path: '/survey/Stepone',
