@@ -577,10 +577,10 @@ const removeImage = (index:any) => {
   ServicesImg.removeImgDB(removedImage.file)
 };
 
-const ConvertNUM = (input) => {
+const ConvertNUM = (input:any) => {
   if (input>100){
     ToastNotificationService.warn("اعداد بیشتر از 100 نمیتوان وارد کرد");
-    return "";1
+    return "";
   }
 
   if (!input) {
@@ -603,7 +603,7 @@ const ConvertNUM = (input) => {
     '۸': '8',
     '۹': '9'
   };
-  const convertedString = input.replace(/[۰-۹]/g, (match) => persianToEnglishMap[match]);
+  const convertedString = input.replace(/[۰-۹]/g, (match:any) => persianToEnglishMap[match]);
   return parseInt(convertedString, 10);
 };
 
