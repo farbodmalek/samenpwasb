@@ -120,15 +120,6 @@ const clearCache = async () => {
   }
 };
 
-
-const GetSurveyBaseInfo = async () => {
-  MakeResponse.makeServerResponse(CommonServices.GetSurveyBaseInfo(), true, result => {
-    if (result && result.result) {
-      localStorage.setItem("SurveyBaseInfo", JSON.stringify(result.result))
-    }
-  }, false);
-}
-
 const handleKeyboardShow = () => {
   pageContainer.value.scrollIntoView({behavior: "smooth", block: "start"});
 };
@@ -162,13 +153,10 @@ const  detectDevice =()=> {
 
 
 onMounted(() => {
-  GetSurveyBaseInfo();
   window.addEventListener("keyboardDidShow", handleKeyboardShow);
   window.addEventListener("keyboardDidHide", handleKeyboardHide);
-
   const deviceType = detectDevice();
   isMobile.value = (deviceType === "Android" || deviceType === "iOS");
-  console.log("Device type:", deviceType);
 });
 </script>
 

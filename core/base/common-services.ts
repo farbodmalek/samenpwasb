@@ -19,10 +19,7 @@ export class CommonServices extends BaseApi {
         return BaseApi.postApi(url, body);
     }
 
-    static GetSurveyBaseInfo() {
-        const url = this.getBaseAPI() + 'api/survey/GetSurveyBaseInfo';
-        return BaseApi.getApiLogin(url);
-    }
+
 
     static SetLoanPlanSurvey(body: any) {
         const url = this.getBaseAPI() + 'api/survey/SetLoanPlanSurvey';

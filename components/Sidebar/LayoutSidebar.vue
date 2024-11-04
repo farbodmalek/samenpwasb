@@ -141,7 +141,7 @@ const logout = (index) => {
     if (userId) {
       closeExitemodale.value = true
     } else {
-      localStorage.removeItem("SurveyBaseInfo");
+
       localStorage.removeItem("User-data");
       localStorage.removeItem("SurveysList")
       localStorage.removeItem("nuxt-color-mode");
@@ -159,7 +159,7 @@ const modalHome = () => {
   router.push("authorization/login");
   localStorage.removeItem("User-data");
   localStorage.removeItem("localStorageUserKey");
-  localStorage.removeItem("SurveyBaseInfo");
+
   localStorage.removeItem("nuxt-color-mode");
   localStorage.removeItem("data");
 }

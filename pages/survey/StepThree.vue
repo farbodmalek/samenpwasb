@@ -189,12 +189,9 @@
 </template>
 <script lang="ts" setup>
 import {useFormStore} from "~/store/Form";
-import SelectButton from "primevue/selectbutton";
 import {required} from '@vuelidate/validators';
 import {useVuelidate} from "@vuelidate/core";
 import {ToastNotificationService} from "~/core/toast-notification-service";
-import surveyHeader from "~/components/Layouts/surveyHeader.vue";
-import {MakeResponse} from "~/composables/make-response";
 import {CommonServices} from "~/core/base/common-services";
 import {ServicesImg} from "~/core/base/Services-Img.ts";
 import {BaseApi} from "~/core/base/base-api.ts";
@@ -211,7 +208,6 @@ let mainform = <any>reactive({})
 const Mainstore = useSurveyStore();
 const store = useFormStore()
 const IsRequest = ref()
-const Url = useRuntimeConfig().public.base_API;
 const router = useRouter();
 const route = useRoute();
 const fileInput = ref<any>([]);
@@ -222,7 +218,6 @@ const EquipmentTab = ref();
 const submitted = ref(false);
 const visible = ref(false);
 const visibleConfirm = ref(false);
-const SurveyBasedata = JSON.parse(<any>localStorage.getItem("SurveyBaseInfo"));
 const FinalRegistrationform = localStorage.getItem("FinalRegistrationform");
 const FinalRegistrationForm = FinalRegistrationform ? JSON.parse(FinalRegistrationform) : {};
 const userdata = Mainstore.getCartableUserDataById(Number(route.query.id));

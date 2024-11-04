@@ -351,18 +351,16 @@
         بعدی
       </button>
     </div>
+
   </form>
 </template>
 
 <script lang="ts" setup>
 import DatePicker from 'vue3-persian-datetime-picker';
-import SelectButton from "primevue/selectbutton";
 import {required} from '@vuelidate/validators';
 import {useVuelidate} from "@vuelidate/core";
 import {ToastNotificationService} from "~/core/toast-notification-service";
-import Titel from "~/components/Titel.vue";
 import {useFormStore} from "~/store/Form";
-import surveyHeader from "~/components/Layouts/surveyHeader.vue";
 import { useSurveyStore } from "~/store/useSurveyStore";
 import exportedObjects from '~/core/Enum/baseEnum';
 
@@ -383,7 +381,6 @@ const currentTab = ref();
 const AgriculturalCalender = ref()
 const insuranceTabAgricultural = ref();
 const loanSurvey =<any> route.query.loanType;
-const SurveyBasedata = JSON.parse(<any>localStorage.getItem("SurveyBaseInfo"));
 const Cartables = JSON.parse(<any>localStorage.getItem("Cartables"));
 const userdata = Mainstore.getCartableUserDataById(Number(route.query.id));
 const filteredSurveys = Mainstore.getFilteredSurveys(userdata ? userdata.loanId : 0);

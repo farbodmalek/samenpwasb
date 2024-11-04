@@ -13,9 +13,6 @@ const getSurveysListForPWA = () => {
     return BasePage.getEnv() + 'api/survey/GetSurveysListForPWA';
 }
 
-const getSurveyBaseInfo = () => {
-    return BasePage.getEnv() + 'api/survey/GetSurveyBaseInfo';
-}
 
 const getCartables = () => {
     return BasePage.getEnv() + 'api/survey/GetCartables';
@@ -26,7 +23,6 @@ export default {
     uploadSurveyImage,
     setLoanPlanSurvey,
     getSurveysListForPWA,
-    getSurveyBaseInfo,
     getCartables,
 }
 

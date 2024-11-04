@@ -281,16 +281,6 @@ const SetLoanPlanSurvey = async (body: any,id:number) => {
   },true);
 }
 
-const GetSurveyBaseInfo = async () => {
-  MakeResponse.makeServerResponse(CommonServices.GetSurveyBaseInfo(), true, result => {
-    if (result && result.result) {
-      localStorage.setItem("SurveyBaseInfo", JSON.stringify(result.result))
-    }
-  }, false);
-}
-
-
-
 const openDataDB = () => {
   ServicesImg.openDatabase(true,result => {
     images=result
@@ -302,7 +292,6 @@ onMounted(() => {
   GetSurveysList()
   openDataDB()
   ClearStorge()
-  GetSurveyBaseInfo()
 
 });
 

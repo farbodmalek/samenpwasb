@@ -117,9 +117,14 @@ export default defineNuxtConfig({
             {
                 path: '~/components',
                 pathPrefix: false,
+            },
+            {
+                path: '~/composables',
+                pathPrefix: false,
             }
         ],
     },
+
 
     imports: {
         autoImport: true,

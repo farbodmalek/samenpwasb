@@ -1,6 +1,6 @@
 <template>
-  <SurveyHeader/>
-  <CardDetails />
+  <surveyHeader/>
+  <PaymentDetails/>
   <form  @submit.prevent="submitForm()">
     <section class="col col-12 d-flex align-center pt-1 flex-column mb-2 text-black ">
       <div class="col-12 form-group px-4 d-flex justify-content-between">
@@ -139,118 +139,14 @@
   </form>
 
 </template>
-
-<!--<script lang="ts" setup>-->
-<!--import Carddetails from "~/components/PaymentDetails.vue";-->
-<!--import {ToastNotificationService} from "~/core/toast-notification-service";-->
-<!--import {required} from '@vuelidate/validators';-->
-<!--import {useVuelidate} from "@vuelidate/core";-->
-<!--import { Useform } from "~/store/Form";-->
-<!--import { useSurveyStore } from "~/store/useSurveyStore";-->
-<!--import exportedObjects from '~/core/Enum/baseEnum';-->
-<!--import surveyHeader from "~/components/Layouts/surveyHeader.vue";-->
-
-<!--definePageMeta({-->
-<!--  layout: "survey",-->
-<!--});-->
-
-
-<!--const store=Useform()-->
-<!--const router = useRouter();-->
-<!--const route = useRoute();-->
-<!--const error = ref(false);-->
-<!--const submitted = ref(false);-->
-<!--const Mainstore = useSurveyStore();-->
-<!--const loanSurveyEconomidTypeId = route.query.loanType-->
-<!--const InfoMonitored = Mainstore.getCartableUserDataById(Number(route.query.id));-->
-<!--const Supervisory = JSON.parse(<any>localStorage.getItem('User-data'));-->
-<!--let previousValues = <any>{};-->
-<!--const form = <any>reactive({-->
-<!--  genderType:   InfoMonitored.customerGenderType,-->
-<!--  residentTypeId:  InfoMonitored.loanPlan.residentTypeId == "" ? null : InfoMonitored.loanPlan.residentTypeId,-->
-<!--  maritalStatusId:  InfoMonitored.loanPlan.maritalStatusId ?InfoMonitored.loanPlan.maritalStatusId : InfoMonitored.loanPlan.maritalStatusId,-->
-<!--  isFamilySupervisor:  InfoMonitored.loanPlan.isFamilySupervisor == "" ? null : InfoMonitored.loanPlan.isFamilySupervisor,-->
-<!--  Phone:  InfoMonitored.loanPlan.Phone,-->
-<!--  mobileNo:  InfoMonitored.mobileNo.slice(-11) == "" ? null : InfoMonitored.mobileNo.slice(-11),-->
-<!--  planTypeId:  InfoMonitored.loanPlan.planTypeId == "" ? null : InfoMonitored.loanPlan.planTypeId,-->
-<!--  educationTypeId: InfoMonitored.loanPlan.educationTypeId == "" ? null : InfoMonitored.loanPlan.educationTypeId,-->
-<!--  planNoId: InfoMonitored.loanPlan.planNoId,-->
-<!--  id:  InfoMonitored.loanPlan.id,-->
-<!--  cartableId:  InfoMonitored.loanPlan.cartableId,-->
-<!--  loanId:  InfoMonitored.loanPlan.loanId,-->
-<!--  loanSurveyEconomidTypeId: loanSurveyEconomidTypeId,-->
-<!--  otherPlanNo: InfoMonitored.loanPlan.otherPlanNo,-->
-<!--  latitude: store.addressform.latitude ? store.addressform.latitude :InfoMonitored.loanPlan.latitude,-->
-<!--  longitude:  store.addressform.longitude ? store.addressform.longitude :InfoMonitored.loanPlan.longitude,-->
-<!--  address: store.addressform.address ? store.addressform.address : InfoMonitored.loanPlan.address,-->
-<!--  villageName:store.addressform.villageName ? store.addressform.villageName : InfoMonitored.loanPlan.villageName,-->
-<!--  UserOtherPlanNo: Supervisory.id,-->
-<!--  insuranceTypeId:  InfoMonitored.loanPlan.insuranceTypeId,-->
-<!--  workShopCode:  InfoMonitored.loanPlan.workShopCode,-->
-<!--  isValidPlanNo:  false,-->
-<!--  UserPlanNoText: null,-->
-<!--  planNoDto: null,-->
-<!--});-->
-
-<!--const Pachvalue = () => {-->
-<!--  previousValues=JSON.parse(<any>localStorage.getItem("firPreForm"));-->
-<!--  if(previousValues){-->
-<!--        form.genderType= previousValues.hasOwnProperty('genderType') ? previousValues.genderType :  InfoMonitored.customerGenderType;-->
-<!--        form.residentTypeId= previousValues.hasOwnProperty('residentTypeId') ? previousValues.residentTypeId : InfoMonitored.loanPlan.residentTypeId  ?  InfoMonitored.loanPlan.residentTypeId :null-->
-<!--        form.maritalStatusId= previousValues.hasOwnProperty('maritalStatusId') ? previousValues.maritalStatusId : InfoMonitored.loanPlan.maritalStatusId ?InfoMonitored.loanPlan.maritalStatusId : InfoMonitored.loanPlan.maritalStatusId;-->
-<!--        form.isFamilySupervisor= previousValues.hasOwnProperty('isFamilySupervisor') ? previousValues.isFamilySupervisor : InfoMonitored.loanPlan.isFamilySupervisor  ?  InfoMonitored.loanPlan.isFamilySupervisor:null;-->
-<!--        form.Phone= previousValues.hasOwnProperty('Phone') ? previousValues.Phone : InfoMonitored.loanPlan.phone?InfoMonitored.loanPlan.phone:null;-->
-<!--        form.mobileNo= previousValues.hasOwnProperty('mobileNo') ? previousValues.mobileNo : InfoMonitored.mobileNo.slice(-11) ? InfoMonitored.mobileNo.slice(-11):null;-->
-<!--        form.planTypeId= previousValues.hasOwnProperty('planTypeId') ? previousValues.planTypeId : InfoMonitored.loanPlan.planTypeId ?   InfoMonitored.loanPlan.planTypeId:null;-->
-<!--        form.educationTypeId= previousValues.hasOwnProperty('educationTypeId') ? previousValues.educationTypeId : InfoMonitored.loanPlan.educationTypeId ?   InfoMonitored.loanPlan.educationTypeId:null;-->
-<!--        form.planNoId= previousValues.hasOwnProperty('planNoId') ? previousValues.planNoId : InfoMonitored.planNoId;-->
-<!--        form.id= previousValues.hasOwnProperty('id') ? previousValues.id : InfoMonitored.loanPlan.id;-->
-<!--        form.cartableId= previousValues.hasOwnProperty('cartableId') ? previousValues.cartableId : InfoMonitored.loanPlan.cartableId;-->
-<!--        form.loanId= previousValues.hasOwnProperty('loanId') ? previousValues.loanId : InfoMonitored.loanPlan.loanId;-->
-<!--        form.loanSurveyEconomidTypeId= previousValues.hasOwnProperty('loanSurveyEconomidTypeId') ? previousValues.loanSurveyEconomidTypeId : loanSurveyEconomidTypeId;-->
-<!--        form.otherPlanNo= previousValues.hasOwnProperty('planTypeId') ? previousValues.planTypeId : InfoMonitored.loanPlan.otherPlanNo;-->
-<!--        form.latitude= store.addressform.latitude ? store.addressform.latitude : previousValues.hasOwnProperty('planTypeId') ? previousValues.latitude : InfoMonitored.loanPlan.latitude;-->
-<!--        form.longitude=store.addressform.longitude ? store.addressform.longitude : previousValues.hasOwnProperty('longitude') ? previousValues.longitude : InfoMonitored.loanPlan.longitude;-->
-<!--        form.address=  store.addressform.address ? store.addressform.address :previousValues.hasOwnProperty('address') ? previousValues.address : InfoMonitored.loanPlan.address;-->
-<!--        form.villageName= store.addressform.villageName ? store.addressform.villageName : previousValues.hasOwnProperty('villageName') ? previousValues.villageName : InfoMonitored.loanPlan.villageName;-->
-<!--        form.insuranceTypeId= previousValues.hasOwnProperty('insuranceTypeId') ? previousValues.insuranceTypeId : InfoMonitored.loanPlan.insuranceTypeId;-->
-<!--        form.workShopCode= previousValues.hasOwnProperty('workShopCode') ? previousValues.workShopCode : InfoMonitored.loanPlan.workShopCode;-->
-<!--        form.isValidPlanNo= previousValues.hasOwnProperty('isValidPlanNo') ? previousValues.isValidPlanNo : false;-->
-<!--  }-->
-<!--}-->
-
-<!--const sumbitForm = () => {-->
-<!--  submitted.value = true-->
-<!--  if (!v$.value.$invalid) {-->
-<!--    if (form.mobileNo.length < 11 || form.Phone.length < 11) {-->
-<!--      ToastNotificationService.warn("تلفن همراه یا تلفن ثابت باید 11 رقم باشد");-->
-<!--    } else if (!form.Phone.startsWith(0)) {-->
-<!--      ToastNotificationService.warn("تلفن ثابت باید با صفر شروع شود");-->
-<!--    } else if (form.address === "") {-->
-<!--      ToastNotificationService.error("لطفا ادرس را تکمیل کنید");-->
-<!--    } else {-->
-<!--      store.SetFormOne(form)-->
-<!--      router.push({ path: "/survey/StepTow", query: {id:InfoMonitored.id ,loanType:loanSurveyEconomidTypeId }});-->
-<!--      localStorage.setItem("firPreForm", JSON.stringify(form))-->
-<!--    }-->
-<!--  } else {-->
-<!--    ToastNotificationService.error("فیلد های اجباری را لطفا تکمیل کنید");-->
-<!--  }-->
-<!--};-->
-
-
-<!--</script>-->
 <script lang="ts" setup>
-import CardDetails from "../../components/PaymentDetails.vue";
-import SurveyHeader from "../../components/Layouts/surveyHeader.vue";
 import { ToastNotificationService } from "~/core/toast-notification-service";
 import { useFormStore } from "~/store/Form";
 import { useSurveyStore } from "~/store/useSurveyStore";
 import { required } from '@vuelidate/validators';
 import { useVuelidate } from "@vuelidate/core";
 import exportedObjects from '~/core/Enum/baseEnum';
-import { ref, reactive, computed, onMounted } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+;
 
 
 definePageMeta({
@@ -261,15 +157,12 @@ const formStore = useFormStore();
 const surveyStore = useSurveyStore();
 const router = useRouter();
 const route = useRoute();
-
 const error = ref(false);
 const submitted = ref(false);
 const loanTypeId = route.query.loanType;
 const surveyData = surveyStore.getCartableUserDataById(Number(route.query.id));
 const userData = JSON.parse(<any>localStorage.getItem('User-data')) || {};
-
 let previousFormValues = reactive({});
-
 const form = reactive({
   genderType: surveyData.loanPlan.genderType,
   residentTypeId: surveyData.loanPlan.residentTypeId ,

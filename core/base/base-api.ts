@@ -31,7 +31,7 @@ export class BaseApi extends BasePage {
     public static async postApiLogin(url: string, body: any) {
         this.con = {
             headers: {
-                'Content-Type': 'application/json',  // تعیین نوع محتوا
+                'Content-Type': 'application/json',
                 'DeviceName': 'IsPwa'
             }
         };
