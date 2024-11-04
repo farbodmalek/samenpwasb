@@ -19,7 +19,6 @@ const getCartables = () => {
 }
 
 export default {
-
     uploadSurveyImage,
     setLoanPlanSurvey,
     getSurveysListForPWA,
