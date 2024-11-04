@@ -81,8 +81,6 @@
 //     getApi,
 //     postApi
 // }
-
-
 import type { UseFetchOptions } from "nuxt/app";
 import { UseLoading } from "../store/loading-store";
 import { BasePage } from "../core/base/base-page";
@@ -93,7 +91,6 @@ const useFetchServices = async (url: string, options?: UseFetchOptions<object>, 
         const token = 'Bearer ' + BasePage.getLoggedUser()?.token;
         const loading = UseLoading();
 
-        // تنظیم گزینه‌ها برای $fetch
         const config = {
             ...options,
             headers: {
@@ -109,10 +106,13 @@ const useFetchServices = async (url: string, options?: UseFetchOptions<object>, 
             },
             async onResponse({ response }) {
                 if (loader) loading.getLoadingHide();
+
                 if (response._data && response._data.serverErrors?.length) {
                     toast.error(response._data.serverErrors[0].hint);
                 } else if (response.status === 400) {
                     toast.error('خطا در انجام عملیات');
+                } else if (response.status === 500) {
+                    toast.error('خطای داخلی سرور');
                 }
             },
             onResponseError({ response }) {
@@ -120,6 +120,9 @@ const useFetchServices = async (url: string, options?: UseFetchOptions<object>, 
                     if (loader) loading.getLoadingHide();
                     localStorage.removeItem('token');
                     navigateTo('/authorization/login');
+                } else if (response?.status === 500) {
+                    if (loader) loading.getLoadingHide();
+                    toast.error('خطای داخلی سرور');
                 }
             },
         };
@@ -129,8 +132,17 @@ const useFetchServices = async (url: string, options?: UseFetchOptions<object>, 
         return data;
     } catch (error) {
         console.error(error);
+        return { success: false, message: 'Network Error: Failed to fetch data', data: null };
+        if (!navigator.onLine) {
+            toast.error('ارتباط اینترنتی شما قطع است');
+        } else {
+            toast.error('خطای شبکه: لطفاً بعداً مجدداً تلاش کنید');
+        }
+
         if (loader) UseLoading().getLoadingHide();
-        toast.error('خطایی رخ داد');
+
+        // برگرداندن نتیجه پیش‌فرض در صورت بروز خطا
+
     }
 };
 

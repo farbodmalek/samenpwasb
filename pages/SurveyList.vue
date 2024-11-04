@@ -324,15 +324,13 @@ const openDataDB = () => {
 //     }
 //   }
 // };
-// onMounted(() => {
-//   GetCartables()
-//   GetSurveysList()
-//   openDataDB()
-//   ClearStorge()
-//   postData()
-//
-//
-// });
+onMounted(() => {
+  GetCartables()
+  GetSurveysList()
+  openDataDB()
+  ClearStorge()
+  // postData()
+});
 
 </script>
 <style lang="scss">
