@@ -203,7 +203,7 @@ import {MakeResponse} from "~/composables/make-response";
 import {CommonServices} from "~/core/base/common-services";
 import {ServicesImg} from "~/core/base/Services-Img.ts";
 import {BaseApi} from "~/core/base/base-api.ts";
-
+import { useSurveyStore } from "~/store/useSurveyStore";
 
 
 definePageMeta({
@@ -227,6 +227,7 @@ const optionsEquipmentBought = ref([
   {name: 'تجهیزات ندارد', value: 0},
 ]);
 
+const Mainstore = useSurveyStore();
 const store = useFormStore()
 const requestStatus = RequestStatus()
 const IsRequest = ref()
@@ -236,7 +237,7 @@ const router = useRouter();
 const route = useRoute();
 const fileInput = ref<any>([]);
 const uploadedImages = ref<any>([]);
-let InfoMonitored = <any>ref('');
+
 let mainform = <any>reactive({})
 const ConstructionTab = ref(0);
 let totalUploadedFiles = 0;
@@ -246,19 +247,15 @@ const EquipmentTab = ref();
 const submitted = ref(false);
 const visible = ref(false);
 const visibleConfirm = ref(false);
-const SurveysList = JSON.parse(<any>localStorage.getItem("SurveysList") || "[]");
 const SurveyBasedata = JSON.parse(<any>localStorage.getItem("SurveyBaseInfo"));
 const supervisoryInfo = JSON.parse(<any>localStorage.getItem("User-data"))
 const FinalRegistrationform = localStorage.getItem("FinalRegistrationform");
 const FinalRegistrationForm = FinalRegistrationform ? JSON.parse(FinalRegistrationform) : {};
-const Cartables = JSON.parse(<any>localStorage.getItem("Cartables"));
-const targetObject = Cartables.find((item: any) => item.id === Number(route.query.id));
-if (targetObject) {
-  InfoMonitored = targetObject;
-}
 
-const LastSurveyIndex = SurveysList.findIndex((item: any) => item.id === Number(InfoMonitored.loanId));
-const LasteSurvey = LastSurveyIndex !== -1 ? SurveysList[LastSurveyIndex] : null;
+
+const userdata = Mainstore.getCartableUserDataById(Number(route.query.id));
+const filteredSurveys = Mainstore.getFilteredSurveys(userdata ? userdata.loanId : 0);
+const LasteSurvey = filteredSurveys.length ? filteredSurveys[0] : null;
 const currentDate = new Date();
 const options = {timeZone: 'Asia/Tehran'};
 const surveyDate = currentDate.toLocaleString('en-US', options);
@@ -273,9 +270,9 @@ const form = ref({
   constructionDescription: FinalRegistrationForm.hasOwnProperty("constructionDescription") ? FinalRegistrationForm.constructionDescription : LasteSurvey ? LasteSurvey.constructionDescription : null,
   equipmentTypeId: FinalRegistrationForm.hasOwnProperty("equipmentTypeId") ? FinalRegistrationForm.equipmentTypeId : LasteSurvey ? LasteSurvey.equipmentTypeId : null,
   equipmentDescription: FinalRegistrationForm.hasOwnProperty("equipmentDescription") ? FinalRegistrationForm.equipmentDescription : LasteSurvey ? LasteSurvey.equipmentDescription : null,
-  cartableId: InfoMonitored.loanPlan.cartableId,
+  cartableId: userdata.loanPlan.cartableId,
   surveyDate: surveyDate,
-  userId: InfoMonitored.userId,
+  userId: userdata.userId,
   confirmation: null,
   guidList: [],
 });
@@ -487,7 +484,7 @@ const handleFileUpload = async (event:any) => {
       totalUploadedFiles--;
       return;
     }
-    const compressedFile = await compressImage(file);
+    const compressedFile =<any> await compressImage(file);
     uploadedImages.value.push({
       url: compressedFile.dataURL,
       file: compressedFile,
@@ -499,12 +496,12 @@ const handleFileUpload = async (event:any) => {
 const compressImage = (file:any) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = (event) => {
-      const img = new Image();
+    reader.onload = (event:any) => {
+      const img =<any> new Image();
       img.src = event.target.result;
       img.onload = () => {
         const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
+        const ctx =<any> canvas.getContext("2d");
         const maxWidth = 800;
         const maxHeight = 600;
         let newWidth = img.width;
@@ -521,7 +518,7 @@ const compressImage = (file:any) => {
         canvas.height = newHeight;
         ctx.drawImage(img, 0, 0, newWidth, newHeight);
         canvas.toBlob(
-            (blob) => {
+            (blob:any) => {
               const compressedFile = new File([blob], file.name, {
                 type: "image/jpeg",
               });
@@ -566,7 +563,7 @@ const openDatabase =()=>{
 }
 
 const SaveImgDB = (file:any) => {
-  ServicesImg.saveImgTodDB(file,route.query.id,InfoMonitored.loanPlan.loanId)
+  ServicesImg.saveImgTodDB(file,route.query.id,userdata.loanPlan.loanId)
 };
 
 const removeImage = (index:any) => {
@@ -591,7 +588,7 @@ const ConvertNUM = (input:any) => {
     return ""
   }
 
-  const persianToEnglishMap = {
+  const persianToEnglishMap =<any> {
     '۰': '0',
     '۱': '1',
     '۲': '2',
@@ -610,6 +607,7 @@ const ConvertNUM = (input:any) => {
 
 onMounted(() => {
   store.LoadForm()
+  Mainstore.loadFromLocalStorage();
   setCurrentTab(form.value.planActivationTypeId)
   ConstructionHandelTab(form.value.constructionApproval)
   EquipmentBoughtHandel(form.value.isEquipmentBought)

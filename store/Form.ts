@@ -25,7 +25,6 @@ export const useFormStore = defineStore('form', {
   ),
   actions: {
     SetFormOne(data:any) {
-      console.log(data)
       this.form.loanPlan = data;
       this.form.survey.isValidPlanNo = data.isValidPlanNo;
       this.form.LoanPlanNo.UserPlanNoText = data.UserPlanNoText;
