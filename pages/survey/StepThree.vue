@@ -191,7 +191,7 @@
 import axios from "axios";
 import Carddetails from "~/components/PaymentDetails.vue";
 import {useFormStore} from "~/store/Form";
-import {RequestStatus} from "~/store/RequestStatus"
+
 import Titel from "~/components/Titel.vue";
 import SelectButton from "primevue/selectbutton";
 import {required} from '@vuelidate/validators';
@@ -229,30 +229,24 @@ const optionsEquipmentBought = ref([
 
 const Mainstore = useSurveyStore();
 const store = useFormStore()
-const requestStatus = RequestStatus()
 const IsRequest = ref()
-const loadingMethod = UseLoading();
 const Url = useRuntimeConfig().public.base_API;
 const router = useRouter();
 const route = useRoute();
 const fileInput = ref<any>([]);
 const uploadedImages = ref<any>([]);
-
-let mainform = <any>reactive({})
-const ConstructionTab = ref(0);
 let totalUploadedFiles = 0;
 let db:any;
+let mainform = <any>reactive({})
+const ConstructionTab = ref(0);
 const currentTab = ref();
 const EquipmentTab = ref();
 const submitted = ref(false);
 const visible = ref(false);
 const visibleConfirm = ref(false);
 const SurveyBasedata = JSON.parse(<any>localStorage.getItem("SurveyBaseInfo"));
-const supervisoryInfo = JSON.parse(<any>localStorage.getItem("User-data"))
 const FinalRegistrationform = localStorage.getItem("FinalRegistrationform");
 const FinalRegistrationForm = FinalRegistrationform ? JSON.parse(FinalRegistrationform) : {};
-
-
 const userdata = Mainstore.getCartableUserDataById(Number(route.query.id));
 const filteredSurveys = Mainstore.getFilteredSurveys(userdata ? userdata.loanId : 0);
 const LasteSurvey = filteredSurveys.length ? filteredSurveys[0] : null;
