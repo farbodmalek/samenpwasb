@@ -8,7 +8,7 @@
       <Titel :title="'مصوبه ساخت ساز'"/>
       <div class="px-3 col-12  mb-3 d-flex justify-content-center bg-white py-3 rounded-4">
         <SelectButton v-model="form.constructionApproval"
-                      :options="optionsApproval"
+                      :options="exportedObjects.binaryOptions"
                       :class="{'p-invalid': v$.constructionApproval.$invalid && submitted}"
                       aria-labelledby="basic"
                       class="col-12 d-flex sec-titel"
@@ -45,7 +45,7 @@
     <section class="flex-column px-1 form-group">
       <Titel :title="'وضعیت تجهیرات طبق مصوبه و پرونده'"/>
       <SelectButton v-model="form.isEquipmentBought"
-                    :options="optionsEquipmentBought"
+                    :options="exportedObjects.optionsEquipmentBought"
                     aria-labelledby="basic"
                     :class="{'p-invalid': v$.isEquipmentBought.$invalid && submitted}"
                     class="d-flex border-secondary gap-2 flex-direction-row py-2 py-2 bg-white justify-content-center flex-wrap EquipmentBought-titel"
@@ -57,7 +57,7 @@
            class="flex-column px-1">
         <div class="d-flex pt-3  justify-content-around ">
           <SelectButton v-model="form.isFactorMatch"
-                        :options="optionsFactor"
+                        :options="exportedObjects.optionFamilySupervisor"
                         :class="{'p-invalid': v$.isFactorMatch.$invalid && submitted}"
                         aria-labelledby="basic"
                         class="d-flex border-secondary  flex-direction-row col-8 justify-content-center flex-wrap  FactorMatch-button "
@@ -70,7 +70,7 @@
         <div>
           <Titel :title="'نوع تجهیزات'"/>
           <SelectButton v-model="form.equipmentTypeId"
-                        :options="SurveyBasedata.equipmentTypes"
+                        :options="exportedObjects.equipmentTypes"
                         :class="{'p-invalid': v$.equipmentTypeId.$invalid && submitted}"
                         aria-labelledby="basic"
                         class="d-flex border-secondary gap-2 flex-direction-row py-2 bg-white justify-content-center flex-wrap EquipmentBought-titel"
@@ -204,28 +204,12 @@ import {CommonServices} from "~/core/base/common-services";
 import {ServicesImg} from "~/core/base/Services-Img.ts";
 import {BaseApi} from "~/core/base/base-api.ts";
 import { useSurveyStore } from "~/store/useSurveyStore";
-
+import exportedObjects from '~/core/Enum/baseEnum';
 
 definePageMeta({
   layout: "survey",
 });
 
-
-const optionsApproval = ref([
-  {name: 'ندارد ', value: 0},
-  {name: 'دارد', value: 1},
-]);
-
-const optionsFactor = ref([
-  {name: 'خیر ', value: 0},
-  {name: 'بلی', value: 1},
-]);
-
-const optionsEquipmentBought = ref([
-  {name: 'خریداری شده  ', value: 2},
-  {name: 'خریداری نشده', value: 1},
-  {name: 'تجهیزات ندارد', value: 0},
-]);
 let totalUploadedFiles = 0;
 let db:any;
 let mainform = <any>reactive({})

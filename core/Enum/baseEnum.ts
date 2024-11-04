@@ -416,6 +416,12 @@
             "parentKey": null
         }
     ]
+    const optionsEquipmentBought = [
+           {name: 'خریداری شده  ', value: 2},
+           {name: 'خریداری نشده', value: 1},
+           {name: 'تجهیزات ندارد', value: 0},
+       ];
+
 
 const exportedObjects = {
     optionmaritalStatus,
@@ -437,7 +443,8 @@ const exportedObjects = {
     economicTypes,
     insuranceTypes,
     planActivationTypes,
-    binaryOptions
+    binaryOptions,
+    optionsEquipmentBought
 }
 
 export default exportedObjects;
