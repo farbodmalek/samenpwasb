@@ -1,7 +1,7 @@
 
 <template>
   <surveyHeader @saveform3="Setform" ></surveyHeader>
-  <Carddetails/>
+  <PaymentDetails/>
   <form @submit.prevent="submit()">
 
     <section class="flex-column form-group">
@@ -188,11 +188,8 @@
   </form>
 </template>
 <script lang="ts" setup>
-import axios from "axios";
-import Carddetails from "~/components/PaymentDetails.vue";
-import {useFormStore} from "~/store/Form";
 
-import Titel from "~/components/Titel.vue";
+import {useFormStore} from "~/store/Form";
 import SelectButton from "primevue/selectbutton";
 import {required} from '@vuelidate/validators';
 import {useVuelidate} from "@vuelidate/core";
