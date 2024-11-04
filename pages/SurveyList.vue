@@ -287,13 +287,52 @@ const openDataDB = () => {
   })
 }
 
-onMounted(() => {
-  GetCartables()
-  GetSurveysList()
-  openDataDB()
-  ClearStorge()
-
-});
+// // useFetchServices.postApi(baseUrl.getCartables(),body).then(result => {
+//
+//
+// const data = ref(null);
+// const error = ref(null);
+//
+// const postData = async (payload = {}) => {
+//   const body = {
+//     pageNumber: 1,
+//     take: 1000,
+//     cartableStatusTypeId: 1,
+//     userId: 114,
+//     ...payload,
+//   };
+//
+//   try {
+//     // if (!navigator.onLine) {
+//     //   throw new Error('Network is offline'); // بررسی آفلاین بودن
+//     // }
+//
+//     data.value = await $fetch('https://samensandboxapi.karafariniomid.com/api/survey/GetCartables', {
+//       method: 'POST',
+//       body: body,
+//       headers: {
+//         'Content-Type': 'application/json',
+//         'DeviceName': 'IsPwa',
+//       },
+//     });
+//   } catch (err) {
+//     console.log('Network error:', err);
+//     error.value = 'درخواست ارسال نشد، لطفا اتصال به اینترنت را بررسی کنید';
+//
+//     if (err.message === 'Network is offline') {
+//
+//     }
+//   }
+// };
+// onMounted(() => {
+//   GetCartables()
+//   GetSurveysList()
+//   openDataDB()
+//   ClearStorge()
+//   postData()
+//
+//
+// });
 
 </script>
 <style lang="scss">
