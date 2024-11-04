@@ -1,27 +1,10 @@
 
-    const optionsPresence = [
-        {name: 'ندارد ', value: 0},
-        {name: 'دارد', value: 1},
-    ];
-    const optionsInsurance = [
-        {name: 'ندارد ', value: 0},
-        {name: 'دارد', value: 1},
-    ];
-    const optionsInsurance1 = [
-        {name: 'ندارد ', value: 0},
-        {name: 'دارد', value: 1},
-    ];
 
        const binaryOptions = [
         {name: 'ندارد ', value: 0},
         {name: 'دارد', value: 1},
     ];
 
-
-    const optionsLivestockBooklet = [
-        {name: 'ندارد ', value: 0},
-        {name: 'دارد', value: 1},
-    ];
     const optionFamilySupervisor = [
         {name: 'بلی ', value: true},
         {name: 'خیر', value: false},
@@ -439,10 +422,6 @@ const exportedObjects = {
     options,
     genderoptions,
     optionFamilySupervisor,
-    optionsLivestockBooklet,
-    optionsPresence
-    ,optionsInsurance
-    ,optionsInsurance1,
     maritalStatusTypes,
     cartableStatusTypes,
     genders,
