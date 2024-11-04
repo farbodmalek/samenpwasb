@@ -188,13 +188,11 @@
   </form>
 </template>
 <script lang="ts" setup>
-
 import {useFormStore} from "~/store/Form";
 import SelectButton from "primevue/selectbutton";
 import {required} from '@vuelidate/validators';
 import {useVuelidate} from "@vuelidate/core";
 import {ToastNotificationService} from "~/core/toast-notification-service";
-import {UseLoading} from "@/store/loading-store";
 import surveyHeader from "~/components/Layouts/surveyHeader.vue";
 import {MakeResponse} from "~/composables/make-response";
 import {CommonServices} from "~/core/base/common-services";
