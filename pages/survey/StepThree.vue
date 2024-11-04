@@ -226,7 +226,9 @@ const optionsEquipmentBought = ref([
   {name: 'خریداری نشده', value: 1},
   {name: 'تجهیزات ندارد', value: 0},
 ]);
-
+let totalUploadedFiles = 0;
+let db:any;
+let mainform = <any>reactive({})
 const Mainstore = useSurveyStore();
 const store = useFormStore()
 const IsRequest = ref()
@@ -235,9 +237,6 @@ const router = useRouter();
 const route = useRoute();
 const fileInput = ref<any>([]);
 const uploadedImages = ref<any>([]);
-let totalUploadedFiles = 0;
-let db:any;
-let mainform = <any>reactive({})
 const ConstructionTab = ref(0);
 const currentTab = ref();
 const EquipmentTab = ref();
@@ -249,7 +248,7 @@ const FinalRegistrationform = localStorage.getItem("FinalRegistrationform");
 const FinalRegistrationForm = FinalRegistrationform ? JSON.parse(FinalRegistrationform) : {};
 const userdata = Mainstore.getCartableUserDataById(Number(route.query.id));
 const filteredSurveys = Mainstore.getFilteredSurveys(userdata ? userdata.loanId : 0);
-const LasteSurvey = filteredSurveys.length ? filteredSurveys[0] : null;
+const LasteSurvey = filteredSurveys.length ? filteredSurveys[filteredSurveys.length-1] : null;
 const currentDate = new Date();
 const options = {timeZone: 'Asia/Tehran'};
 const surveyDate = currentDate.toLocaleString('en-US', options);

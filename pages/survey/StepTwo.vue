@@ -8,7 +8,7 @@
       <div class="d-flex  form-group  ">
         <SelectButton v-model="form.LivestockTypeId"
                       :class="{'p-invalid': v$.LivestockTypeId.$invalid && submitted}"
-                      :options="SurveyBasedata.livestockTypes"
+                      :options="exportedObjects.livestockTypes"
                       aria-labelledby="basic"
                       class=" d-flex border-secondary gap-2 flex-direction-row  justify-content-center flex-wrap group-titel"
                       optionLabel="value"
@@ -59,7 +59,7 @@
       <div class="px-3 col-12 form-group mb-3 d-flex justify-content-center bg-white  px-2 py-3   rounded-4">
         <SelectButton v-model="form.OwnerTypeId"
                       :class="{'p-invalid': v$.OwnerTypeId.$invalid && submitted}"
-                      :options="SurveyBasedata.ownerTypes"
+                      :options="exportedObjects.ownerTypes"
                       aria-labelledby="basic"
                       class="col-12 d-flex sec-titel"
                       optionLabel="value"
@@ -72,7 +72,7 @@
       <div class="px-3 col-12 form-group mb-3 d-flex justify-content-center bg-white  px-2 py-3 rounded-4">
         <SelectButton v-model="form.HasWorkPermission"
                       :class="{'p-invalid': v$.HasWorkPermission.$invalid && submitted}"
-                      :options="optionsPresence"
+                      :options="exportedObjects.optionsPresence"
                       aria-labelledby="basic"
                       class="col-12 d-flex sec-titel"
                       optionLabel="name"
@@ -85,7 +85,7 @@
       <div class="mx-3">
         <div class="d-flex justify-content-center bg-white p-2 pt-3">
           <SelectButton v-model="form.Isinsurance"
-                                      :options="optionsInsurance1"
+                                      :options="exportedObjects.optionsInsurance1"
                                       aria-labelledby="basic"
                                       class="col-9 d-flex sec-titel"
                                       optionLabel="name"
@@ -153,7 +153,7 @@
     <section class="flex-column px-1 form-group">
       <Titel :title="'فعال بودن طرح'"/>
       <SelectButton v-model="form.planActivationTypeId"
-                    :options="SurveyBasedata.planActivationTypes"
+                    :options="exportedObjects.planActivationTypes"
                     :class="{'p-invalid': v$.planActivationTypeId.$invalid && submitted}"
                     aria-labelledby="basic"
                     class="d-flex border-secondary gap-2 flex-direction-row py-2 bg-white  justify-content-center flex-wrap  EquipmentBought-titel planActivation-Button "
@@ -195,7 +195,7 @@
       <Titel :title="'دفترچه دامداری'"/>
       <div class="px-3 col-12 form-group mb-3 d-flex justify-content-center bg-white  px-2 py-3   rounded-4">
         <SelectButton v-model="form.LivestockBooklet"
-                      :options="optionsLivestockBooklet"
+                      :options="exportedObjects.optionsLivestockBooklet"
                       aria-labelledby="basic"
                       :class="{'p-invalid': v$.LivestockBooklet.$invalid && submitted}"
                       class="col-12 d-flex sec-titel"
@@ -210,7 +210,7 @@
       <div class="px-3 col-12 form-group mb-3 d-flex justify-content-center bg-white  px-2 py-3   rounded-4">
         <SelectButton v-model="form.LivestockLicense"
                       :class="{'p-invalid': v$.LivestockLicense.$invalid && submitted}"
-                      :options="optionsInsurance"
+                      :options="exportedObjects.optionsInsurance"
                       aria-labelledby="basic"
                       class="col-12 d-flex sec-titel"
                       optionLabel="name"
@@ -223,7 +223,7 @@
       <Titel :title="'بیمه نامه دام'"/>
       <div class="px-3 col-12 form-group mb-3 d-flex justify-content-center bg-white  px-2 py-3   rounded-4">
         <SelectButton v-model="form.LivestockInsurance"
-                      :options="optionsPresence"
+                      :options="exportedObjects.optionsPresence"
                       :class="{'p-invalid': v$.LivestockInsurance.$invalid && submitted}"
                       aria-labelledby="basic"
                       class="col-12 d-flex sec-titel"
@@ -266,7 +266,7 @@
       <Titel :title="'نوع محصول'"/>
       <div class="px-3 col-12 form-group mb-3 d-flex justify-content-center bg-white  px-2 py-3   rounded-4">
         <SelectButton v-model="form.ProductTypeId"
-                      :options="SurveyBasedata.productTypes"
+                      :options="exportedObjects.productTypes"
                       :class="{'p-invalid': v$.ProductTypeId.$invalid && submitted}"
                       aria-labelledby="basic"
                       class="col-12 d-flex sec-titel"
@@ -308,7 +308,7 @@
       <Titel :title="'بیمه محصولات'"/>
       <div class="px-3 col-12 form-group mb-3 d-flex justify-content-center bg-white  px-2 py-3   rounded-4">
         <SelectButton v-model="form.HasAgriculturalInsurance"
-                      :options="optionsInsurance"
+                      :options="exportedObjects.optionsInsurance"
                       :class="{'p-invalid': v$.HasAgriculturalInsurance.$invalid && submitted}"
                       aria-labelledby="basic"
                       class="col-12 d-flex sec-titel"
@@ -337,7 +337,7 @@
       <div class="px-3 col-12 form-group mb-3 d-flex justify-content-center bg-white  px-2 py-3   rounded-4">
         <SelectButton v-model="form.OwnerTypeId"
                       :class="{'p-invalid': v$.OwnerTypeId.$invalid && submitted}"
-                      :options="SurveyBasedata.ownerTypes"
+                      :options="exportedObjects.ownerTypes"
                       aria-labelledby="basic"
                       class="col-12 d-flex sec-titel"
                       optionLabel="value"
@@ -365,7 +365,7 @@ import Titel from "~/components/Titel.vue";
 import {useFormStore} from "~/store/Form";
 import surveyHeader from "~/components/Layouts/surveyHeader.vue";
 import { useSurveyStore } from "~/store/useSurveyStore";
-
+import exportedObjects from '~/core/Enum/baseEnum';
 
 
 definePageMeta({
@@ -421,7 +421,7 @@ const Cartables = JSON.parse(<any>localStorage.getItem("Cartables"));
 
 const userdata = Mainstore.getCartableUserDataById(Number(route.query.id));
 const filteredSurveys = Mainstore.getFilteredSurveys(userdata ? userdata.loanId : 0);
-const LasteSurvey = filteredSurveys.length ? filteredSurveys[0] : null;
+const LasteSurvey = filteredSurveys.length ? filteredSurveys[filteredSurveys.length-1] : null;
 let previousValues = <any>{};
 
 
