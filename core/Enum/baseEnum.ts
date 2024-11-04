@@ -11,6 +11,13 @@
         {name: 'ندارد ', value: 0},
         {name: 'دارد', value: 1},
     ];
+
+       const binaryOptions = [
+        {name: 'ندارد ', value: 0},
+        {name: 'دارد', value: 1},
+    ];
+
+
     const optionsLivestockBooklet = [
         {name: 'ندارد ', value: 0},
         {name: 'دارد', value: 1},
@@ -450,7 +457,8 @@ const exportedObjects = {
     educationTypes,
     economicTypes,
     insuranceTypes,
-    planActivationTypes
+    planActivationTypes,
+    binaryOptions
 }
 
 export default exportedObjects;

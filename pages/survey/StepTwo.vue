@@ -59,11 +59,11 @@
       <div class="px-3 col-12 form-group mb-3 d-flex justify-content-center bg-white  px-2 py-3   rounded-4">
         <SelectButton v-model="form.OwnerTypeId"
                       :class="{'p-invalid': v$.OwnerTypeId.$invalid && submitted}"
-                      :options="exportedObjects.ownerTypes"
+                      :options="exportedObjects.binaryOptions"
                       aria-labelledby="basic"
                       class="col-12 d-flex sec-titel"
-                      optionLabel="value"
-                      optionValue="key"/>
+                      optionLabel="name"
+                      optionValue="Value"/>
       </div>
     </section>
 
@@ -72,7 +72,7 @@
       <div class="px-3 col-12 form-group mb-3 d-flex justify-content-center bg-white  px-2 py-3 rounded-4">
         <SelectButton v-model="form.HasWorkPermission"
                       :class="{'p-invalid': v$.HasWorkPermission.$invalid && submitted}"
-                      :options="exportedObjects.optionsPresence"
+                      :options="exportedObjects.binaryOptions"
                       aria-labelledby="basic"
                       class="col-12 d-flex sec-titel"
                       optionLabel="name"
@@ -85,7 +85,7 @@
       <div class="mx-3">
         <div class="d-flex justify-content-center bg-white p-2 pt-3">
           <SelectButton v-model="form.Isinsurance"
-                                      :options="exportedObjects.optionsInsurance1"
+                                      :options="exportedObjects.binaryOptions"
                                       aria-labelledby="basic"
                                       class="col-9 d-flex sec-titel"
                                       optionLabel="name"
@@ -195,7 +195,7 @@
       <Titel :title="'دفترچه دامداری'"/>
       <div class="px-3 col-12 form-group mb-3 d-flex justify-content-center bg-white  px-2 py-3   rounded-4">
         <SelectButton v-model="form.LivestockBooklet"
-                      :options="exportedObjects.optionsLivestockBooklet"
+                      :options="exportedObjects.binaryOptions"
                       aria-labelledby="basic"
                       :class="{'p-invalid': v$.LivestockBooklet.$invalid && submitted}"
                       class="col-12 d-flex sec-titel"
@@ -210,7 +210,7 @@
       <div class="px-3 col-12 form-group mb-3 d-flex justify-content-center bg-white  px-2 py-3   rounded-4">
         <SelectButton v-model="form.LivestockLicense"
                       :class="{'p-invalid': v$.LivestockLicense.$invalid && submitted}"
-                      :options="exportedObjects.optionsInsurance"
+                      :options="exportedObjects.binaryOptions"
                       aria-labelledby="basic"
                       class="col-12 d-flex sec-titel"
                       optionLabel="name"
@@ -223,7 +223,7 @@
       <Titel :title="'بیمه نامه دام'"/>
       <div class="px-3 col-12 form-group mb-3 d-flex justify-content-center bg-white  px-2 py-3   rounded-4">
         <SelectButton v-model="form.LivestockInsurance"
-                      :options="exportedObjects.optionsPresence"
+                      :options="exportedObjects.binaryOptions"
                       :class="{'p-invalid': v$.LivestockInsurance.$invalid && submitted}"
                       aria-labelledby="basic"
                       class="col-12 d-flex sec-titel"
@@ -308,7 +308,7 @@
       <Titel :title="'بیمه محصولات'"/>
       <div class="px-3 col-12 form-group mb-3 d-flex justify-content-center bg-white  px-2 py-3   rounded-4">
         <SelectButton v-model="form.HasAgriculturalInsurance"
-                      :options="exportedObjects.optionsInsurance"
+                      :options="exportedObjects.binaryOptions"
                       :class="{'p-invalid': v$.HasAgriculturalInsurance.$invalid && submitted}"
                       aria-labelledby="basic"
                       class="col-12 d-flex sec-titel"
@@ -371,29 +371,6 @@ import exportedObjects from '~/core/Enum/baseEnum';
 definePageMeta({
   layout: "survey",
 });
-
-
-const optionsPresence = ref([
-  {name: 'ندارد ', value: 0},
-  {name: 'دارد', value: 1},
-]);
-
-const optionsInsurance = ref([
-  {name: 'ندارد ', value: 0},
-  {name: 'دارد', value: 1},
-]);
-const optionsInsurance1 = ref([
-  {name: 'ندارد ', value: 0},
-  {name: 'دارد', value: 1},
-]);
-
-const optionsLivestockBooklet = ref([
-  {name: 'ندارد ', value: 0},
-  {name: 'دارد', value: 1},
-]);
-
-
-
 
 const router = useRouter();
 const route = useRoute();
