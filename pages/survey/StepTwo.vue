@@ -1,6 +1,6 @@
 <template>
   <surveyHeader @saveform2="Setform" ></surveyHeader>
-  <Carddetails/>
+  <PaymentDetails/>
   <form @submit.prevent="NextstepHandel()">
     <section v-if="loanSurvey == 1"
              class="flex-column px-1">
@@ -351,11 +351,10 @@
         بعدی
       </button>
     </div>
-
   </form>
 </template>
+
 <script lang="ts" setup>
-import Carddetails from "~/components/PaymentDetails.vue";
 import DatePicker from 'vue3-persian-datetime-picker';
 import SelectButton from "primevue/selectbutton";
 import {required} from '@vuelidate/validators';
@@ -380,22 +379,12 @@ const animalsTab = ref(1);
 const calender = ref();
 const store=useFormStore()
 const Mainstore = useSurveyStore();
-
 const currentTab = ref();
 const AgriculturalCalender = ref()
 const insuranceTabAgricultural = ref();
 const loanSurvey =<any> route.query.loanType;
 const SurveyBasedata = JSON.parse(<any>localStorage.getItem("SurveyBaseInfo"));
 const Cartables = JSON.parse(<any>localStorage.getItem("Cartables"));
-// let InfoMonitored = <any>ref('');
-// const userdata = Cartables.find((item:any) => item.id === Number(route.query.id));
-// if (userdata) {
-//   InfoMonitored = userdata;
-// }
-// const SurveysList = JSON.parse(<any>localStorage.getItem("SurveysList") || "[]");
-// const filteredSurveys = SurveysList.filter((item:any) => item.id === Number(InfoMonitored.loanId))
-// const LasteSurvey =  filteredSurveys[0];
-
 const userdata = Mainstore.getCartableUserDataById(Number(route.query.id));
 const filteredSurveys = Mainstore.getFilteredSurveys(userdata ? userdata.loanId : 0);
 const LasteSurvey = filteredSurveys.length ? filteredSurveys[filteredSurveys.length-1] : null;
