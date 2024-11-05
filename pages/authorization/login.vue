@@ -45,10 +45,6 @@
         </div>
       </div>
     </form>
-<!--    <div v-else class="text-center mt-5">-->
-<!--      <access/>-->
-<!--    </div>-->
-
   </div>
 </template>
 
@@ -60,7 +56,7 @@ import {UseLoading} from "~/store/loading-store";
 import Download from "~/components/Download.vue"
 import {MakeResponse} from "~/composables/make-response";
 import {CommonServices} from "~/core/base/common-services";
-import access from "../../pages/access.vue"
+
 
 const {$pwa} = useNuxtApp()
 
