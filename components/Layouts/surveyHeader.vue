@@ -3,12 +3,12 @@
     <div class="d-flex justify-content-between pt-1 px-2">
       <div class="px-1 py-2">
           <span class="px-1 font3 fw-bold text-white">
-            {{ InfoMonitored.loanDetail.customerNumber }}</span>
+            {{ surveyData.loanDetail.customerNumber }}</span>
         <span class="fw-bold text-white font-text">:شماره مشتری </span>
       </div>
       <div class="d-flex">
           <span class="px-2 py-2 fw-bold text-white font-header">
-            {{ InfoMonitored.loanDetail.customerName }}</span>
+            {{ surveyData.loanDetail.customerName }}</span>
         <p class="burger-btn d-block d-xl-none text-white position-relative mx-4"
           @click="goBack">
           <img
@@ -19,8 +19,6 @@
         </p>
       </div>
     </div>
-
-
   </header>
 </template>
 
@@ -28,15 +26,14 @@
 import {useFormStore} from "~/store/Form";
 import Confirm from "../../components/ConfirmExite.vue";
 import {useDialog} from "primevue/usedialog";
+import { useSurveyStore } from "~/store/useSurveyStore";
 
 
 const router = useRouter();
 const route = useRoute();
-const visible = ref(false);
-const GetCartable = JSON.parse(<any>localStorage.getItem('Cartables'));
-const LounId = router.currentRoute._value.query.id;
+const surveyStore = useSurveyStore();
+const surveyData = surveyStore.getCartableUserDataById(Number(route.query.id));
 const loanSurveyEconomidTypeId = parseInt(router.currentRoute._value.query.loanType)
-const InfoMonitored = GetCartable.find((item: any) => item.id === Number(LounId));
 const store = useFormStore()
 const dialog = useDialog();
 const emit = defineEmits(['saveform2','saveform3',])
@@ -47,15 +44,14 @@ const goBack = () => {
   }
   else if (route.path === "/survey/StepTwo") {
     emit('saveform2',true);
-    router.push({ path: "/survey/Stepone", query: {id:InfoMonitored.id ,loanType:loanSurveyEconomidTypeId }});
-
+    router.push({ path: "/survey/Stepone", query: {id:surveyData.id ,loanType:loanSurveyEconomidTypeId }});
   }
   else if (route.path === "/survey/StepThree") {
     emit('saveform3',true);
-    router.push({ path: "/survey/StepTwo", query: {id:InfoMonitored.id ,loanType:loanSurveyEconomidTypeId }});
+    router.push({ path: "/survey/StepTwo", query: {id:surveyData.id ,loanType:loanSurveyEconomidTypeId }});
   }
   else if(route.path === "/navigation/EditAddress"){
-    router.push({ path: "/survey/Stepone", query: {id:InfoMonitored.id ,loanType:loanSurveyEconomidTypeId }});
+    router.push({ path: "/survey/Stepone", query: {id:surveyData.id ,loanType:loanSurveyEconomidTypeId }});
   }
 };
 
