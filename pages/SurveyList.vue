@@ -72,39 +72,6 @@
       </div>
     </section>
   </div>
-
-  <Dialog
-      v-model:visible="visible"
-      class="col-8"
-      modal
-      showHeader="false">
-    <p class="text-center pt-3">نظارت شما با موفقیت ثبت شد </p>
-    <nuxt-link class="col-12" to="/">
-      <button class="text-white bg-blue-1 rounded-5 font1 col-12 text-white bg-success py-3 " type="button"
-              @click="closeDialog">
-        تایید
-      </button>
-    </nuxt-link>
-  </Dialog>
-
-  <Dialog
-      v-model:visible="isModalVisible"
-      :showHeader="true"
-      header="نوع نظارت را مشخص فرمایید"
-      modal>
-    <div class="d-flex flex-column p-2 justify-content-center align-items-center  ">
-      <div class="col-12 text-center border border-secondary p-3" @click="routerTypeHandel(1)">
-        <span>دامپروری</span>
-      </div>
-      <div class="col-12 text-center border border-secondary p-3" @click="routerTypeHandel(2)">
-        <span>زراعی/باغی</span>
-      </div>
-      <div class="col-12 text-center border border-secondary p-3" @click="routerTypeHandel(3)">
-        <span>خدمات</span>
-      </div>
-    </div>
-  </Dialog>
-
   <div v-if="condition" class="d-flex justify-content-centerd  flex-column-reverse">
     <p class="text-center">هیچ نظارتی برای شما ثبت نشده</p>
   </div>
@@ -118,8 +85,11 @@ import {MakeResponse} from "~/composables/make-response";
 import {ServicesImg} from "~/core/base/Services-Img";
 import baseUrl from "~/core/base/base-url-service"
 import {BasePage} from "~/core/base/base-page"
+import Confirm from "../../components/ConfirmLounType.vue";
+import {useDialog} from "primevue/usedialog";
 
 
+let images: any[] = [];
 const Data = ref();
 const searchUser = ref('');
 const router = useRouter();
@@ -127,11 +97,8 @@ const condition = ref(false)
 const setloun = ref<boolean[]>([]);
 const setphoto = ref<boolean[]>([]);
 const showsend = <any>ref([]);
-const visible = ref(false)
-let images: any[] = [];
-let globalCardName = 0;
-const isModalVisible = ref(false);
 const currentDate = new Date();
+const dialog = useDialog();
 const todayDateString = currentDate.toISOString().split('T')[0]
 
 watch(searchUser, (newVal: any,) => {
@@ -152,19 +119,9 @@ watch(searchUser, (newVal: any,) => {
   }
 });
 
-const closeDialog = () => {
-  location.reload()
-  visible.value = false
-}
-
-const showModal = () => {
-  isModalVisible.value = true;
-};
-
 const navigateToCardDetail = (id: number, loanPlanId: number, loanType: number) => {
   if (loanPlanId == 0 && loanType == 1) {
-    showModal();
-    globalCardName = id;
+    showConfirm(id)
   } else if (loanPlanId == 0) {
     const updatedLoanEconomicTypeId = loanType === 4 ? 3 : loanType === 3 ? 4 : loanType;
     router.push({path: "/survey/Stepone", query: {id, loanType: updatedLoanEconomicTypeId}});
@@ -173,16 +130,25 @@ const navigateToCardDetail = (id: number, loanPlanId: number, loanType: number) 
   }
 };
 
-const routerTypeHandel = (loanType: number) => {
-  if(loanType==1){
-    router.push({path: "/survey/Stepone", query: {id: globalCardName, loanType}});
-  }
-  else if(loanType==2){
-    router.push({path: "/survey/Stepone", query: {id: globalCardName, loanType}});
-  } else if(loanType==3){
-    router.push({path: "/survey/Stepone", query: {id: globalCardName, loanType}});
-  }
+const showConfirm = (id:number) => {
+  dialog.open(Confirm, {
+    props: {
+      header: 'نوع نظارت را مشخص فرمایید',
+      modal: true,
+      style: {
+        width: '40%',
+      },
+      breakpoints: {
+        '640px': '100%'
+      },
+      draggable: false
+    },
+    data:id,
+    onClose: () => {
+    },
+  });
 }
+
 
 
 const convert = (number: any) => {
@@ -273,6 +239,7 @@ const SetLoanPlanSurvey = async (body: any,id:number) => {
        GetCartables()
        setloun.value[id] = false;
        ToastNotificationService.success("نظارت با موفقیت ثبت شد");
+
     }
      else{
        setloun.value[id] = false;
