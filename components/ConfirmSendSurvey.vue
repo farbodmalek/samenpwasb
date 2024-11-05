@@ -21,8 +21,8 @@ const params = ref();
 
 const closeDialog = () => {
   location.reload()
-
 }
+
 const reject = (data: boolean = false) => {
   dialogRef.value.close(data);
 }
