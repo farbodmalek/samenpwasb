@@ -24,7 +24,7 @@
 
 <script lang="ts" setup>
 import {useFormStore} from "~/store/Form";
-import Confirm from "../../components/ConfirmExite.vue";
+import Confirm from "../ConfirmExiteSurvey.vue";
 import {useDialog} from "primevue/usedialog";
 import { useSurveyStore } from "~/store/useSurveyStore";
 

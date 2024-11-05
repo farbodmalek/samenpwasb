@@ -38,7 +38,7 @@
 
             <button class="bg-blue-1 rounded-2 p-3 col-5 text-white bg-blue-1 py-1 address-font" type="button"
                     @click="modalexite">
-              رفتن به لیست وام ها
+
             </button>
             <button class="bg-blue-1 rounded-2 p-3 col-5 text-white bg-blue-1 py-1 address-font" type="button"
                     @click="modalHome">
@@ -56,9 +56,11 @@
 import PerfectScrollbar from "perfect-scrollbar";
 import SidebarItem from "./SidebarItem.vue";
 import {useStore} from "~/store";
-import {computed, onMounted, ref, watch} from "vue";
+import Confirm from "~/components/ConfirmExiteApp.vue";
+import {useDialog} from "primevue/usedialog";
 
 const closeExitemodale = ref(false)
+const dialog = useDialog();
 
 const SupervisoryInfo = localStorage.getItem("User-data")
 const supervisoryInfo = SupervisoryInfo ? JSON.parse(SupervisoryInfo) : {}
@@ -75,9 +77,7 @@ const onresize = () => {
   }
   store.openSidebar();
 };
-/**
- * Create Sidebar Backdrop
- */
+
 const createBackdrop = () => {
   if (window.innerWidth > 1200) return;
   deleteBackdrop();
@@ -89,9 +89,7 @@ const createBackdrop = () => {
   });
   document.body.appendChild(backdrop);
 };
-/**
- * Delete Sidebar Backdrop
- */
+
 const deleteBackdrop = () => {
   const backdrop = document.querySelector(".sidebar-backdrop");
   if (backdrop) {
@@ -102,7 +100,7 @@ const deleteBackdrop = () => {
 onMounted(() => {
   onresize();
   window.addEventListener("resize", onresize);
-  // Perfect Scrollbar Init
+
   new PerfectScrollbar(sidebarWrapper.value!, {
     wheelPropagation: false,
   });
@@ -110,7 +108,7 @@ onMounted(() => {
 
 watch(
   () => store.isSidebarActive,
-  (isSidebarActive) => {
+  (isSidebarActive:any) => {
 
     if (isSidebarActive) {
       createBackdrop();
@@ -127,21 +125,18 @@ watch(
   }
 );
 
-const logout = (index) => {
-  if (index == 2) {
+const logout = (index:any) => {
+  if (index == 4) {
     let userId = ""
     for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
+      const key =<any> localStorage.key(i);
       if (key.startsWith("user")) {
         userId = key.substring(5, 11)
       }
     }
-
-
     if (userId) {
-      closeExitemodale.value = true
+      confirmExite()
     } else {
-
       localStorage.removeItem("User-data");
       localStorage.removeItem("SurveysList")
       localStorage.removeItem("nuxt-color-mode");
@@ -155,14 +150,26 @@ const modalexite = () => {
   closeExitemodale.value = false
 }
 
-const modalHome = () => {
-  router.push("authorization/login");
-  localStorage.removeItem("User-data");
-  localStorage.removeItem("localStorageUserKey");
-
-  localStorage.removeItem("nuxt-color-mode");
-  localStorage.removeItem("data");
+const confirmExite = () => {
+  dialog.open(Confirm, {
+    props: {
+      header: '',
+      modal: true,
+      style: {
+        width: '40%',
+      },
+      breakpoints: {
+        '640px': '100%'
+      },
+      draggable: false
+    },
+    onClose: () => {
+    },
+  });
 }
+
+
+
 </script>
 
 

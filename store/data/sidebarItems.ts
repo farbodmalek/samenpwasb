@@ -6,19 +6,19 @@ export default [
     img: "/img/pro.png"
   },
   {
-    id: 3,
+    id: 2,
     name: "تنظیمات",
     icon: "gear-fill",
     img: "/img/setting.png"
   },
   {
-    id: 4,
+    id: 3,
     name: "درباره ما",
     icon: "info-circle",
     img: "/img/info.png"
   },
   {
-    id: 2,
+    id: 4,
     name: "خروج",
     icon: "box-arrow-right",
     img: "/img/exit.png"
