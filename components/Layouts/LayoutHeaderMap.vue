@@ -19,21 +19,17 @@ const goBack =()=>{
       </div>
       <div class="d-flex">
         <span class="px-2 py-2 fw-bold text-white  mx-1 ">نقشه</span>
-
         <a
           href="#"
           class="burger-btn d-block d-xl-none text-white px-2 py-1 position-relative  "
-          @click="goBack"
-        >
+          @click="goBack">
           <img src="/img/icons8-arrow-50.png" class=" text-white fs-3" style="width: 33px;">
-
-
         </a>
-
       </div>
     </div>
   </header>
 </template>
+
 <style lang="scss">
 .font3{
   font-size: 10px;
