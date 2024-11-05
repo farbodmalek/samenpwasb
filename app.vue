@@ -2,6 +2,8 @@
   <NuxtLayout>
     <NuxtPage />
     <VitePwaManifest />
+    <DynamicDialog />
+
   </NuxtLayout>
 </template>
 

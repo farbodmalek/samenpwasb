@@ -19,23 +19,16 @@
         </p>
       </div>
     </div>
-    <Dialog v-model:visible="visible"  modal :showHeader="false">
-      <div class="d-flex align-items-center gap-3 mb-2 mt-4">
-        <p class="text-center ">
-          برای این پرونده ارجاع شده نظارتی انجام نشده است .پرداخت دستمزد منوط به
-          اتمام مراحل است ایا باز مایل به خروج هستید؟
-        </p>
-      </div>
-      <div class="d-flex justify-content-end gap-2">
-        <Button type="button"   class=" rounded-5 rounded-pill col-6 bg-danger text-white py-3" label="خیر" severity="secondary" @click="visible = false"></Button>
-        <Button type="button"   class=" rounded-5 rounded-pill  col-6 text-white bg-success py-3" label="بله" @click="homeHandle"></Button>
-      </div>
-    </Dialog>
+
+
   </header>
 </template>
 
 <script lang="ts" setup>
 import {useFormStore} from "~/store/Form";
+import Confirm from "../../components/ConfirmExite.vue";
+import {useDialog} from "primevue/usedialog";
+
 
 const router = useRouter();
 const route = useRoute();
@@ -45,11 +38,12 @@ const LounId = router.currentRoute._value.query.id;
 const loanSurveyEconomidTypeId = parseInt(router.currentRoute._value.query.loanType)
 const InfoMonitored = GetCartable.find((item: any) => item.id === Number(LounId));
 const store = useFormStore()
+const dialog = useDialog();
 const emit = defineEmits(['saveform2','saveform3',])
 
 const goBack = () => {
   if (route.path === "/survey/Stepone") {
-    visible.value = true
+    showProducts()
   }
   else if (route.path === "/survey/StepTwo") {
     emit('saveform2',true);
@@ -65,14 +59,26 @@ const goBack = () => {
   }
 };
 
-const homeHandle = () => {
-  localStorage.removeItem("firPreForm");
-  localStorage.removeItem("SecPreForm");
-  localStorage.removeItem("FinalRegistrationform");
-  store.addressForm={}
-  router.push("/");
-};
 
+
+
+const showProducts = () => {
+  dialog.open(Confirm, {
+    props: {
+      header: '',
+      modal: true,
+      style: {
+        width: '40%',
+      },
+      breakpoints: {
+        '640px': '100%'
+      },
+      draggable: false
+    },
+    onClose: () => {
+    },
+  });
+}
 
 </script>
 

@@ -10,7 +10,7 @@ export default defineNuxtConfig({
       components: {
           include: ['Dialog', 'Button', 'InputText', "Dropdown", "ProgressBar", "Accordion", 'InputNumber', 'Checkbox',
               "RadioButton", "Textarea", "AutoComplete", 'MultiSelect',
-              "ProgressSpinner", "Password", 'Badge', "SelectButton", "Knob"]
+              "ProgressSpinner", "Password", 'Badge', 'SelectButton', "Knob",'DynamicDialog' ]
       },
       directives: {
           include: ['Ripple', 'Tooltip', 'StyleClass', 'Avatar']

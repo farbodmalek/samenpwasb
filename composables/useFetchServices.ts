@@ -127,7 +127,7 @@ const useFetchServices = async (url: string, options?: UseFetchOptions<object>, 
             },
         };
 
-        // ارسال درخواست با $fetch
+
         const data = await $fetch(url, config);
         return data;
     } catch (error) {
@@ -140,8 +140,6 @@ const useFetchServices = async (url: string, options?: UseFetchOptions<object>, 
         }
 
         if (loader) UseLoading().getLoadingHide();
-
-        // برگرداندن نتیجه پیش‌فرض در صورت بروز خطا
 
     }
 };
