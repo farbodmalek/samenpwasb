@@ -132,13 +132,7 @@ const useFetchServices = async (url: string, options?: UseFetchOptions<object>, 
         return data;
     } catch (error) {
         console.error(error);
-        return { success: false, message: 'Network Error: Failed to fetch data', data: null };
-        if (!navigator.onLine) {
-            toast.error('ارتباط اینترنتی شما قطع است');
-        } else {
-            toast.error('خطای شبکه: لطفاً بعداً مجدداً تلاش کنید');
-        }
-
+        return { message: 'ERR_NETWORK'  };
         if (loader) UseLoading().getLoadingHide();
 
     }

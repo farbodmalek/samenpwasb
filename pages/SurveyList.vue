@@ -254,7 +254,27 @@ const openDataDB = () => {
   })
 }
 
-// // useFetchServices.postApi(baseUrl.getCartables(),body).then(result => {
+// const GetCartables = () => {
+//   const body={pageNumber: 1, take: 1000,cartableStatusTypeId:1, userId:114}
+//   useFetchServices.postApi(baseUrl.getCartables(),body).then((result:any) => {
+//     if ( result && result.results && result.results.length>=0) {
+//       const Cartables = result.results.filter((item: any) => item.expireDate.substring(0, 10) >= todayDateString);
+//       localStorage.setItem('Cartables', JSON.stringify(Cartables));
+//       if(Cartables.length>0){
+//         Data.value = Cartables
+//       }else{
+//         condition.value = true
+//       }
+//     }
+//     else if (result === "ERR_NETWORK") {
+//       const GetCartable = JSON.parse(<any>localStorage.getItem('Cartables'));
+//       Data.value = GetCartable
+//     }
+//   });
+//   FindOfflineForm()
+// }
+//
+
 //
 //
 // const data = ref(null);
@@ -296,7 +316,7 @@ onMounted(() => {
   GetSurveysList()
   openDataDB()
   ClearStorge()
-  // postData()
+
 });
 
 </script>
