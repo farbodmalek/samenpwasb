@@ -48,5 +48,32 @@ export class CommonServices extends BaseApi {
         localStorage.removeItem("SecPreForm");
         localStorage.removeItem("FinalRegistrationform");
     }
-
 }
+
+// import {BasePage} from "~/core/base/base-page";
+//
+//
+// const uploadSurveyImage = () => {
+//     return BasePage.getEnv() + 'api/Upload/uploadSurveyImage';
+// }
+//
+// const setLoanPlanSurvey = () => {
+//     return BasePage.getEnv() + 'api/survey/SetLoanPlanSurvey';
+// }
+//
+// const getSurveysListForPWA = () => {
+//     return BasePage.getEnv() + 'api/survey/GetSurveysListForPWA';
+// }
+//
+//
+// const getCartables = () => {
+//     return BasePage.getEnv() + 'api/survey/GetCartables';
+// }
+//
+// export default {
+//     uploadSurveyImage,
+//     setLoanPlanSurvey,
+//     getSurveysListForPWA,
+//     getCartables,
+// }
+//

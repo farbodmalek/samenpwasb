@@ -83,7 +83,6 @@ import {ToastNotificationService} from "~/core/toast-notification-service";
 import {CommonServices} from "~/core/base/common-services";
 import {MakeResponse} from "~/composables/make-response";
 import {ServicesImg} from "~/core/base/Services-Img";
-import baseUrl from "~/core/base/base-url-service"
 import {BasePage} from "~/core/base/base-page"
 import Confirm from "../../components/ConfirmLounType.vue";
 import {useDialog} from "primevue/usedialog";
@@ -254,63 +253,6 @@ const openDataDB = () => {
   })
 }
 
-// const GetCartables = () => {
-//   const body={pageNumber: 1, take: 1000,cartableStatusTypeId:1, userId:114}
-//   useFetchServices.postApi(baseUrl.getCartables(),body).then((result:any) => {
-//     if ( result && result.results && result.results.length>=0) {
-//       const Cartables = result.results.filter((item: any) => item.expireDate.substring(0, 10) >= todayDateString);
-//       localStorage.setItem('Cartables', JSON.stringify(Cartables));
-//       if(Cartables.length>0){
-//         Data.value = Cartables
-//       }else{
-//         condition.value = true
-//       }
-//     }
-//     else if (result === "ERR_NETWORK") {
-//       const GetCartable = JSON.parse(<any>localStorage.getItem('Cartables'));
-//       Data.value = GetCartable
-//     }
-//   });
-//   FindOfflineForm()
-// }
-//
-
-//
-//
-// const data = ref(null);
-// const error = ref(null);
-//
-// const postData = async (payload = {}) => {
-//   const body = {
-//     pageNumber: 1,
-//     take: 1000,
-//     cartableStatusTypeId: 1,
-//     userId: 114,
-//     ...payload,
-//   };
-//
-//   try {
-//     // if (!navigator.onLine) {
-//     //   throw new Error('Network is offline'); // بررسی آفلاین بودن
-//     // }
-//
-//     data.value = await $fetch('https://samensandboxapi.karafariniomid.com/api/survey/GetCartables', {
-//       method: 'POST',
-//       body: body,
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'DeviceName': 'IsPwa',
-//       },
-//     });
-//   } catch (err) {
-//     console.log('Network error:', err);
-//     error.value = 'درخواست ارسال نشد، لطفا اتصال به اینترنت را بررسی کنید';
-//
-//     if (err.message === 'Network is offline') {
-//
-//     }
-//   }
-// };
 onMounted(() => {
   GetCartables()
   GetSurveysList()

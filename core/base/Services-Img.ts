@@ -21,7 +21,7 @@ export class ServicesImg {
         request.onsuccess = async (event: any) => {
             db = event.target.result;
             if (status) {
-                await this.getImgsDB();  // Wait for getImgsDB to complete
+                await this.getImgsDB();
             }
             onComplete(this.images);
             this.images=[]
