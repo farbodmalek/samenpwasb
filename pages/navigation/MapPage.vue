@@ -110,7 +110,7 @@ const navigation = () => {
   window.open(mapsLink, '_blank');
 };
 
-onMounted(() => {
+const geolocation =()=>{
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -130,7 +130,12 @@ onMounted(() => {
   } else {
     ToastNotificationService.error("مرورگر شما از ویژگی موقعیت جغرافیایی پشتیبانی نمی‌کند.", 5000);
   }
+}
+
+onMounted(() => {
+  geolocation()
 });
+
 </script>
 
 <style>
