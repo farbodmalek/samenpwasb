@@ -1,9 +1,9 @@
 <template>
   <div class="position-relative z-1" style="height: 92vh">
-    <l-map :zoom="zoom" :center="center" style="height: 100%; width: 100%">
+    <l-map :zoom="12" :center="center" style="height: 100%; width: 100%">
       <l-tile-layer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          :attribution="attribution"
+          attribution="&copy; OpenStreetMap contributors"
       ></l-tile-layer>
       <l-marker
           :lat-lng="[form.lat, form.lng]"
@@ -56,8 +56,6 @@ definePageMeta({ layout: "map" });
 
 const router = useRouter();
 const route = useRoute();
-const zoom = ref(12);
-const attribution = '&copy; OpenStreetMap contributors';
 const Error = ref(false);
 const surveyStore = useSurveyStore();
 const latitude = ref(0);
@@ -66,8 +64,8 @@ const surveyData = surveyStore.getCartableUserDataById(Number(route.query.id));
 
 const form = ref({
   address: surveyData?.customerName?.address || '',
-  lat: surveyData?.customerName?.latitude || 0,
-  lng: surveyData?.customerName?.longitude || 0,
+  lat: surveyData?.loanPlan?.latitude || 0,
+  lng: surveyData?.loanPlan?.longitude || 0,
 });
 
 const center = ref([form.value.lat, form.value.lng]);
