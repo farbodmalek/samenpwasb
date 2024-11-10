@@ -111,6 +111,8 @@
                 v-model="form.customerOffer"/>
     </section>
 
+
+
     <section class="px-1 form-group">
       <Titel :title="'گرفتن عکس'"/>
       <div>
