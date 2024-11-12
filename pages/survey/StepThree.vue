@@ -36,6 +36,7 @@
             id="formGroupExampleInput"
             :class="{'p-invalid-textarea': v$.constructionDescription.$invalid && submitted}"
             style="height: 100px"
+            :maxlength="499"
             v-model="form.constructionDescription"
             placeholder="شرح عملیات عمرانی"
         />
@@ -84,6 +85,7 @@
                     class="form-control bg-white text-end mb-3 pt-3"
                     :class="{'p-invalid-textarea': v$.equipmentDescription.$invalid && submitted}"
                     id="formGroupExampleInput"
+                    :maxlength="499"
                     style="height: 75px"
                     v-model="form.equipmentDescription"
           />
