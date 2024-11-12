@@ -161,11 +161,12 @@ const error = ref(false);
 const submitted = ref(false);
 const loanTypeId = route.query.loanType;
 const surveyData = surveyStore.getCartableUserDataById(Number(route.query.id));
+console.log(surveyData.loanPlan.residentTypeId)
 const userData = JSON.parse(<any>localStorage.getItem('User-data')) || {};
 let previousFormValues = reactive({});
 const form = reactive({
   genderType: surveyData.loanPlan.genderType,
-  residentTypeId: surveyData?.loanPlan.residentTypeId?0:null,
+  residentTypeId: surveyData?.loanPlan.residentTypeId==0?null:surveyData?.loanPlan.residentTypeId,
   maritalStatusId: surveyData.loanPlan.maritalStatusId ,
   isFamilySupervisor: surveyData.loanPlan.isFamilySupervisor ,
   mobileNo: surveyData.mobileNo.slice(-11) || null,

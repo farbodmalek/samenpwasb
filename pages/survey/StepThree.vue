@@ -97,6 +97,7 @@
       <textarea type="text"
                 class="form-control bg-white text-end mb-3 pt-3"
                 v-model="form.surveyReport"
+                :maxlength="499"
                 :class="{'p-invalid-textarea': v$.surveyReport.$invalid && submitted}"
                 style="height: 75px"/>
     </section>
@@ -107,6 +108,7 @@
                 class="form-control bg-white text-end mb-3 pt-3"
                 id="formGroupExampleInput"
                 style="height: 75px"
+                :maxlength="499"
                 :class="{'p-invalid-textarea': v$.customerOffer.$invalid && submitted}"
                 v-model="form.customerOffer"/>
     </section>
