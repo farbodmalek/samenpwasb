@@ -169,7 +169,7 @@ const form = reactive({
   residentTypeId: surveyData?.loanPlan.residentTypeId==0?null:surveyData?.loanPlan.residentTypeId,
   maritalStatusId: surveyData.loanPlan.maritalStatusId ,
   isFamilySupervisor: surveyData.loanPlan.isFamilySupervisor ,
-  mobileNo: surveyData.mobileNo.slice(-11) || null,
+  mobileNo:surveyData.mobileNo? surveyData.mobileNo.slice(-11):surveyData.loanPlan.mobileNo || null,
   planTypeId: surveyData.loanPlan.planTypeId || null,
   educationTypeId: surveyData.loanPlan.educationTypeId || null,
   planNoId: surveyData.loanPlan.planNoId || null,
