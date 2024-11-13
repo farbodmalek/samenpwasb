@@ -59,11 +59,11 @@
       <div class="px-3 col-12 form-group mb-3 d-flex justify-content-center bg-white  px-2 py-3   rounded-4">
         <SelectButton v-model="form.OwnerTypeId"
                       :class="{'p-invalid': v$.OwnerTypeId.$invalid && submitted}"
-                      :options="exportedObjects.binaryOptions"
+                      :options="exportedObjects.ownerTypes"
                       aria-labelledby="basic"
                       class="col-12 d-flex sec-titel"
-                      optionLabel="name"
-                      optionValue="Value"/>
+                      optionLabel="value"
+                      optionValue="key"/>
       </div>
     </section>
 
