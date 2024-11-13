@@ -421,7 +421,7 @@ const Cartables = JSON.parse(<any>localStorage.getItem("Cartables"));
 
 const userdata = Mainstore.getCartableUserDataById(Number(route.query.id));
 const filteredSurveys = Mainstore.getFilteredSurveys(userdata ? userdata.loanId : 0);
-const LasteSurvey = filteredSurveys.length ? filteredSurveys[0] : null;
+const LasteSurvey = filteredSurveys.length ? filteredSurveys[filteredSurveys.length-1] : null;
 let previousValues = <any>{};
 
 
