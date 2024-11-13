@@ -229,6 +229,7 @@ const FinalRegistrationForm = FinalRegistrationform ? JSON.parse(FinalRegistrati
 const userdata = Mainstore.getCartableUserDataById(Number(route.query.id));
 const filteredSurveys = Mainstore.getFilteredSurveys(userdata ? userdata.loanId : 0);
 const LasteSurvey = filteredSurveys.length ? filteredSurveys[filteredSurveys.length-1] : null;
+console.log(LasteSurvey)
 const currentDate = new Date();
 const options = {timeZone: 'Asia/Tehran'};
 const surveyDate = currentDate.toLocaleString('en-US', options);
