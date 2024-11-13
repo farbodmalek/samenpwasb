@@ -417,9 +417,9 @@
         }
     ]
     const optionsEquipmentBought = [
-           {name: 'خریداری شده  ', value: 1},
-           {name: 'خریداری نشده', value: 0},
-           {name: 'تجهیزات ندارد', value: 2},
+           {name: 'خریداری شده  ', value: 2},
+           {name: 'خریداری نشده', value: 1},
+           {name: 'تجهیزات ندارد', value: 0},
        ];
 
 
