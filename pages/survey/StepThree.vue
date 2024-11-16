@@ -54,7 +54,7 @@
                     optionValue="value"
                     @click="EquipmentBoughtHandel(form.isEquipmentBought)"/>
 
-      <div v-if="EquipmentTab === 2"
+      <div v-if="EquipmentTab === 1"
            class="flex-column px-1">
         <div class="d-flex pt-3  justify-content-around ">
           <SelectButton v-model="form.isFactorMatch"
@@ -229,7 +229,7 @@ const FinalRegistrationForm = FinalRegistrationform ? JSON.parse(FinalRegistrati
 const userdata = Mainstore.getCartableUserDataById(Number(route.query.id));
 const filteredSurveys = Mainstore.getFilteredSurveys(userdata ? userdata.loanId : 0);
 const LasteSurvey = filteredSurveys.length ? filteredSurveys[filteredSurveys.length-1] : null;
-console.log(LasteSurvey)
+
 const currentDate = new Date();
 const options = {timeZone: 'Asia/Tehran'};
 const surveyDate = currentDate.toLocaleString('en-US', options);
@@ -273,7 +273,8 @@ const setCurrentTab = (Number: number) => {
 };
 const ConstructionHandelTab = (Number: number) => {
   ConstructionTab.value = Number;
-  if (Number === 1 && EquipmentTab.value === 2) {
+  if (Number === 1 && EquipmentTab.value === 1) {
+    console.log("1")
     const rules = computed(() => {
       return {
         constructionApproval: {required},
@@ -288,7 +289,26 @@ const ConstructionHandelTab = (Number: number) => {
       };
     })
     v$ = useVuelidate(rules, form);
+  }  else if (Number === 0 && EquipmentTab.value === 1) {
+    console.log("17")
+    const rules = computed(() => {
+      return {
+        constructionApproval: {required},
+        customerOffer: {required},
+        surveyReport: {required},
+        isEquipmentBought: {required},
+        constructionDescription: '',
+        constructionPercentageProgress: '',
+        isFactorMatch: {required},
+        equipmentTypeId: {required},
+        equipmentDescription: {required},
+      };
+    })
+    v$ = useVuelidate(rules, form);
+    form.value.constructionPercentageProgress=null
+    form.value.constructionDescription=null
   } else if (Number === 1) {
+    console.log(35)
     const rules = computed(() => {
       return {
         constructionApproval: {required},
@@ -300,11 +320,11 @@ const ConstructionHandelTab = (Number: number) => {
         equipmentDescription: '',
         equipmentTypeId: '',
         isFactorMatch: '',
-
       };
     })
     v$ = useVuelidate(rules, form);
   } else {
+    console.log("3")
     const rules = computed(() => {
       return {
         constructionApproval: {required},
@@ -324,7 +344,7 @@ const ConstructionHandelTab = (Number: number) => {
 
 const EquipmentBoughtHandel = (Number: number) => {
   EquipmentTab.value = Number;
-  if (Number === 2 && ConstructionTab.value === 1) {
+  if (Number === 1 && ConstructionTab.value === 1) {
     const rules = computed(() => {
       return {
         constructionApproval: {required},
@@ -339,7 +359,7 @@ const EquipmentBoughtHandel = (Number: number) => {
       };
     })
     v$ = useVuelidate(rules, form);
-  } else if (Number === 2) {
+  } else if (Number === 1) {
     const rules = computed(() => {
       return {
         constructionApproval: {required},

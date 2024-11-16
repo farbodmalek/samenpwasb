@@ -124,10 +124,10 @@ const navigateToCardDetail = (id: number, loanPlanId: number, loanType: number) 
   } else if (loanPlanId == 0) {
 
     const updatedLoanEconomicTypeId = loanType === 4 ? 3 : loanType === 3 ? 4 : loanType;
-    console.log(updatedLoanEconomicTypeId)
+
     router.push({path: "/survey/Stepone", query: {id, loanType: updatedLoanEconomicTypeId}});
   } else {
-    console.log(loanType)
+
     router.push({path: "/navigation/MapPage", query: {id, loanType}});
   }
 };

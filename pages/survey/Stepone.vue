@@ -161,7 +161,7 @@ const error = ref(false);
 const submitted = ref(false);
 const loanTypeId = route.query.loanType;
 const surveyData = surveyStore.getCartableUserDataById(Number(route.query.id));
-console.log(surveyData.loanPlan.residentTypeId)
+
 const userData = JSON.parse(<any>localStorage.getItem('User-data')) || {};
 let previousFormValues = reactive({});
 const form = reactive({

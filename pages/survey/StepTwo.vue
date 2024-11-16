@@ -384,7 +384,7 @@ const loanSurvey =<any> route.query.loanType;
 const Cartables = JSON.parse(<any>localStorage.getItem("Cartables"));
 const userdata = Mainstore.getCartableUserDataById(Number(route.query.id));
 const filteredSurveys = Mainstore.getFilteredSurveys(userdata ? userdata.loanId : 0);
-console.log(filteredSurveys)
+
 const LasteSurvey = filteredSurveys.length ? filteredSurveys[filteredSurveys.length-1] : null;
 let previousValues = <any>{};
 
@@ -614,7 +614,7 @@ const InsuranceTabHadel = (tabNumber:any) => {
     v$ = useVuelidate(rules1, form);
   }else if (tabNumber && loanSurvey == 1 && [1, 2].includes(form.LivestockTypeId)) {
     const rules1 = computed(() => {
-      console.log(15)
+
       return {
         NumberOfFemaleLivestock: {required},
         planActivationTypeId: {required},
