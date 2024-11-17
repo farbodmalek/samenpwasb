@@ -418,6 +418,7 @@ const form = reactive({
   planActivationTypeId:  null,
 });
 
+console.log(form.endOfActivationDate)
 
 const rules = computed(() => {
   if (loanSurvey == 1) {
@@ -863,6 +864,7 @@ const ConvertNUM = (input) => {
 const NextstepHandel = () => {
   submitted.value = true
   if (!v$.value.$invalid) {
+    console.log( form.endOfActivationDate)
     if (form.numberOfInsurdPerson > form.numberOfJobsCreated) {
       ToastNotificationService.warn("تعداد بیمه شده نمیتواند بیشتر از اشغال ایجاد شده باشد");
     } else if (form.CultivatedLandArea > form.LandArea) {
