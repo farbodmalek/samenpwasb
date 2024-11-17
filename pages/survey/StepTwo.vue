@@ -805,6 +805,7 @@ const Pachvalue = () => {
     form.LivestockTypeId = previousValues.hasOwnProperty("LivestockTypeId") ? previousValues.LivestockTypeId : LasteSurvey ? LasteSurvey.livestockTypeId : ""
     form.ID = previousValues.hasOwnProperty("ID") ? previousValues.ID : LasteSurvey ? LasteSurvey.ID : 0
     form.LivestockLicense = previousValues.hasOwnProperty("LivestockLicense") ? previousValues.LivestockLicense : LasteSurvey ? LasteSurvey.livestockLicense : null
+    form.LivestockBooklet = previousValues.hasOwnProperty("LivestockBooklet") ? previousValues.LivestockBooklet : LasteSurvey ? LasteSurvey.LivestockBooklet : null
     form.LivestockInsurance = previousValues.hasOwnProperty("LivestockInsurance") ? previousValues.LivestockInsurance : LasteSurvey ? LasteSurvey.livestockInsurance : null
     form.InsuranceDate = previousValues.hasOwnProperty("InsuranceDate") ? previousValues.InsuranceDate : LasteSurvey ? LasteSurvey.InsuranceDate : null
     form.NumberOfInsuredLivestock = previousValues.hasOwnProperty("NumberOfInsuredLivestock") ? previousValues.NumberOfInsuredLivestock : LasteSurvey ? LasteSurvey.hasWorkPermission : null
