@@ -162,13 +162,13 @@
                     @click="setCurrentTab(form.planActivationTypeId)"/>
       <div v-if="currentTab === 3"
            class="d-flex justify-content-between mt-4 pt-1 px-2 col-12 text-center">
-        <p class="custom-input col-3  text-white bg-blue-1 py-2 rounded-5  "
+        <p class="custom-input1 col-3  text-white bg-blue-1 py-2 rounded-5  "
            type="text">انتخاب تاریخ</p>
         <date-picker
             v-model="form.endOfActivationDate"
-            custom-input=".custom-input"
-            display-format="YYYY/MM/DD"
-            format="YYYY/MM/DD"
+            custom-input=".custom-input1"
+            display-format="jYYYY/jMM/jDD"
+            format="jYYYY/jMM/jDD"
         />
         <p class="py-2 fw-bold text-black date">{{ form.endOfActivationDate }}:تاریخ اتمام مهلت فعال بودن </p>
       </div>
@@ -239,8 +239,8 @@
           <date-picker
               v-model="form.InsuranceDate"
               custom-input=".custom-input"
-              display-format="YYYY/MM/DD"
-              format="YYYY/MM/DD"
+              display-format="jYYYY/jMM/jDD"
+              format="jYYYY/jMM/jDD"
           />
           <p class="py-2 fw-bold text-black data">
             {{ form.InsuranceDate }}:تاریخ بیمه نامه
