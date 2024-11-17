@@ -115,8 +115,6 @@
                 v-model="form.customerOffer"/>
     </section>
 
-
-
     <section class="px-1 form-group">
       <Titel :title="'گرفتن عکس'"/>
       <div>
@@ -274,7 +272,6 @@ const setCurrentTab = (Number: number) => {
 const ConstructionHandelTab = (Number: number) => {
   ConstructionTab.value = Number;
   if (Number === 1 && EquipmentTab.value === 1) {
-    console.log("1")
     const rules = computed(() => {
       return {
         constructionApproval: {required},
@@ -290,7 +287,6 @@ const ConstructionHandelTab = (Number: number) => {
     })
     v$ = useVuelidate(rules, form);
   }  else if (Number === 0 && EquipmentTab.value === 1) {
-    console.log("17")
     const rules = computed(() => {
       return {
         constructionApproval: {required},
@@ -308,7 +304,6 @@ const ConstructionHandelTab = (Number: number) => {
     form.value.constructionPercentageProgress=null
     form.value.constructionDescription=null
   } else if (Number === 1) {
-    console.log(35)
     const rules = computed(() => {
       return {
         constructionApproval: {required},
@@ -324,7 +319,6 @@ const ConstructionHandelTab = (Number: number) => {
     })
     v$ = useVuelidate(rules, form);
   } else {
-    console.log("3")
     const rules = computed(() => {
       return {
         constructionApproval: {required},

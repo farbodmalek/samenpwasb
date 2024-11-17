@@ -112,7 +112,6 @@ definePageMeta({
 });
 
 const navigateToCardDetail = (id: string,loanType:any,) => {
-  console.log(loanType)
   router.push({ path: "/survey/Stepone", query: {id, loanType: loanType } });
   // router.push({ path: "/MonitoringRegistrationPage", query: {id, loanType: loanType } });
 };
