@@ -6,7 +6,7 @@
           <input-text
               v-model="searchUser"
               class=" col-9  mx-5 p-2 text-center rounded-pill border-secondary text-black data"
-              placeholder="جستجو بر اساس نام یا شماره قرداد "
+              placeholder="جستجو بر اساس نام یا شماره قرارداد "
               type="search"
           />
         </div>
