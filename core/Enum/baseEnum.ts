@@ -6,8 +6,8 @@
     ];
 
     const optionFamilySupervisor = [
-        {name: 'بلی ', value: 1},
-        {name: 'خیر', value: 0},
+        {name: 'بلی ', value: true},
+        {name: 'خیر', value: false   },
     ];
     const genderoptions = [
         {name: ' مرد', value: false},

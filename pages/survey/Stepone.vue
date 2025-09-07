@@ -126,7 +126,12 @@
         <strong class="mx-1 fw-bold">:دسته وام </strong>
         <p class=""  v-if="surveyData.loanPlan"> {{ surveyData.loanPlan.planNo.name }}</p>
       </div>
-      <div class="col-12">
+
+      <div class="card d-flex flex-wrap justify-center gap-4">
+        <div class="d-flex items-center gap-2">
+          <Checkbox v-model="form.isValidPlanNo"  binary/>
+          <label > در صورت مغایرت, تیک رشته فعالیت  را علامت بزنید  </label>
+        </div>
       </div>
     </div>
 
@@ -146,8 +151,8 @@ import { useSurveyStore } from "~/store/useSurveyStore";
 import { required } from '@vuelidate/validators';
 import { useVuelidate } from "@vuelidate/core";
 import exportedObjects from '~/core/Enum/baseEnum';
-;
-
+import checkbox from "primevue/checkbox/Checkbox.vue";
+import checkboxGroup from "primevue/checkbox/Checkbox.vue";
 
 definePageMeta({
   layout: "survey",
