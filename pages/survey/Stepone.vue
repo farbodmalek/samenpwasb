@@ -130,7 +130,7 @@
       <div class="px-2 d-flex  flex-reverse flex-row-reverse gap-4">
         <div class="d-flex  gap-3">
           <Checkbox v-model="form.isValidPlanNo"  binary/>
-          <label > در صورت مغایرت, تیک رشته فعالیت  را علامت بزنید  </label>
+          <label >درخواست تغییر رشته فعالیت </label>
         </div>
       </div>
     </div>
