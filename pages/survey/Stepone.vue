@@ -121,14 +121,14 @@
       </div>
 
     </section>
+
     <div class="px-1 col col-12  align-center pt-1 px-2  justify-content-between">
       <div class="px-2 d-flex flex-reverse flex-row-reverse ">
         <strong class="mx-1 fw-bold">:دسته وام </strong>
-        <p class=""  v-if="surveyData.loanPlan"> {{ surveyData.loanPlan.planNo.name }}</p>
+        <p   v-if="surveyData.loanPlan"> {{ surveyData.loanPlan.planNo.name }}</p>
       </div>
-
-      <div class="card d-flex flex-wrap justify-center gap-4">
-        <div class="d-flex items-center gap-2">
+      <div class="px-2 d-flex  flex-reverse flex-row-reverse gap-4">
+        <div class="d-flex  gap-3">
           <Checkbox v-model="form.isValidPlanNo"  binary/>
           <label > در صورت مغایرت, تیک رشته فعالیت  را علامت بزنید  </label>
         </div>
