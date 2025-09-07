@@ -5,6 +5,15 @@
   background-color: #fca40f;
 }
 
+.p-checkbox.p-highlight .p-checkbox-box {
+  border-color: #fca40f;
+  background: #fca40f;
+}
+.p-checkbox:not(.p-disabled):has(.p-checkbox-input:hover) .p-checkbox-box
+{
+  border-color: #fca40f;
+}
+
 .form-select {
   display: block;
   width: 100%;

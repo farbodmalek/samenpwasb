@@ -151,8 +151,7 @@ import { useSurveyStore } from "~/store/useSurveyStore";
 import { required } from '@vuelidate/validators';
 import { useVuelidate } from "@vuelidate/core";
 import exportedObjects from '~/core/Enum/baseEnum';
-import checkbox from "primevue/checkbox/Checkbox.vue";
-import checkboxGroup from "primevue/checkbox/Checkbox.vue";
+
 
 definePageMeta({
   layout: "survey",
