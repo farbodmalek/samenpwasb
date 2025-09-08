@@ -9,7 +9,7 @@
       <l-marker
         v-for="(item, index) in filteredItems"
         :key="index"
-        :lat-lng="[item.loanPlan.latitude, item.loanPlan.longitude]"
+        :lat-lng="[item.latitude, item.longitude]"
         :draggable="false"
         @click="showMarkerInfo(index)"
         :icon="getMarkerIcon(item)"
@@ -27,7 +27,7 @@
              <span class=" light d-flex  justify-content-between">
           <i class="bi bi-phone ms-3 font-icon-user mb-1 mx-2"></i>
               <p class="  mb-0 truncate-text  ">
-{{selectedData.loanDetail.customerName}}
+{{selectedData.customerName}}
            <i class="bi bi-person  ms-3 font-icon-user mb-1 mx-2 "></i>
               </p>
              </span>
@@ -36,7 +36,7 @@
       <div class="mb-1 col-12 px-2 text-end mb-3">
         <strong>
           ادرس طرح :
-          {{selectedData.loanPlan.address}}
+          {{selectedData.address}}
         </strong>
 
       </div>
@@ -49,7 +49,7 @@
         </P>
       </div>
       <div class="d-grid col-12 mx-auto pt-3 pb-3">
-          <button class="text-white bg-blue-1  p-3" type="button" @click="navigateToCardDetail(selectedData.id,selectedData.loanPlan.loanSurveyEconomidTypeId,selectedData.loanDetail.loanEconomicTypeId)">
+          <button class="text-white bg-blue-1  p-3" type="button" @click="navigateToCardDetail(selectedData.id,selectedData.loanSurveyEconomidTypeId,selectedData.loanEconomicTypeId)">
           انجام نظارت
         </button>
       </div>

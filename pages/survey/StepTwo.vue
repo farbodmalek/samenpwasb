@@ -417,8 +417,6 @@ const form = reactive({
   OwnerTypeId: null,
   planActivationTypeId:  null,
 });
-
-
 const rules = computed(() => {
   if (loanSurvey == 1) {
     return {

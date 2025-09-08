@@ -12,7 +12,7 @@
       <l-marker
           :lat-lng="form.lat && form.lng ? [form.lat, form.lng] : markerLocation"
           :draggable="false"
-          :icon="getMarkerIcon(customer.loanPlan.loanSurveyEconomidTypeId)"
+          :icon="getMarkerIcon(customer.loanSurveyEconomidTypeId)"
       ></l-marker>
       <l--marker
           :lat-lng="[latitude, longitude]"
@@ -26,7 +26,7 @@
              <span class=" light d-flex  justify-content-between">
           <i class="bi bi-phone ms-3 font-icon-user mb-1 mx-2"></i>
               <p class="  mb-0 truncate-text  ">
-                {{ customer.loanDetail.customerName }}
+                {{ customer.customerName }}
            <i class="bi bi-person  ms-3 font-icon-user mb-1 mx-2 "></i>
               </p>
              </span>
@@ -59,7 +59,7 @@
 
         </div>
         <div class="d-grid col-12 mx-auto pt-3 pb-3">
-          <button class="text-white bg-blue-1  p-3" type="button" @click="navigateToCardDetail(target,customerName.loanSurveyEconomidTypeId,customer.loanDetail.loanEconomicTypeId)">
+          <button class="text-white bg-blue-1  p-3" type="button" @click="navigateToCardDetail(target,customerName.loanSurveyEconomidTypeId,customer.loanEconomicTypeId)">
             انجام نظارت
           </button>
         </div>

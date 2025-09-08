@@ -5,7 +5,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
   const token = supervisoryInfo.token
   const router = useRouter();
 
-  if (!token && to.path !== "/authorization/login") {
-    return navigateTo("/authorization/login");
-  }
+  // if (!token && to.path !== "/authorization/login") {
+  //   return navigateTo("/authorization/login");
+  // }
 });

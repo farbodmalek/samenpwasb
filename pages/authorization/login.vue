@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div class="justify-content-center container">
 <!--    <Download v-if="isMobile"/>-->
 <!--    v-if="!isMobile"-->
@@ -96,7 +96,7 @@ const login = async () => {
   if (!v$.value.$invalid) {
     MakeResponse.makeServerResponse(CommonServices.login(form.value), true, result => {
       if (result && result.result) {
-        localStorage.setItem('User-data', JSON.stringify(result.result));
+        localStorage.setItem('User-data', JSON.stringify(result.data));
         router.push("/")
         ToastNotificationService.success("ورود با موفقیت انجام شد");
       }

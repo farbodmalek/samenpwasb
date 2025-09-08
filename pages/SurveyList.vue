@@ -15,37 +15,37 @@
 
     <section  class="mx-3 d-flex flex-column gap-3">
       <div v-for="(item, index) in Data" :key="index" class="col-md-6  col-sm-12 d-flex flex-column">
-        <div :class="{'background-card':item.loanPlan.id===0 }"
+        <div :class="{'background-card':item.id===0 }"
              class="shadow-lg bg-white border-top"
-             @click="navigateToCardDetail(item.id,item.loanPlan.id,item.loanDetail.loanEconomicTypeId)">
+             @click="navigateToCardDetail(item.id,item.id,item.loanEconomicTypeId)">
           <div class="p-3">
             <div class="d-flex justify-content-between text-black ">
-              <img v-if="item.loanPlan.id===0" src="/img/contact.png" width="50" alt="photo">
-              <img v-if="item.loanPlan.id" class=" px-2" src="/img/icons8-location-96.png" width="70" alt="photo">
+              <img v-if="item.id===0" src="/img/contact.png" width="50" alt="photo">
+              <img v-if="item.id" class=" px-2" src="/img/icons8-location-96.png" width="70" alt="photo">
               <span class=" light d-flex">
-                  <p class=" mt-3  truncate-text">{{ item.loanDetail.customerName }}</p>
+                  <p class=" mt-3  truncate-text">{{ item.customerName }}</p>
                     <img v-if="item.customerGenderType" class="mb-1 mx-2 " src="/img/muslim.png" width="50" alt="photo">
                     <img v-else class="mb-1 mx-2" src="~/assets/images/man.png" width="50" alt="photo">
               </span>
             </div>
           </div>
           <p class="card-text text-center text-black title-font px-3 py-2">
-            {{ item.loanDetail.loanMinorTypeDesc }}
+            {{ item.loanMinorTypeDesc }}
           </p>
           <div class="background d-flex card-text text-center text-danger bg-gray justify-content-center p-1">
-            <span class="">{{ item.loanDetail.loanNumber }}</span>
+            <span class="">{{ item.loanNumber }}</span>
             <p class="card-text text-center text-danger bg-gray fw-bold px-1 ">
               :شماره قرارداد
             </p>
           </div>
           <div class="d-flex justify-content-between pt-3 px-3">
-            <p :class="{'text-danger':convert(item.loanPlan.loanSurveyEconomidTypeId) === ':ثبت نشده' }"
+            <p :class="{'text-danger':convert(item.loanSurveyEconomidTypeId) === ':ثبت نشده' }"
                class="text-success  date-font ">
               <strong>نوع نظارت </strong>
-              {{ convert(item.loanPlan.loanSurveyEconomidTypeId) }}</p>
+              {{ convert(item.loanSurveyEconomidTypeId) }}</p>
             <p class="text-black date-font">
               مهلت پرداخت
-              <strong class="data"> {{ item.expireDateFa }}</strong>
+              <strong class="data"> {{ item.expireDate }}</strong>
             </p>
           </div>
         </div>
@@ -182,7 +182,7 @@ const FindOfflineForm = () => {
 const GetCartables = () => {
   MakeResponse.makeServerResponse(CommonServices.GetCartables(), true, result => {
     if ( result && result.results && result.results.length>=0) {
-      const Cartables = result.results.filter((item: any) => item.expireDate.substring(0, 10) >= todayDateString);
+      const Cartables = result.results;
       localStorage.setItem('Cartables', JSON.stringify(Cartables));
       if(Cartables.length>0){
         Data.value = Cartables
@@ -198,13 +198,13 @@ const GetCartables = () => {
   FindOfflineForm()
 }
 
-const GetSurveysList = () => {
-  MakeResponse.makeServerResponse(CommonServices.GetSurveys(), true, result => {
-    if ( result && result.results) {
-      localStorage.setItem('SurveysList', JSON.stringify(result.results));
-    }
-  },false);
-};
+// const GetSurveysList = () => {
+//   MakeResponse.makeServerResponse(CommonServices.GetSurveys(), true, result => {
+//     if ( result && result.results) {
+//       localStorage.setItem('SurveysList', JSON.stringify(result.results));
+//     }
+//   },false);
+// };
 
 const SetSurveyImage = async (data:any,id:number) => {
   setphoto.value[id] = true;
@@ -257,9 +257,9 @@ const openDataDB = () => {
 }
 
 onMounted(() => {
-  GetCartables()
-  GetSurveysList()
-  openDataDB()
+   GetCartables()
+  // GetSurveysList()
+   openDataDB()
   ClearStorge()
 
 });

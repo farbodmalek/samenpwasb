@@ -3,11 +3,11 @@ import {BaseApi} from "../base/base-api";
 export class CommonServices extends BaseApi {
 
     static login(body: any) {
-        const url = this.getBaseAPI() + 'api/Auth/Login';
+        const url = this.getUserAPI() + 'Auth/Login';
         return BaseApi.postApiLogin(url, body);
     }
     static GetCartables() {
-        const url = this.getBaseAPI() + 'api/survey/GetCartables';
+        const url = this.getSurveyAPI() + 'Pwa/Surveys/List';
         this.getLoggedUser()
         const body={pageNumber: 1, take: 1000,cartableStatusTypeId:1, userId: this.getLoggedUser().id}
         return BaseApi.postApi(url, body);

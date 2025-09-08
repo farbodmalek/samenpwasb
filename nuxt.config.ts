@@ -108,6 +108,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
       public: {
           base_API: process.env.base_API,
+          surveyUrl: process.env.surveyUrl,
+          mediaUrl: process.env.mediaUrl,
+          securityUrl: process.env.securityUrl,
       },
   },
 

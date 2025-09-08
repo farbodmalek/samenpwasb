@@ -6,6 +6,14 @@ export class BasePage {
         return useRuntimeConfig().public.base_API;
     }
 
+    static getSurveyAPI() {
+        return useRuntimeConfig().public.surveyUrl;
+    }
+
+    static getUserAPI() {
+        return useRuntimeConfig().public.securityUrl;
+    }
+
     static getEnv() {
         return useRuntimeConfig().public.base_API;
     }
