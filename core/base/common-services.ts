@@ -25,6 +25,17 @@ export class CommonServices extends BaseApi {
         const url = this.getBaseAPI() + 'api/survey/SetLoanPlanSurvey';
         return BaseApi.postApi(url, body);
     }
+    static async SetSurveyImage(body: any) {
+        const url = this.getBaseAPI() + 'api/Upload/uploadSurveyImage';
+        await this.getLoggedUser();
+        return BaseApi.postApi(url, body)
+    }
+
+    // static async SetSurveyImage(body: any) {
+    //     const url = this.getMediaAPI() + 'Media/save/1/1';
+    //     await this.getLoggedUser();
+    //     return BaseApi.postApi(url, body)
+    // }
 
     static async SetSurveyImage(body: any) {
         const url = this.getMediaAPI() + 'Media/save/1/1';

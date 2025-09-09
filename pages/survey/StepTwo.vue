@@ -65,8 +65,8 @@
                       optionLabel="value"
                       optionValue="key"/>
       </div>
-    </section>
 
+    </section>
     <section v-if="loanSurvey == 3 || loanSurvey == 4">
       <Titel :title="'مجوز کار'"/>
       <div class="px-3 col-12 form-group mb-3 d-flex justify-content-center bg-white  px-2 py-3 rounded-4">
@@ -96,7 +96,7 @@
         </div>
 
         <div class="d-flex justify-content-center bg-white p-2 col-12"
-             v-if="Tab === 1">
+             v-if="Tab == 1">
           <div class="nav nav-pills px-2 col-9">
             <select
               class="form-select  border-1 rounded-3 text-start"
@@ -111,7 +111,7 @@
         </div>
 
         <div class="d-flex justify-content-center bg-white p-2 col-12 flex-wrap align-items-center"
-             v-if="Tab === 1">
+             v-if="Tab == 1">
           <div class="px-2 col-9">
               <input-text
                   @input="form.workShopCode=ConvertNUM(form.workShopCode)"
@@ -129,7 +129,7 @@
         </div>
 
         <div class="d-flex justify-content-center bg-white p-2 col-12 flex-wrap align-items-center "
-             v-if="Tab === 1">
+             v-if="Tab == 1">
           <div class="px-2 col-9">
             <input-text
                 @input="form.numberOfInsurdPerson=ConvertNUM(form.numberOfInsurdPerson)"
@@ -315,6 +315,7 @@
                       optionLabel="name"
                       optionValue="value"/>
       </div>
+
       <div v-if="AgriculturalCalender === 1">
         <div
           class="d-flex justify-content-between mt-4 pt-1 px-2 col-12 text-center">
@@ -381,9 +382,7 @@ const currentTab = ref();
 const AgriculturalCalender = ref()
 const insuranceTabAgricultural = ref();
 const loanSurvey =<any> route.query.loanType;
-
 const data = Mainstore.getCartableUserDataById(Number(route.query.loanId));
-
 const LasteSurvey = data.surveDetail!=null ? data.surveDetail : null;
 
 let previousValues = <any>{};
@@ -395,7 +394,7 @@ const form = reactive({
   numberOfInsurdPerson:  LasteSurvey ? LasteSurvey.numberOfInsurdPerson : null,
   numberOfJobsCreated:  LasteSurvey ? LasteSurvey.numberOfJobsCreated : "",
   endOfActivationDate : LasteSurvey ?LasteSurvey.endOfActivationDate:null,
-  Isinsurance:  LasteSurvey ? LasteSurvey.workShopCode == 0 ? 0 : 1 : null,
+  Isinsurance:  LasteSurvey ? LasteSurvey.workShopCode == null ? false : true : null,
   Id:  LasteSurvey ? LasteSurvey.Id : 0,
   SurveyId:  LasteSurvey ? LasteSurvey.SurveyId : 0,
   ProductTypeId:  LasteSurvey ? LasteSurvey.productTypeId : null,
@@ -413,8 +412,8 @@ const form = reactive({
   NumberOfMaleLivestock:  null,
   NumberOfFemaleLivestock: null,
   LivestockTypeId: null,
-  OwnerTypeId: null,
-  planActivationTypeId:  null,
+  OwnerTypeId: LasteSurvey ? LasteSurvey.ownerTypeId : null,
+  planActivationTypeId:  LasteSurvey ? LasteSurvey.planActivationTypeId : null,
 });
 
 const rules = computed(() => {
@@ -462,6 +461,7 @@ const rules = computed(() => {
 let v$ = useVuelidate(rules, form);
 
 const InsuranceTabHadel = (tabNumber:any) => {
+
   Tab.value = tabNumber;
   if (tabNumber && loanSurvey == 3 ) {
     const rules1 = computed(() => {
@@ -508,7 +508,6 @@ const InsuranceTabHadel = (tabNumber:any) => {
         insuranceTypeId: {required},
         workShopCode: {required},
         numberOfInsurdPerson: {required},
-
       };
     });
     v$ = useVuelidate(rules1, form);
@@ -785,7 +784,7 @@ const Pachvalue = () => {
     form.workShopCode = previousValues.hasOwnProperty("workShopCode") ? previousValues.workShopCode : LasteSurvey ? LasteSurvey.workShopCode : ""
     form.numberOfInsurdPerson = previousValues.hasOwnProperty("numberOfInsurdPerson") ? previousValues.numberOfInsurdPerson : LasteSurvey ? LasteSurvey.numberOfInsurdPerson : null
     form.numberOfJobsCreated = previousValues.hasOwnProperty("numberOfJobsCreated") ? previousValues.numberOfJobsCreated : LasteSurvey ? LasteSurvey.numberOfJobsCreated : ""
-    form.OwnerTypeId = previousValues.hasOwnProperty("OwnerTypeId") ? previousValues.OwnerTypeId : LasteSurvey ? LasteSurvey.ownerTypeId : null
+    form.OwnerTypeId = previousValues.hasOwnProperty("OwnerTypeId") ? previousValues.OwnerTypeId : LasteSurvey ? LasteSurvey.ownerTypeId: null
     form.planActivationTypeId = previousValues.hasOwnProperty("planActivationTypeId") ? previousValues.planActivationTypeId : LasteSurvey ? LasteSurvey.planActivationTypeId : null
     form.endOfActivationDate = previousValues.hasOwnProperty("endOfActivationDate") ? previousValues.endOfActivationDate : LasteSurvey ? LasteSurvey.endOfActivationDate : null
     form.Isinsurance = previousValues.hasOwnProperty("Isinsurance") ? previousValues.Isinsurance : LasteSurvey ? LasteSurvey.workShopCode == 0 ? 0 : 1 : null

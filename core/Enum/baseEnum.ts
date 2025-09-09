@@ -1,8 +1,8 @@
 
 
        const binaryOptions = [
-        {name: 'ندارد ', value: 0},
-        {name: 'دارد', value: 1},
+        {name: 'ندارد ', value: false},
+        {name: 'دارد', value: true},
     ];
 
     const optionFamilySupervisor = [
