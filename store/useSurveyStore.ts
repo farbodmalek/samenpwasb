@@ -7,8 +7,9 @@ export const useSurveyStore = defineStore('surveyStore', {
         infoMonitored: '',
     }),
     getters: {
-        getCartableUserDataById: (state) => (id: number) => {
-            return state.cartables.find((item: any) => item.id === id);
+        getCartableUserDataById: (state) => (loanId: number) => {
+
+            return state.cartables.find((item: any) => item.loanId === loanId);
         },
         getFilteredSurveys: (state) => (loanId: number) => {
             return state.surveysList.filter((item: any) => item.id === loanId);

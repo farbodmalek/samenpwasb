@@ -224,13 +224,14 @@ const visible = ref(false);
 const visibleConfirm = ref(false);
 const FinalRegistrationform = localStorage.getItem("FinalRegistrationform");
 const FinalRegistrationForm = FinalRegistrationform ? JSON.parse(FinalRegistrationform) : {};
-const userdata = Mainstore.getCartableUserDataById(Number(route.query.id));
-const filteredSurveys = Mainstore.getFilteredSurveys(userdata ? userdata.loanId : 0);
-const LasteSurvey = filteredSurveys.length ? filteredSurveys[filteredSurveys.length-1] : null;
+const data = Mainstore.getCartableUserDataById(Number(route.query.loanId));
 
+const LasteSurvey = data.surveDetail!=null ? data.surveDetail : null;
 
 const currentDate = new Date();
+
 const options = {timeZone: 'Asia/Tehran'};
+
 const surveyDate = currentDate.toLocaleString('en-US', options);
 
 const form = ref({
@@ -243,9 +244,9 @@ const form = ref({
   constructionDescription: FinalRegistrationForm.hasOwnProperty("constructionDescription") ? FinalRegistrationForm.constructionDescription : LasteSurvey ? LasteSurvey.constructionDescription : null,
   equipmentTypeId: FinalRegistrationForm.hasOwnProperty("equipmentTypeId") ? FinalRegistrationForm.equipmentTypeId : LasteSurvey ? LasteSurvey.equipmentTypeId : null,
   equipmentDescription: FinalRegistrationForm.hasOwnProperty("equipmentDescription") ? FinalRegistrationForm.equipmentDescription : LasteSurvey ? LasteSurvey.equipmentDescription : null,
-  cartableId: userdata.loanPlan.cartableId,
+  cartableId: data.cartableId,
   surveyDate: surveyDate,
-  userId: userdata.userId,
+  userId: data.userId,
   confirmation: null,
   guidList: [],
 });
@@ -528,7 +529,7 @@ const compressImage = (file:any) => {
 const SetSurveyImage = async (file:any, index:any) => {
   IsRequest.value=true
   const formData = new FormData();
-  formData.append("image", file.file);
+  formData.append("postedFile", file.file);
   MakeResponse.makeServerResponse(CommonServices.SetSurveyImage(formData), false, result => {
     uploadedImages.value[index].uploadProgress = BaseApi.progress.value;
     if(result==='ERR_NETWORK'){
@@ -537,9 +538,10 @@ const SetSurveyImage = async (file:any, index:any) => {
       ToastNotificationService.warn("خطا در برقراری شبکه عکس در حافظه ذخیره شد ",8000 );
           SaveImgDB(file);
     }
-    else if(result && result.results.length>0) {
+    else if(result&& result.result) {
       uploadedImages.value[index].uploadProgress = null;
-      form.value.guidList.push(result.results[0]);
+
+      form.value.guidList.push(result.data);
       IsRequest.value=false
       ToastNotificationService.success("عکس با موفقیت ارسال شد ",);
     }
@@ -552,7 +554,7 @@ const openDatabase =()=>{
 }
 
 const SaveImgDB = (file:any) => {
-  ServicesImg.saveImgTodDB(file,route.query.id,userdata.loanPlan.loanId)
+  ServicesImg.saveImgTodDB(file,route.query.id,data.loanId)
 };
 
 const removeImage = (index:any) => {

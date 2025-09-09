@@ -110,8 +110,8 @@ definePageMeta({
   layout: "map",
 });
 
-const navigateToCardDetail = (id: string,loanType:any,) => {
-  router.push({ path: "/survey/Stepone", query: {id, loanType: loanType } });
+const navigateToCardDetail = (loanId: string,loanType:any,) => {
+  router.push({ path: "/survey/Stepone", query: {loanId, loanType: loanType } });
   // router.push({ path: "/MonitoringRegistrationPage", query: {id, loanType: loanType } });
 };
 

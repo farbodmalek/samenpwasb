@@ -3,12 +3,12 @@
     <div class="d-flex justify-content-between pt-1 px-2">
       <div class="px-1 py-2">
           <span class="px-1 font3 fw-bold text-white">
-            {{ surveyData.loanDetail.customerNumber }}</span>
+            {{ surveyData.customerNumber }}</span>
         <span class="fw-bold text-white font-text">:شماره مشتری </span>
       </div>
       <div class="d-flex">
           <span class="px-2 py-2 fw-bold text-white font-header">
-            {{ surveyData.loanDetail.customerName }}</span>
+            {{ surveyData.customerName }}</span>
         <p class="burger-btn d-block d-xl-none text-white position-relative mx-4"
           @click="goBack">
           <img
@@ -32,7 +32,7 @@ import { useSurveyStore } from "~/store/useSurveyStore";
 const router = useRouter();
 const route = useRoute();
 const surveyStore = useSurveyStore();
-const surveyData = surveyStore.getCartableUserDataById(Number(route.query.id));
+const surveyData = surveyStore.getCartableUserDataById(Number(route.query.loanId));
 const loanSurveyEconomidTypeId = parseInt(router.currentRoute._value.query.loanType)
 const store = useFormStore()
 const dialog = useDialog();

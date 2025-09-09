@@ -164,31 +164,32 @@ const route = useRoute();
 const error = ref(false);
 const submitted = ref(false);
 const loanTypeId = route.query.loanType;
-const surveyData = surveyStore.getCartableUserDataById(Number(route.query.id));
+const surveyData = surveyStore.getCartableUserDataById(Number(route.query.loanId));
 
 const userData = JSON.parse(<any>localStorage.getItem('User-data')) || {};
+
 let previousFormValues = reactive({});
 const form = reactive({
-  genderType: surveyData.loanPlan.genderType,
-  residentTypeId: surveyData?.loanPlan.residentTypeId==0?null:surveyData?.loanPlan.residentTypeId,
-  maritalStatusId: surveyData.loanPlan.maritalStatusId ,
-  isFamilySupervisor: surveyData.loanPlan.isFamilySupervisor ,
-  mobileNo:surveyData.mobileNo? surveyData.mobileNo.slice(-11):surveyData.loanPlan.mobileNo || null,
-  planTypeId: surveyData.loanPlan.planTypeId || null,
-  educationTypeId: surveyData.loanPlan.educationTypeId || null,
-  planNoId: surveyData.loanPlan.planNoId || null,
-  loanId: surveyData.loanPlan.loanId,
-  cartableId: surveyData.loanPlan.cartableId,
-  latitude:  surveyData.loanPlan.latitude,
-  longitude:  surveyData.loanPlan.longitude,
-  address:  surveyData.loanPlan.address,
-  villageName:  surveyData.loanPlan.villageName,
-  insuranceTypeId: surveyData.loanPlan.insuranceTypeId,
-  workShopCode: surveyData.loanPlan.workShopCode,
+  genderType: surveyData.genderType,
+  residentTypeId: surveyData?.residentTypeId==0?null:surveyData?.residentTypeId,
+  maritalStatusId: surveyData.maritalStatusId ,
+  isFamilySupervisor: surveyData.isFamilySupervisor ,
+  mobileNo:surveyData.mobileNo? surveyData.mobileNo.slice(-11):surveyData.mobileNo || null,
+  planTypeId: surveyData.planTypeId || null,
+  educationTypeId: surveyData.educationTypeId || null,
+  planNoId: surveyData.planNoId || null,
+  loanId: surveyData.loanId,
+  cartableId: surveyData.cartableId,
+  latitude:  surveyData.latitude,
+  longitude:  surveyData.longitude,
+  address:  surveyData.address,
+  villageName:  surveyData.villageName,
+  insuranceTypeId: surveyData.insuranceTypeId,
+  workShopCode: surveyData.workShopCode,
   isValidPlanNo: false,
-  otherPlanNo: surveyData.loanPlan.otherPlanNo || null,
-  Phone:  surveyData.loanPlan.phone,
-  id:  surveyData.loanPlan.id,
+  otherPlanNo: surveyData.otherPlanNo || null,
+  Phone:  surveyData.phone,
+  id:  surveyData.id,
   loanSurveyEconomidTypeId: loanTypeId,
   UserOtherPlanNo: userData.id,
   UserPlanNoText: null,
@@ -244,7 +245,7 @@ const submitForm = () => {
       ToastNotificationService.error("لطفا آدرس را تکمیل کنید");
     } else {
       formStore.SetFormOne(form);
-      router.push({ path: "/survey/StepTwo", query: { id: surveyData.id, loanType: loanTypeId } });
+      router.push({ path: "/survey/StepTwo", query: { loanId: surveyData.loanId, loanType: loanTypeId } });
       localStorage.setItem("firPreForm", JSON.stringify(form));
     }
   } else {

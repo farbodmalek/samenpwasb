@@ -23,19 +23,18 @@
     src="/img/agriculture.jpg"
   />
     <!-- card details header -->
-    <div v-if="Monitored.loanDetail" class="px-2">
       <div class="d-flex overflow-hidden border-black" style="width: 100%">
         <div class="rounded-bottom  m-1 bg-white w-25">
             <div class="text-center text-black font-0-7 text-center py-3 px-1 ">
               <span
-                class="d-block text-center pb-2 numfont ">{{ formatNumberWithCommas(Monitored.loanDetail.numberOfDelayedInstallment) }}</span>
+                class="d-block text-center pb-2 numfont ">{{ formatNumberWithCommas(Cartables.numberOfDelayedInstallment) }}</span>
               <strong class="font1 fw-bold  ">تعداد اقساط پرداخت نشده </strong>
             </div>
         </div>
         <div class="rounded-bottom  m-1 bg-white w-25">
             <div class="text-center text-black font-0-7 py-3 px-1 ">
               <span
-                class="d-block text-center pb-2 numfont ">{{ formatNumberWithCommas(Monitored.loanDetail.totalDelayedAmount) }}</span>
+                class="d-block text-center pb-2 numfont ">{{ formatNumberWithCommas(Cartables.totalDelayedAmount) }}</span>
               <strong class="font1 fw-bold">کل معوقات</strong>
             </div>
         </div>
@@ -43,7 +42,7 @@
         <div class="rounded-bottom  m-1 bg-white w-25">
             <div class="text-center text-black font-0-7 py-3 px-1 ">
               <span class="d-block text-center pb-2 numfont ">{{
-                  formatNumberWithCommas(Monitored.loanDetail.eachInstallmentAmount)
+                  formatNumberWithCommas(Cartables.eachInstallmentAmount)
                 }}</span>
               <strong class="font1 fw-bold">مبلغ هر قسط</strong>
             </div>
@@ -52,26 +51,22 @@
         <div class="rounded-bottom  m-1 bg-white  w-25">
             <div class="text-center text-black font-0-7 py-3 px-1 ">
               <span class="d-block text-center pb-2 numfont ">{{
-                  formatNumberWithCommas(Monitored.loanDetail.loanAmount)
+                  formatNumberWithCommas(Cartables.loanAmount)
                 }}</span>
               <strong class="font1 fw-bold">مبلغ تسهیلات</strong>
             </div>
         </div>
       </div>
     </div>
-  </div>
 </template>
 <script lang="ts" setup>
+import {useSurveyStore} from "~/store/useSurveyStore";
+
 const route = useRouter()
-
-const Cartables = JSON.parse(localStorage.getItem('Cartables'));
-const target = route.currentRoute._value.query.id;
+const surveyStore = useSurveyStore();
+const loanId = route.currentRoute._value.query.loanId;
+const Cartables = surveyStore.getCartableUserDataById(Number(loanId));
 const loanType = route.currentRoute._value.query.loanType;
-const Monitored = ref([])
-
-onMounted(() => {
-  Monitored.value = Cartables.find((item:any) => item.id === Number(target));
-})
 
 const formatNumberWithCommas = (value:any) => {
   if (value === null || value === undefined) return '';

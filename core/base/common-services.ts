@@ -27,7 +27,7 @@ export class CommonServices extends BaseApi {
     }
 
     static async SetSurveyImage(body: any) {
-        const url = this.getBaseAPI() + 'api/Upload/uploadSurveyImage';
+        const url = this.getMediaAPI() + 'Media/save/1/1';
         await this.getLoggedUser();
         return BaseApi.postApi(url, body)
     }

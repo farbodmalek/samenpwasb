@@ -14,8 +14,8 @@ export class BasePage {
         return useRuntimeConfig().public.securityUrl;
     }
 
-    static getEnv() {
-        return useRuntimeConfig().public.base_API;
+    static getMediaAPI() {
+        return useRuntimeConfig().public.mediaUrl;
     }
 
     public static getLoggedUser() {
