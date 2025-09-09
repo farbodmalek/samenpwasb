@@ -26,7 +26,7 @@
              <span class=" light d-flex  justify-content-between">
           <i class="bi bi-phone ms-3 font-icon-user mb-1 mx-2"></i>
               <p class="  mb-0 truncate-text  ">
-                {{ customer.customerName }}
+                {{ customer.customer }}
            <i class="bi bi-person  ms-3 font-icon-user mb-1 mx-2 "></i>
               </p>
              </span>
@@ -59,7 +59,7 @@
 
         </div>
         <div class="d-grid col-12 mx-auto pt-3 pb-3">
-          <button class="text-white bg-blue-1  p-3" type="button" @click="navigateToCardDetail(target,customerName.loanSurveyEconomidTypeId,customer.loanEconomicTypeId)">
+          <button class="text-white bg-blue-1  p-3" type="button" @click="navigateToCardDetail(target,customer.loanSurveyEconomidTypeId,customer.loanEconomicTypeId)">
             انجام نظارت
           </button>
         </div>
@@ -82,24 +82,23 @@ const zoom = ref(12);
 const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const Error = ref(false);
 const selectedLocation = ref("");
-let customerName = ref('');
 let customer = ref('');
-const target = router.currentRoute._value.query.id;
+const target = router.currentRoute._value.query.loanId;
 
 let latitude = ref(0);
 let longitude = ref(0);
 const data = localStorage.getItem('Cartables');
 const dataArray = JSON.parse(data);
-const targetObject = dataArray.find(item => item.id === Number(target));
+const targetObject = dataArray.find(item => item.loanId === Number(target));
 if (targetObject) {
-  customerName = targetObject.loanPlan;
+ 
   customer = targetObject;
 }
 const form = ref({
-  address: customerName.address,
-  Namevilleg: customerName.address,
-  lat: customerName.latitude,
-  lng: customerName.longitude,
+  address: customer.address,
+  Namevilleg: customer.address,
+  lat: customer.latitude,
+  lng: customer.longitude,
 });
 
 

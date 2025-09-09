@@ -100,6 +100,7 @@ export default defineNuxtConfig({
       },
   },
 
+
   client: {
           installPrompt: true,
           beforeinstallprompt:true

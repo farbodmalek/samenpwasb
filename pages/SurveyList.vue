@@ -15,13 +15,13 @@
 
     <section  class="mx-3 d-flex flex-column gap-3">
       <div v-for="(item, index) in Data" :key="index" class="col-md-6  col-sm-12 d-flex flex-column">
-        <div :class="{'background-card':item.id===0 }"
+        <div :class="{'background-card':item.loanPlanId===0 }"
              class="shadow-lg bg-white border-top"
-             @click="navigateToCardDetail(item.id,item.id,item.loanEconomicTypeId)">
+             @click="navigateToCardDetail(item.loanId,item.loanPlanId,item.loanEconomicTypeId)">
           <div class="p-3">
             <div class="d-flex justify-content-between text-black ">
-              <img v-if="item.id===0" src="/img/contact.png" width="50" alt="photo">
-              <img v-if="item.id" class=" px-2" src="/img/icons8-location-96.png" width="70" alt="photo">
+              <img v-if="item.loanPlanId===0" src="/img/contact.png" width="50" alt="photo">
+              <img v-if="item.loanPlanId" class=" px-2" src="/img/icons8-location-96.png" width="70" alt="photo">
               <span class=" light d-flex">
                   <p class=" mt-3  truncate-text">{{ item.customerName }}</p>
                     <img v-if="item.customerGenderType" class="mb-1 mx-2 " src="/img/muslim.png" width="50" alt="photo">
@@ -45,7 +45,7 @@
               {{ convert(item.loanSurveyEconomidTypeId) }}</p>
             <p class="text-black date-font">
               مهلت پرداخت
-              <strong class="data"> {{ item.expireDate }}</strong>
+              <strong class="data"> {{ item.expireDateFa }}</strong>
             </p>
           </div>
         </div>
@@ -105,8 +105,8 @@ watch(searchUser, (newVal: any,) => {
   if (newVal) {
     const foundData = data.filter((item: any) => {
       return (
-          item.loanDetail.customerName.toString().includes(newVal) ||
-          item.loanDetail.loanNumber.toString().includes(newVal)
+          item.customerName.toString().includes(newVal) ||
+          item.loanNumber.toString().includes(newVal)
       );
     });
     Data.value = foundData;
@@ -118,17 +118,16 @@ watch(searchUser, (newVal: any,) => {
   }
 });
 
-const navigateToCardDetail = (id: number, loanPlanId: number, loanType: number) => {
+const navigateToCardDetail = (loanId: number, loanPlanId: number, loanType: number) => {
   if (loanPlanId == 0 && loanType == 1) {
     showConfirm(id)
   } else if (loanPlanId == 0) {
 
     const updatedLoanEconomicTypeId = loanType === 4 ? 3 : loanType === 3 ? 4 : loanType;
 
-    router.push({path: "/survey/Stepone", query: {id, loanType: updatedLoanEconomicTypeId}});
+    router.push({path: "/survey/Stepone", query: {loanId, loanType: updatedLoanEconomicTypeId}});
   } else {
-
-    router.push({path: "/navigation/MapPage", query: {id, loanType}});
+    router.push({path: "/navigation/MapPage", query: {loanId, loanType}});
   }
 };
 
@@ -182,7 +181,7 @@ const FindOfflineForm = () => {
 const GetCartables = () => {
   MakeResponse.makeServerResponse(CommonServices.GetCartables(), true, result => {
     if ( result && result.results && result.results.length>=0) {
-      const Cartables = result.results;
+      const Cartables = result.results.filter((item: any) => item.expireDate.substring(0, 10) >= todayDateString);
       localStorage.setItem('Cartables', JSON.stringify(Cartables));
       if(Cartables.length>0){
         Data.value = Cartables
@@ -198,13 +197,13 @@ const GetCartables = () => {
   FindOfflineForm()
 }
 
-// const GetSurveysList = () => {
-//   MakeResponse.makeServerResponse(CommonServices.GetSurveys(), true, result => {
-//     if ( result && result.results) {
-//       localStorage.setItem('SurveysList', JSON.stringify(result.results));
-//     }
-//   },false);
-// };
+const GetSurveysList = () => {
+  MakeResponse.makeServerResponse(CommonServices.GetSurveys(), true, result => {
+    if ( result && result.results) {
+      localStorage.setItem('SurveysList', JSON.stringify(result.results));
+    }
+  },false);
+};
 
 const SetSurveyImage = async (data:any,id:number) => {
   setphoto.value[id] = true;
@@ -233,19 +232,19 @@ const SetSurveyImage = async (data:any,id:number) => {
 const SetLoanPlanSurvey = async (body: any,id:number) => {
   setloun.value[id] = true;
   MakeResponse.makeServerResponse(CommonServices.SetLoanPlanSurvey(body), true, result => {
-     if(result && result.serverErrors.length==0) {
-       const keyToDelete = `userId_${body.loanPlan.cartableId}`;
-       localStorage.removeItem(keyToDelete);
-       ServicesImg.RemoveAllPhotoDB(body.loanPlan.cartableId)
-       showsend.value=null
-       GetCartables()
-       setloun.value[id] = false;
-       ToastNotificationService.success("نظارت با موفقیت ثبت شد");
+    if(result && result.serverErrors.length==0) {
+      const keyToDelete = `userId_${body.loanPlan.cartableId}`;
+      localStorage.removeItem(keyToDelete);
+      ServicesImg.RemoveAllPhotoDB(body.loanPlan.cartableId)
+      showsend.value=null
+      GetCartables()
+      setloun.value[id] = false;
+      ToastNotificationService.success("نظارت با موفقیت ثبت شد");
 
     }
-     else{
-       setloun.value[id] = false;
-     }
+    else{
+      setloun.value[id] = false;
+    }
 
   },true);
 }
@@ -257,9 +256,9 @@ const openDataDB = () => {
 }
 
 onMounted(() => {
-   GetCartables()
+  GetCartables()
   // GetSurveysList()
-   openDataDB()
+  openDataDB()
   ClearStorge()
 
 });
